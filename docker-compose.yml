@@ -17,11 +17,11 @@ services:
     build:
       context: ./backend
     ports:
-      - "5000:5000"
+      - "${PORT}:${PORT}"
     volumes:
       - ./backend:/app
-    environment:
-      - MONGO_URL=mongodb://mongo:27017/mydb
+    env_file:
+      - ./backend/.env
 
   mongo:
     image: mongo
