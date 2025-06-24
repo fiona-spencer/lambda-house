@@ -1,10 +1,7 @@
-function LambdaHouse() {
+import React from 'react'
+
+export default function Lambdahouse() {
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>Lambda House</h1>
-      <p>Welcome to Lambda House page!</p>
-    </div>
+    <div>Lambdahouse</div>
   )
 }
-
-export default LambdaHouse

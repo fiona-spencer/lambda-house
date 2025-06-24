@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';  // <- fixed imports
 import reactLogo from './assets/react.svg'
@@ -18,7 +19,7 @@ function Home() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Fiona</h1>
+      <h1 className='bg-blue-500 text-lime-500'>Fiona Website</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
