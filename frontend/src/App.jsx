@@ -1,53 +1,24 @@
 import React from 'react';
-import { useState } from 'react'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';  // <- fixed imports
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import LambdaHouse from './Home/Lambdahouse';  // watch spelling and path!
-
-function Home() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1 className='bg-blue-500 text-lime-500'>Fiona Website</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import Main from './Home/Main';               // Make sure path is correct
+import LambdaHouse from './Home/Lambdahouse';
+import './index.css';                   // Tailwind CSS imports here
 
 function App() {
   return (
     <BrowserRouter>
-      <nav style={{ padding: '1rem', background: '#eee' }}>
-        <Link to="/" style={{ marginRight: '1rem' }}>Home</Link>
-        <Link to="/lambda-house">Lambda House</Link>
+      <nav className="bg-gray-100 p-4 flex space-x-6 shadow-md">
+        <Link to="/" className="text-blue-600 hover:text-blue-800 font-semibold">Home</Link>
+        <Link to="/lambda-house" className="text-blue-600 hover:text-blue-800 font-semibold">Lambda House</Link>
       </nav>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/lambda-house" element={<LambdaHouse />} />
-      </Routes>
+      <main className="p-6 max-w-5xl mx-auto">
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/lambda-house" element={<LambdaHouse />} />
+        </Routes>
+      </main>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;
