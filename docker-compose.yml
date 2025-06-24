@@ -29,7 +29,7 @@ services:
     ports: 
       - 8000:8000
     environment: 
-      DB_URL: 'mongodb+srv://fionagspencer:q7DFWxouFn2SfdNn@cluster0.9vzixga.mongodb.net/users'
+      DB_URL: 'mongodb+srv://fionagspencer:KDXhmyEiiv6MO3TC@cluster0.9vzixga.mongodb.net/users'
 
     develop:
       watch:
