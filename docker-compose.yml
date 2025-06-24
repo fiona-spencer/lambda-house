@@ -1,35 +1,51 @@
-version: '3.8'
-
 services:
-  frontend:
-    build:
-      context: ./frontend
+  web:
+    depends_on: 
+      - api
+    build: ./frontend
     ports:
-      - "3000:3000"
-    depends_on:
-      - backend
+      - 5173:5173
     volumes:
-      - ./frontend:/app
+      - ./frontend:/app:cached
+      # - /app/node_modules   
     environment:
-      - VITE_BACKEND_URL=http://localhost:5000
+      VITE_API_URL: http://localhost:8000
 
-  backend:
-    build:
-      context: ./backend
-    ports:
-      - "${PORT}:${PORT}"
-    volumes:
-      - ./backend:/app
-    env_file:
-      - ./backend/.env
+    develop:
+      watch:
+        - path: ./frontend/package.json
+          action: rebuild
+        - path: ./frontend/package-lock.json
+          action: rebuild
+        - path: ./frontend
+          target: /app
+          action: sync
 
-  mongo:
-    image: mongo
-    restart: always
+  api:
+    image: node:apline 
+    depends_on: 
+      - db
+    build: ./backend
+    ports: 
+      - 8000:8000
+    environment: 
+      DB_URL: 'mongodb+srv://fionagspencer:q7DFWxouFn2SfdNn@cluster0.9vzixga.mongodb.net/users'
+
+    develop:
+      watch:
+        - path: ./backend/package.json
+          action: rebuild
+        - path: ./backend/package-lock.json
+          action: rebuild
+        - path: ./backend
+          target: /app
+          action: sync
+  db:
+    image: mongo:latest
     ports:
-      - "27017:27017"
+      - 27017:27017
     volumes:
-      - mongo-data:/data/db
+     - dbdata:/data/db
 
 volumes:
-  mongo-data:
+  dbdata:
