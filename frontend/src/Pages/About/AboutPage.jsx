@@ -2,8 +2,8 @@ import React from "react";
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-[#0d335cd7] text-white flex flex-col items-center justify-center p-8">
-      <h1 className="text-5xl font-extrabold mb-6 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.7)]">
+    <main className="min-h-screen bg-[#abc7e474] text-white flex flex-col items-center justify-center p-8">
+      <h1 className="text-5xl font-extrabold mb-6 text-white">
         About Lambda House
       </h1>
 

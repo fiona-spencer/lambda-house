@@ -54,7 +54,7 @@ function App() {
           </Link>
         </nav>
 
-        <main className="p-6 max-w-5xl mx-auto flex-grow">
+        <main className="p-6 max-w-7xl mx-auto flex-grow">
           <Routes>
             <Route path="/" element={<LambdaHousePage />} />
             <Route path="/studio" element={<StudioPage />} />
