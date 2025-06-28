@@ -6,7 +6,7 @@ import './index.css';
 
 // Pages
 import LambdaHousePage from './Pages/Home/LambdahousePage';
-import StudioPage from './Pages/Studio/StudioPage';
+import StudioPage from './Pages/Studio/StudioPage'
 import ProductPage from './Pages/Products/ProductPage';
 import ProjectsPage from './Pages/Projects/ProjectsPage';
 import LogsPage from './Pages/Log/LogsPage';
