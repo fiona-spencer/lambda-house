@@ -4,4 +4,4 @@
 git push origin main
 
 # SSH to server and pull latest changes
-ssh fiona_spencer 'cd /volume1/docker/lambda-house/frontend/src && git pull origin main'
+ssh fiona_server 'cd /volume1/docker/lambda-house/frontend/src && git pull origin main'
