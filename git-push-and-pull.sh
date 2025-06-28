@@ -5,7 +5,7 @@ suffix="$1"
 
 # Generate default commit message with date/time
 datetime=$(date +"%Y-%m-%d %H:%M:%S")
-commit_msg="Auto commit at $datetime"
+commit_msg="$datetime"
 
 # If suffix provided, append it
 if [ -n "$suffix" ]; then
