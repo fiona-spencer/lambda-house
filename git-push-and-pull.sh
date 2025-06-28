@@ -25,3 +25,5 @@ git push origin main
 
 # SSH to server and pull latest
 ssh fiona_server 'cd /volume1/docker/lambda-house/ && git pull origin main'
+
+# add
