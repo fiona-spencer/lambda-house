@@ -5,7 +5,7 @@ function Footer() {
   return (
     <footer className="bg-white py-10 text-center text-gray-700 shadow-inner mt-20 animate-fadeIn">
       {/* Logo */}
-      <div className="text-center font-extrabold text-[9.25rem] text-[#2323FF] leading-none mb-4 drop-shadow-sm tracking-tight">
+      <div className="text-center font-extrabold text-[9.25rem] text-[#f7ff5e] bg-black leading-none mb-4 drop-shadow-sm tracking-tight">
         λ house
       </div>
 
