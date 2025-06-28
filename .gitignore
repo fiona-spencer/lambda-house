@@ -8,4 +8,3 @@ docker-compose-local.yml
 # Ignore keys
 origin.key
 origin.pem
-
