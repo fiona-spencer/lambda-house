@@ -23,12 +23,6 @@ function App() {
         {/* MENU */}
         <nav className="bg-gray-100 p-4 flex space-x-6 shadow-md justify-center">
           <Link 
-            to="/" 
-            className="text-gray-800 hover:text-gray-600 font-semibold"
-          >
-            House
-          </Link>
-          <Link 
             to="/studio" 
             className="text-gray-800 hover:text-gray-600 font-semibold"
           >

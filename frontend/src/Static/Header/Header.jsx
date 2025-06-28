@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Avatar, Dropdown, Button } from 'flowbite-react';
 import { FaUserCircle, FaShoppingCart } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 function Header() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -15,8 +16,12 @@ function Header() {
     <header className="bg-white shadow-md py-4 mb-4">
       <div className="max-w-6xl mx-auto px-4 flex justify-between items-center">
         {/* Logo / Title */}
-        <h1 className="text-2xl font-bold text-gray-600">Lambda House</h1>
-
+ <Link 
+            to="/" 
+            className="text-2xl text-gray-800 hover:text-gray-600 font-semibold"
+          >
+            House
+          </Link>
         {/* Search Bar */}
         <div className="flex-grow max-w-xl mx-6">
           <input
@@ -79,7 +84,6 @@ function Header() {
             <FaShoppingCart className="text-2xl" />
             {/* Example: cart item count badge */}
             <span className="absolute -top-1 -right-2 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
-              3
             </span>
           </button>
         </div>
