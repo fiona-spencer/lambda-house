@@ -8,7 +8,7 @@ function Footer() {
         {/* Social Icons */}
         <div className="flex justify-center space-x-6 mb-6 text-2xl">
           <a
-            href="https://www.youtube.com/yourchannel"
+            href="www.youtube.com/@LambdaHouse416"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="YouTube"
@@ -17,7 +17,7 @@ function Footer() {
             <FaYoutube />
           </a>
           <a
-            href="mailto:contact@lambdahouse.com"
+            href="mailto:lambdahouse416@gmail.com"
             aria-label="Email"
             className="hover:text-gray-900"
           >
