@@ -17,16 +17,47 @@ import Footer from './Static/Footer/Footer';
 function App() {
   return (
     <BrowserRouter>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen bg-white text-gray-900">
         <Header />
 
+        {/* MENU */}
         <nav className="bg-gray-100 p-4 flex space-x-6 shadow-md justify-center">
-          <Link to="/" className="text-red-600 hover:text-blue-700 font-semibold">Lambda House</Link>
-          <Link to="/studio" className="text-red-600 hover:text-blue-700 font-semibold">Studio</Link>
-          <Link to="/products" className="text-red-600 hover:text-blue-700 font-semibold">Products</Link>
-          <Link to="/projects" className="text-red-600 hover:text-blue-700 font-semibold">Projects</Link>
-          <Link to="/logs" className="text-red-600 hover:text-blue-700 font-semibold">Logs</Link>
-          <Link to="/about" className="text-red-600 hover:text-blue-700 font-semibold">About</Link>
+          <Link 
+            to="/" 
+            className="text-gray-800 hover:text-gray-600 font-semibold"
+          >
+            Lambda House
+          </Link>
+          <Link 
+            to="/studio" 
+            className="text-gray-800 hover:text-gray-600 font-semibold"
+          >
+            Studio
+          </Link>
+          <Link 
+            to="/products" 
+            className="text-gray-800 hover:text-gray-600 font-semibold"
+          >
+            Products
+          </Link>
+          <Link 
+            to="/projects" 
+            className="text-gray-800 hover:text-gray-600 font-semibold"
+          >
+            Projects
+          </Link>
+          <Link 
+            to="/logs" 
+            className="text-gray-800 hover:text-gray-600 font-semibold"
+          >
+            Logs
+          </Link>
+          <Link 
+            to="/about" 
+            className="text-gray-800 hover:text-gray-600 font-semibold"
+          >
+            About
+          </Link>
         </nav>
 
         <main className="p-6 max-w-5xl mx-auto flex-grow">
