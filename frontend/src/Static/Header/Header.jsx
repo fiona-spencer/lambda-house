@@ -42,7 +42,7 @@ function Header() {
                   className="ring-2 ring-white"
                 />
               ) : (
-                <FaUserCircle className="text-white text-4xl cursor-pointer drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] hover:drop-shadow-[0_0_20px_rgba(255,255,255,1)] transition duration-300" />
+                <FaUserCircle className="text-white text-4xl cursor-pointer transition duration-300" />
               )
             }
           >
@@ -94,7 +94,7 @@ function Header() {
 
           <button
             aria-label="Shopping Cart"
-            className="relative text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] hover:drop-shadow-[0_0_20px_rgba(255,255,255,1)] transition duration-300"
+            className="relative text-white transition duration-300"
             onClick={() => alert("Go to cart")}
           >
             <FaShoppingCart className="text-4xl" />
