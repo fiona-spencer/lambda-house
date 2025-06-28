@@ -20,7 +20,7 @@ function Header() {
             to="/" 
             className="text-2xl text-gray-800 hover:text-gray-600 font-semibold"
           >
-            House
+            Lambda House
           </Link>
         {/* Search Bar */}
         <div className="flex-grow max-w-xl mx-6">
@@ -76,16 +76,19 @@ function Header() {
           </Dropdown>
 
           {/* Shopping Cart Icon */}
-          <button
-            aria-label="Shopping Cart"
-            className="relative text-gray-600 hover:text-gray-900"
-            onClick={() => alert('Go to cart')}
-          >
-            <FaShoppingCart className="text-2xl" />
-            {/* Example: cart item count badge */}
-            <span className="absolute -top-1 -right-2 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
-            </span>
-          </button>
+<button
+  aria-label="Shopping Cart"
+  className="relative text-gray-600 hover:text-gray-900"
+  onClick={() => alert('Go to cart')}
+>
+  <FaShoppingCart className="text-2xl" />
+  {cartCount > 0 && (
+    <span className="absolute -top-1 -right-2 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+      {cartCount}
+    </span>
+  )}
+</button>
+
         </div>
       </div>
     </header>
