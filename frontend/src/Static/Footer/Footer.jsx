@@ -1,30 +1,30 @@
-import React from 'react';
-import { FaYoutube, FaGithub, FaEnvelope, FaCube } from 'react-icons/fa';
+import React from "react";
+import { FaYoutube, FaGithub, FaEnvelope, FaCube } from "react-icons/fa";
 
 function Footer() {
   return (
-    <footer className="bg-white py-10 text-center text-gray-700 shadow-inner mt-20 animate-fadeIn">
+    <footer className="bg-black py-12 text-center text-gray-100 shadow-inner mt-20 animate-fadeIn">
       {/* Logo */}
-      <div className="text-center font-extrabold text-[9.25rem] text-[#f7ff5e] bg-black leading-none mb-4 drop-shadow-sm tracking-tight">
+      <div className="font-extrabold text-[9.25rem] text-[#FFF01F] leading-none mb-8 drop-shadow-[0_0_10px_#FFF01F] tracking-tight">
         λ house
       </div>
 
       <div className="max-w-6xl mx-auto px-6">
         {/* Social Icons */}
-        <div className="flex justify-center gap-8 mb-8 text-3xl">
+        <div className="flex justify-center gap-12 mb-10 text-5xl">
           <a
             href="https://www.youtube.com/@LambdaHouse416"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="YouTube"
-            className="text-gray-600 hover:text-red-600 transition duration-300 transform hover:scale-125"
+            className="text-[#FF00FF] hover:text-[#FF00FF] transition duration-300 transform hover:scale-125 hover:drop-shadow-[0_0_15px_#FF00FF]"
           >
             <FaYoutube />
           </a>
           <a
             href="mailto:lambdahouse416@gmail.com"
             aria-label="Email"
-            className="text-gray-600 hover:text-gray-900 transition duration-300 transform hover:scale-125"
+            className="text-[#00FFFF] hover:text-[#00FFFF] transition duration-300 transform hover:scale-125 hover:drop-shadow-[0_0_15px_#00FFFF]"
           >
             <FaEnvelope />
           </a>
@@ -33,7 +33,7 @@ function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
-            className="text-gray-600 hover:text-gray-900 transition duration-300 transform hover:scale-125"
+            className="text-[#FFF01F] hover:text-[#FFF01F] transition duration-300 transform hover:scale-125 hover:drop-shadow-[0_0_15px_#FFF01F]"
           >
             <FaGithub />
           </a>
@@ -42,26 +42,26 @@ function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="MakerWorld"
-            className="text-gray-600 hover:text-blue-500 transition duration-300 transform hover:rotate-12 hover:scale-125"
+            className="text-[#00FFFF] hover:text-[#00FFFF] transition duration-300 transform hover:rotate-12 hover:scale-125 hover:drop-shadow-[0_0_15px_#00FFFF]"
           >
             <FaCube />
           </a>
         </div>
 
         {/* Policy Links */}
-        <div className="flex flex-wrap justify-center gap-4 md:gap-6 mb-6 text-sm text-gray-500">
+        <div className="flex flex-wrap justify-center gap-6 mb-8 text-sm text-gray-400">
           {[
-            ['Terms and Conditions', '/terms-and-conditions'],
-            ['Shipping Policy', '/shipping-policy'],
-            ['Privacy Policy', '/privacy-policy'],
-            ['Terms of Service', '/terms-of-service'],
-            ['Refund Policy', '/refund-policy'],
-            ['Return, Exchange & Warranty', '/return-exchange-warranty'],
+            ["Terms and Conditions", "/terms-and-conditions"],
+            ["Shipping Policy", "/shipping-policy"],
+            ["Privacy Policy", "/privacy-policy"],
+            ["Terms of Service", "/terms-of-service"],
+            ["Refund Policy", "/refund-policy"],
+            ["Return, Exchange & Warranty", "/return-exchange-warranty"],
           ].map(([label, href]) => (
             <a
               key={label}
               href={href}
-              className="hover:text-blue-600 transition duration-200 underline-offset-2 hover:underline"
+              className="hover:text-[#FFF01F] transition duration-200 underline-offset-2 hover:underline"
             >
               {label}
             </a>
@@ -69,7 +69,7 @@ function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="text-xs text-gray-400">
+        <div className="text-xs text-gray-500">
           &copy; {new Date().getFullYear()} Lambda House — All rights reserved.
         </div>
       </div>
