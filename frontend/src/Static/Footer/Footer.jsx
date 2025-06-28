@@ -42,7 +42,7 @@ function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="MakerWorld"
-            className="text-[#00FFFF] hover:text-[#00FFFF] transition duration-300 transform hover:rotate-12 hover:scale-125 hover:drop-shadow-[0_0_15px_#00FFFF]"
+            className="text-[#00ff40] hover:text-[#00ff4c] transition duration-300 transform hover:rotate-12 hover:scale-125 hover:drop-shadow-[0_0_15px_#00FFFF]"
           >
             <FaCube />
           </a>
