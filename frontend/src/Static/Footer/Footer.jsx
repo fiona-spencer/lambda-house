@@ -3,12 +3,12 @@ import { FaYoutube, FaGithub, FaEnvelope, FaCube } from "react-icons/fa";
 
 function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-blue-900 bg-opacity-30 py-16 text-center text-white shadow-lg mt-20">
+    <footer className="relative overflow-hidden bg-[#0d335cd7] bg-opacity-30 py-16 text-center text-white shadow-lg mt-20">
       {/* Content container */}
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         {/* Logo */}
-        <div className="font-extrabold text-[10rem] uppercase tracking-wide leading-none mb-12 select-none font-sans">
-          <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.9)]">λ house</span>
+        <div className=" text-[10rem] uppercase tracking-wide leading-none mb-12 select-none font-sans">
+          <span className="text-white">λ house</span>
         </div>
 
         {/* Social Icons */}
