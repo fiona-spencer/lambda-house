@@ -3,13 +3,13 @@ import { FaYoutube, FaGithub, FaEnvelope, FaCube } from "react-icons/fa";
 
 function Footer() {
   return (
-    <footer className="bg-black py-12 text-center text-gray-100 shadow-inner mt-20 animate-fadeIn">
+    <footer className="footer-glitch-bg relative py-12 text-center text-gray-100 shadow-inner mt-20 animate-fadeIn">
       {/* Logo */}
-      <div className="font-extrabold text-[9.25rem] text-[#FFF01F] leading-none mb-8 tracking-tight">
+      <div className="font-extrabold text-[9.25rem] text-[#FFF01F] leading-none mb-8 tracking-tight relative z-10">
         λ house
       </div>
 
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* Social Icons */}
         <div className="flex justify-center gap-12 mb-10 text-5xl">
           {[
@@ -43,7 +43,6 @@ function Footer() {
               className="glitch-icon relative inline-block cursor-pointer transition duration-300 transform hover:scale-125"
             >
               <Icon />
-              {/* Overlay for glitch colors */}
               <span aria-hidden="true" className="glitch-layer glitch-red">
                 <Icon />
               </span>
@@ -78,13 +77,94 @@ function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="text-xs text-gray-500">
+        <div className="text-xs text-gray-500 relative z-10">
           &copy; {new Date().getFullYear()} Lambda House — All rights reserved.
         </div>
       </div>
 
       {/* Glitch styles */}
       <style jsx>{`
+        /* Glitchy background effect */
+        .footer-glitch-bg {
+          background: black;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .footer-glitch-bg::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: -50%;
+          width: 200%;
+          height: 100%;
+          background:
+            repeating-linear-gradient(
+              90deg,
+              #222 0,
+              #222 2px,
+              #111 2px,
+              #111 4px
+            ),
+            repeating-linear-gradient(
+              0deg,
+              #222 0,
+              #222 2px,
+              #111 2px,
+              #111 4px
+            );
+          opacity: 0.15;
+          animation: static-glitch 0.2s infinite linear;
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        /* subtle flicker overlay */
+        .footer-glitch-bg::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.05) 0%,
+            rgba(0, 0, 0, 0.1) 50%,
+            rgba(255, 255, 255, 0.05) 100%
+          );
+          animation: flicker 3s infinite;
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        /* Glitchy horizontal scanlines move */
+        @keyframes static-glitch {
+          0% {
+            transform: translateX(0);
+            opacity: 0.15;
+          }
+          50% {
+            transform: translateX(5%);
+            opacity: 0.3;
+          }
+          100% {
+            transform: translateX(0);
+            opacity: 0.15;
+          }
+        }
+
+        /* Slow flicker effect */
+        @keyframes flicker {
+          0%, 100% {
+            opacity: 0.05;
+          }
+          50% {
+            opacity: 0.15;
+          }
+        }
+
+        /* Icon glitch layers (same as before) */
         .glitch-icon {
           position: relative;
           color: #ccc;
@@ -99,6 +179,7 @@ function Footer() {
           opacity: 0.7;
           clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
           animation: glitch 2s infinite;
+          pointer-events: none;
         }
         .glitch-red {
           color: #ff0000;
