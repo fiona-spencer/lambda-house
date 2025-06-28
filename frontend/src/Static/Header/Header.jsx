@@ -15,7 +15,7 @@ function Header() {
   return (
     <header className="bg-[#0d335cd7] shadow-inner py-4 mb-6">
       <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
-        <h1 className="text-3xl font-extrabold text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.9)]">
+        <h1 className="text-3xl font-extrabold text-white">
           Lambda House
         </h1>
 
