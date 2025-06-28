@@ -1,27 +1,23 @@
 import React, { useState } from 'react';
-import { Avatar, Dropdown, Button } from 'flowbite-react';
+import { Avatar, Dropdown } from 'flowbite-react';
 import { FaUserCircle, FaShoppingCart } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 
 function Header() {
   const [loggedIn, setLoggedIn] = useState(false);
+  
+  // Add this - cart count variable
+  const cartCount = 3; // replace with real count from your state/store
 
-  // Dummy user data (replace with your auth logic)
   const user = {
     name: "Fiona Spencer",
-    avatarUrl: "https://i.pravatar.cc/40", // placeholder avatar image
+    avatarUrl: "https://i.pravatar.cc/40",
   };
 
   return (
     <header className="bg-white shadow-md py-4 mb-4">
       <div className="max-w-6xl mx-auto px-4 flex justify-between items-center">
-        {/* Logo / Title */}
- <Link 
-            to="/" 
-            className="text-2xl text-gray-800 hover:text-gray-600 font-semibold"
-          >
-            Lambda House
-          </Link>
+        <h1 className="text-2xl font-bold text-gray-600">Lambda House</h1>
+
         {/* Search Bar */}
         <div className="flex-grow max-w-xl mx-6">
           <input
@@ -31,9 +27,7 @@ function Header() {
           />
         </div>
 
-        {/* Account Info & Cart */}
         <div className="flex items-center space-x-6">
-          {/* Account Dropdown */}
           <Dropdown
             inline
             label={
@@ -75,20 +69,18 @@ function Header() {
             )}
           </Dropdown>
 
-          {/* Shopping Cart Icon */}
-<button
-  aria-label="Shopping Cart"
-  className="relative text-gray-600 hover:text-gray-900"
-  onClick={() => alert('Go to cart')}
->
-  <FaShoppingCart className="text-2xl" />
-  {cartCount > 0 && (
-    <span className="absolute -top-1 -right-2 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
-      {cartCount}
-    </span>
-  )}
-</button>
-
+          <button
+            aria-label="Shopping Cart"
+            className="relative text-gray-600 hover:text-gray-900"
+            onClick={() => alert('Go to cart')}
+          >
+            <FaShoppingCart className="text-2xl" />
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-2 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                {cartCount}
+              </span>
+            )}
+          </button>
         </div>
       </div>
     </header>
