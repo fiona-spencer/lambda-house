@@ -1,26 +1,30 @@
 import React from 'react';
-import { FaYoutube, FaGithub, FaEnvelope } from 'react-icons/fa';
+import { FaYoutube, FaGithub, FaEnvelope, FaCube } from 'react-icons/fa';
 
 function Footer() {
   return (
-    <footer className="bg-gray-100 py-8 text-center text-gray-700 shadow-inner mt-10">
-      <div className="text-center font-extrabold text-[9.25rem] text-[#2323FF]">λ house</div>
-      <div className="max-w-6xl mx-auto px-4">
+    <footer className="bg-white py-10 text-center text-gray-700 shadow-inner mt-20 animate-fadeIn">
+      {/* Logo */}
+      <div className="text-center font-extrabold text-[9.25rem] text-[#2323FF] leading-none mb-4 drop-shadow-sm tracking-tight">
+        λ house
+      </div>
+
+      <div className="max-w-6xl mx-auto px-6">
         {/* Social Icons */}
-        <div className="flex justify-center space-x-6 mb-6 text-2xl">
+        <div className="flex justify-center gap-8 mb-8 text-3xl">
           <a
-            href="www.youtube.com/@LambdaHouse416"
+            href="https://www.youtube.com/@LambdaHouse416"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="YouTube"
-            className="hover:text-red-600"
+            className="text-gray-600 hover:text-red-600 transition duration-300 transform hover:scale-125"
           >
             <FaYoutube />
           </a>
           <a
             href="mailto:lambdahouse416@gmail.com"
             aria-label="Email"
-            className="hover:text-gray-900"
+            className="text-gray-600 hover:text-gray-900 transition duration-300 transform hover:scale-125"
           >
             <FaEnvelope />
           </a>
@@ -29,36 +33,43 @@ function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
-            className="hover:text-gray-900"
+            className="text-gray-600 hover:text-gray-900 transition duration-300 transform hover:scale-125"
           >
             <FaGithub />
+          </a>
+          <a
+            href="https://makerworld.com/en/u/YOUR_USERNAME"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="MakerWorld"
+            className="text-gray-600 hover:text-blue-500 transition duration-300 transform hover:rotate-12 hover:scale-125"
+          >
+            <FaCube />
           </a>
         </div>
 
         {/* Policy Links */}
-        <div className="flex flex-wrap justify-center gap-6 mb-6 text-sm">
-          <a href="/terms-and-conditions" className="hover:underline">
-            Terms and Conditions
-          </a>
-          <a href="/shipping-policy" className="hover:underline">
-            Shipping Policy
-          </a>
-          <a href="/privacy-policy" className="hover:underline">
-            Privacy Policy
-          </a>
-          <a href="/terms-of-service" className="hover:underline">
-            Terms of Service
-          </a>
-          <a href="/refund-policy" className="hover:underline">
-            Refund Policy
-          </a>
-          <a href="/return-exchange-warranty" className="hover:underline">
-            Return, Exchange & Warranty
-          </a>
+        <div className="flex flex-wrap justify-center gap-4 md:gap-6 mb-6 text-sm text-gray-500">
+          {[
+            ['Terms and Conditions', '/terms-and-conditions'],
+            ['Shipping Policy', '/shipping-policy'],
+            ['Privacy Policy', '/privacy-policy'],
+            ['Terms of Service', '/terms-of-service'],
+            ['Refund Policy', '/refund-policy'],
+            ['Return, Exchange & Warranty', '/return-exchange-warranty'],
+          ].map(([label, href]) => (
+            <a
+              key={label}
+              href={href}
+              className="hover:text-blue-600 transition duration-200 underline-offset-2 hover:underline"
+            >
+              {label}
+            </a>
+          ))}
         </div>
 
         {/* Copyright */}
-        <div className="text-xs text-gray-500">
+        <div className="text-xs text-gray-400">
           &copy; {new Date().getFullYear()} Lambda House — All rights reserved.
         </div>
       </div>
