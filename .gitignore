@@ -1,6 +1,7 @@
 /backend/.env
 .env
 docker-compose.yml
+docker-compose-local.yml
 # Ignore tar files
 *.tar
 
