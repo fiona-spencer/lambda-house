@@ -17,7 +17,7 @@ export default function AboutPage() {
 
       <section className="max-w-3xl w-full">
         <h2 className="text-3xl font-bold text-white mb-4">Main Services</h2>
-        <ul className="list-disc list-inside text-gray-300 mb-10 space-y-2">
+        <ul className="list-none text-gray-300 mb-10 space-y-2">
           <li>
             <strong>Custom 3D Print Service:</strong> Tailored 3D printing solutions using diverse filament types with expert post-processing and electronics integration.
           </li>
@@ -27,7 +27,7 @@ export default function AboutPage() {
         </ul>
 
         <h2 className="text-3xl font-bold text-white mb-4">Other Offerings</h2>
-        <ul className="list-disc list-inside text-gray-300 space-y-2">
+        <ul className="list-none text-gray-300 space-y-2">
           <li>
             <strong>Projects:</strong> Innovative projects combining computer science, 3D printing, and electronics to push creative boundaries.
           </li>
