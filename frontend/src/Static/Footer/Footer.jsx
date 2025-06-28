@@ -7,7 +7,7 @@ function Footer() {
       {/* Content container */}
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         {/* Logo */}
-        <div className=" text-[10rem] uppercase tracking-wide leading-none mb-12 select-none font-sans">
+        <div className=" text-[8rem] tracking-wide leading-none mb-12 select-none font-sans">
           <span className="text-white">λ house</span>
         </div>
 

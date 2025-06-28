@@ -5,7 +5,7 @@ import { FaUserCircle, FaShoppingCart } from "react-icons/fa";
 function Header() {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  const cartCount = 3; // replace with your actual cart count
+  const cartCount = 0; // replace with your actual cart count
 
   const user = {
     name: "Fiona Spencer",
@@ -13,9 +13,9 @@ function Header() {
   };
 
   return (
-    <header className="bg-black shadow-inner py-4 mb-6">
+    <header className="bg-[#0d335cd7] shadow-inner py-4 mb-6">
       <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
-        <h1 className="text-3xl font-extrabold text-[#FFF01F] drop-shadow-[0_0_8px_#FFF01F]">
+        <h1 className="text-3xl font-extrabold text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.9)]">
           Lambda House
         </h1>
 
@@ -24,7 +24,7 @@ function Header() {
           <input
             type="search"
             placeholder="Search..."
-            className="w-full px-4 py-2 border border-gray-700 bg-black text-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFF01F] placeholder-gray-500"
+            className="w-full px-4 py-2 border border-white bg-transparent text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white placeholder-white/70"
           />
         </div>
 
@@ -37,37 +37,37 @@ function Header() {
                   alt="User avatar"
                   img={user.avatarUrl}
                   rounded
-                  className="ring-2 ring-[#FFF01F]"
+                  className="ring-2 ring-white"
                 />
               ) : (
-                <FaUserCircle className="text-[#00FFFF] text-4xl cursor-pointer drop-shadow-[0_0_10px_#00FFFF] hover:drop-shadow-[0_0_20px_#00FFFF] transition duration-300" />
+                <FaUserCircle className="text-white text-4xl cursor-pointer drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] hover:drop-shadow-[0_0_20px_rgba(255,255,255,1)] transition duration-300" />
               )
             }
           >
             {loggedIn ? (
               <>
                 <Dropdown.Header>
-                  <span className="block text-sm text-gray-200">{user.name}</span>
-                  <span className="block truncate text-sm font-medium text-gray-400">
+                  <span className="block text-sm text-white">{user.name}</span>
+                  <span className="block truncate text-sm font-medium text-white/70">
                     user@example.com
                   </span>
                 </Dropdown.Header>
                 <Dropdown.Item
                   onClick={() => alert("Go to profile")}
-                  className="hover:text-[#FFF01F]"
+                  className="hover:text-white"
                 >
                   Profile
                 </Dropdown.Item>
                 <Dropdown.Item
                   onClick={() => alert("Go to settings")}
-                  className="hover:text-[#FFF01F]"
+                  className="hover:text-white"
                 >
                   Settings
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item
                   onClick={() => setLoggedIn(false)}
-                  className="hover:text-[#FFF01F]"
+                  className="hover:text-white"
                 >
                   Sign out
                 </Dropdown.Item>
@@ -76,13 +76,13 @@ function Header() {
               <>
                 <Dropdown.Item
                   onClick={() => setLoggedIn(true)}
-                  className="hover:text-[#FFF01F]"
+                  className="hover:text-white"
                 >
                   Sign in
                 </Dropdown.Item>
                 <Dropdown.Item
                   onClick={() => alert("Go to Register")}
-                  className="hover:text-[#FFF01F]"
+                  className="hover:text-white"
                 >
                   Register
                 </Dropdown.Item>
@@ -92,12 +92,12 @@ function Header() {
 
           <button
             aria-label="Shopping Cart"
-            className="relative text-[#FF00FF] hover:text-[#FF00FF] drop-shadow-[0_0_10px_#FF00FF] hover:drop-shadow-[0_0_20px_#FF00FF] transition duration-300"
+            className="relative text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] hover:drop-shadow-[0_0_20px_rgba(255,255,255,1)] transition duration-300"
             onClick={() => alert("Go to cart")}
           >
             <FaShoppingCart className="text-4xl" />
             {cartCount > 0 && (
-              <span className="absolute -top-1 -right-3 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center shadow-lg">
+              <span className="absolute -top-1 -right-3 bg-white text-[#0d335cd7] rounded-full text-xs w-5 h-5 flex items-center justify-center font-semibold shadow-lg">
                 {cartCount}
               </span>
             )}
