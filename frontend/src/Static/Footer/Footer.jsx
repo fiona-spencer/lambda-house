@@ -4,7 +4,7 @@ import { FaYoutube, FaGithub, FaEnvelope } from 'react-icons/fa';
 function Footer() {
   return (
     <footer className="bg-gray-100 py-8 text-center text-gray-700 shadow-inner mt-10">
-      <div className="text-right text-4xl text-[#34b1cd]">λ house</div>
+      <div className="text-right text-[11.25rem] text-[#2323FF]">λ house</div>
       <div className="max-w-6xl mx-auto px-4">
         {/* Social Icons */}
         <div className="flex justify-center space-x-6 mb-6 text-2xl">
