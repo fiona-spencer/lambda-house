@@ -49,7 +49,7 @@ export default function Sections() {
             <p className="text-sm text-gray-800 mb-4">{item.description}</p>
           </div>
 <Link to={item.link} className="mt-auto flex justify-center group">
-  <span className="px-5 py-2 rounded-full transition duration-300 group-hover:bg-pink-500/50">
+  <span className="px-10 py-2 rounded-full transition duration-300 group-hover:bg-pink-500/50">
     <FaArrowRight className="text-2xl transition-transform duration-300 group-hover:translate-x-1" />
   </span>
 </Link>
