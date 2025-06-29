@@ -39,7 +39,7 @@ const sectionData = [
 
 export default function Sections() {
   return (
-  <div className="-mt-40 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-0">
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-0">
   {sectionData.map((item, index) => (
     <div
       key={index}
