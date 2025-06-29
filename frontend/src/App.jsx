@@ -13,47 +13,14 @@ import AboutPage from './Pages/About/AboutPage';
 // Components
 import Header from './Static/Header/Header';
 import Footer from './Static/Footer/Footer';
+import Navbar from './Navbar'
 
 function App() {
   return (
     <BrowserRouter>
       <div className="flex flex-col min-h-screen bg-white text-gray-900">
         <Header />
-
-        {/* MENU */}
-        <nav className="bg-pink-500 p-4 flex space-x-6 shadow-md justify-center">
-          <Link 
-            to="/studio" 
-            className="text-gray-800 hover:text-gray-600 font-semibold"
-          >
-            Studio
-          </Link>
-          <Link 
-            to="/products" 
-            className="text-gray-800 hover:text-gray-600 font-semibold"
-          >
-            Products
-          </Link>
-          <Link 
-            to="/projects" 
-            className="text-gray-800 hover:text-gray-600 font-semibold"
-          >
-            Projects
-          </Link>
-          <Link 
-            to="/logs" 
-            className="text-gray-800 hover:text-gray-600 font-semibold"
-          >
-            Logs
-          </Link>
-          <Link 
-            to="/about" 
-            className="text-gray-800 hover:text-gray-600 font-semibold"
-          >
-            About
-          </Link>
-        </nav>
-
+        <Navbar />
         <main className="p-6 max-w-full mx-auto flex-grow">
           <Routes>
             <Route path="/" element={<LambdaHousePage />} />
@@ -64,7 +31,6 @@ function App() {
             <Route path="/about" element={<AboutPage />} />
           </Routes>
         </main>
-
         <Footer />
       </div>
     </BrowserRouter>
