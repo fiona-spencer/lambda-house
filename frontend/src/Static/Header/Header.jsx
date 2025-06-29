@@ -37,7 +37,7 @@ function Header() {
     </div>
 
     {/* User + Cart */}
-<div className="flex space-x-10 order-2 sm:order-3 w-auto ml-auto">
+<div className="flex space-x-4 order-2 sm:order-3 w-auto ml-auto">
   <Dropdown
     inline
     label={
