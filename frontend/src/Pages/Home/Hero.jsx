@@ -1,9 +1,11 @@
 import React from 'react';
 import floatingLambda from '../../assets/floating.mp4';
+import Header from "./../../Static/Header/Header"
 
 export default function Hero() {
   return (
     <div className="flex w-full h-screen overflow-hidden">
+        <Header/>
       <video
         autoPlay
         loop
