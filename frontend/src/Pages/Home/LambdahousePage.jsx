@@ -1,15 +1,17 @@
 import React from 'react';
+import Equipemt from './Equipment';
+import Filament from './Filament';
 import Sections from './Sections';
 import EmailContact from '../../Components/EmailContact';
 
 const sections = [
   {
     title: "EQUIPMENT",
-    component: Sections,
+    component: Equipment,
   },
   {
     title: "FILAMENT TYPES",
-    component: Sections,
+    component: Filament,
   },
   {
     title: "OUR SERVICES",
