@@ -43,7 +43,7 @@ export default function Sections() {
       {sectionData.map((item, index) => (
         <div
           key={index}
-      className="border border-black border-t-0 border-l-0 first:border-t first:sm:border-t first:md:border-t sm:first:border-l md:first:border-l p-6"
+      className="relative border border-black border-t-0 border-l-0 first:border-t first:sm:border-t first:md:border-t sm:first:border-l md:first:border-l p-6"
         >
           <div>
             <h3 className="text-xl font-bold mb-1">{item.title}</h3>
