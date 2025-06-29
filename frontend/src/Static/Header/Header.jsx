@@ -22,7 +22,7 @@ function Header() {
   <img 
     src={lhSmallLogo} 
     alt="Lambda House Logo" 
-    className="h-10 w-auto object-contain hover:opacity-90 transition duration-200" 
+    className="h-24 w-auto object-contain hover:opacity-90 transition duration-200" 
   />
 </Link> 
         {/* Search Bar */}
