@@ -37,39 +37,39 @@ function Header() {
     </div>
 
     {/* User + Cart */}
-    <div className="absolute space-x-10 order-2 sm:order-3 w-auto right-10">
-      <Dropdown
-        inline
-        label={
-          loggedIn ? (
-            <Avatar
-              alt="User avatar"
-              img={user.avatarUrl}
-              rounded
-              className="ring-2 ring-black"
-            />
-          ) : (
-            <FaUserCircle className="text-black text-4xl cursor-pointer transition duration-300" />
-          )
-        }
-      >
-        {/* Dropdown content */}
-      </Dropdown>
+<div className="flex space-x-10 order-2 sm:order-3 w-auto ml-auto">
+  <Dropdown
+    inline
+    label={
+      loggedIn ? (
+        <Avatar
+          alt="User avatar"
+          img={user.avatarUrl}
+          rounded
+          className="ring-2 ring-black"
+        />
+      ) : (
+        <FaUserCircle className="text-black text-4xl cursor-pointer transition duration-300" />
+      )
+    }
+  >
+    {/* Dropdown content */}
+  </Dropdown>
 
-      {/* Cart */}
-      <button
-        aria-label="Shopping Cart"
-        className="relative text-black transition duration-300"
-        onClick={() => alert("Go to cart")}
-      >
-        <FaShoppingCart className="text-4xl" />
-        {cartCount > 0 && (
-          <span className="absolute -top-1 bg-black text-white rounded-full text-xs w-5 h-5 flex items-center justify-center font-semibold shadow-lg">
-            {cartCount}
-          </span>
-        )}
-      </button>
-    </div>
+  <button
+    aria-label="Shopping Cart"
+    className="relative text-black transition duration-300"
+    onClick={() => alert("Go to cart")}
+  >
+    <FaShoppingCart className="text-4xl" />
+    {cartCount > 0 && (
+      <span className="absolute -top-1 -right-3 bg-black text-white rounded-full text-xs w-5 h-5 flex items-center justify-center font-semibold shadow-lg">
+        {cartCount}
+      </span>
+    )}
+  </button>
+</div>
+
   </div>
 </header>
 
