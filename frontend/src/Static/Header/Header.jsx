@@ -33,11 +33,11 @@ function Header() {
     placeholder="Search"
     className="w-full border-b border-black bg-transparent text-black placeholder-black/60 py-2 pr-10 focus:outline-none focus:border-b-2 focus:border-black"
   />
-  <FaSearch className="absolute right-2 top-1/2 transform -translate-y-1/2 text-black opacity-70" />
+  <FaSearch className="absolute right-2 top-1/2 transform -translate-y-1/2 text-black" />
 </div>
 
         {/* User + Cart */}
-        <div className="flex items-center space-x-8">
+        <div className="flex items-center space-x-10">
           <Dropdown
             inline
             label={
