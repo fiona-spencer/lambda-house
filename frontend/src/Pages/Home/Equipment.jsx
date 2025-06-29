@@ -2,29 +2,38 @@ import React from 'react';
 
 export default function Equipment() {
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white text-black rounded shadow">
-      <h1 className="text-4xl font-bold mb-6">Equipment</h1>
+    <div className="max-w-3xl mx-auto p-8 bg-white text-black rounded shadow-md">
+      {/* Image */}
+      <img
+        src="/path-to-your-image/bambu-lab-ps1.jpg"
+        alt="Bambu Lab Printing PS1 with AMS"
+        className="w-full h-auto rounded mb-6 object-contain"
+      />
 
-      <section className="mb-6">
-        <h2 className="text-2xl font-semibold mb-2">Bambu Lab Printing PS1 with AMS</h2>
-        <ul className="list-disc list-inside space-y-1 text-gray-800 mb-4">
-          <li>Hardened steel nozzle: 0.4 mm</li>
-          <li>4 color print heads plus 1 external extruder</li>
-          <li>Print bed size: 256 x 256 mm</li>
-          <li>Maximum print volume: 256 x 256 x 256 mm</li>
-        </ul>
+      <h2 className="text-3xl font-bold mb-6 border-b border-gray-300 pb-2">
+        Bambu Lab Printing PS1 with AMS
+      </h2>
 
-        <h3 className="text-xl font-semibold mb-2">Additional Features</h3>
-        <ul className="list-disc list-inside space-y-1 text-gray-800">
-          <li>Works right out of the box, set up in 15 minutes</li>
-          <li>Well-polished hardware and software</li>
-          <li>Enclosed body for high-temperature filament printing</li>
-          <li>Up to 16-color printing with AMS</li>
-          <li>Up to 20000 mm/s² acceleration, prints a benchy in 18 minutes</li>
-          <li>Built-in camera for remote monitoring and timelapse</li>
-          <li>The AMS 2 Pro is compatible with X1/P1 series printers for multi-material printing</li>
-        </ul>
-      </section>
+      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-gray-700 mb-8">
+        <li><strong>Nozzle:</strong> Hardened steel 0.4 mm</li>
+        <li><strong>Extruders:</strong> 4 color + 1 external</li>
+        <li><strong>Bed Size:</strong> 256 × 256 mm</li>
+        <li><strong>Max Volume:</strong> 256 × 256 × 256 mm</li>
+      </ul>
+
+      <h3 className="text-2xl font-semibold mb-4 border-b border-gray-300 pb-2">
+        Key Features
+      </h3>
+
+      <ul className="list-disc list-inside space-y-2 text-gray-700">
+        <li>Quick setup—ready to print in 15 minutes</li>
+        <li>Polished hardware and intuitive software</li>
+        <li>Enclosed design supports high-temp filaments</li>
+        <li>Up to 16-color printing via AMS system</li>
+        <li>High acceleration: 20,000 mm/s²; Benchy prints in 18 minutes</li>
+        <li>Built-in camera for remote monitoring & timelapse</li>
+        <li>AMS 2 Pro compatible with X1/P1 series for multi-material printing</li>
+      </ul>
     </div>
   );
 }
