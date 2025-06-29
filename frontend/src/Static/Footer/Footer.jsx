@@ -6,7 +6,7 @@ function Footer() {
   return (
     <footer className="relative overflow-hidden bg-opacity-70 bg-black  text-center text-white shadow-lg mt-10">
       {/* Content container */}
-      <div className="relative z-10 max-w-7xl mx-auto py-2 px-2">
+      <div className="relative z-10 max-w-7xl mx-auto pt-8 px-2">
         {/* Logo */}
         <div className="flex justify-center items-center mb-10 select-none">
               <img src={lgTransparent}
