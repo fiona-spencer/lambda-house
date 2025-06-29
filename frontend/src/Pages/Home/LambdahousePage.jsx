@@ -7,7 +7,7 @@ import EmailContact from '../../Components/EmailContact';
 
 const sections = [
   {
-    title: "TORONTO 3D PRINTING",
+    title: "",
     component: Hero,
   },
   {
