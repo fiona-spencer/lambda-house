@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Avatar, Dropdown } from "flowbite-react";
 import { FaUserCircle, FaShoppingCart, FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import lhSmallLogo from '../../assets/lg-small-logo.svg';
+import lhSmallLogo from '../../assets/lg-name-logo.svg';
 
 function Header() {
   const [loggedIn, setLoggedIn] = useState(false);
