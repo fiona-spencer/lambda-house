@@ -9,7 +9,7 @@ function Footer() {
     style={{ backgroundImage: `url(${tvBg})` }}>
       {/* Content container */}
       <div className="relative z-10 max-w-7xl mx-auto">
-        <div className="flex justify-center items-center mb-10 select-none py-3">
+        <div className="flex justify-center items-center my-4 select-none py-3">
               <img src={lgTransparent}
           alt="Lambda House Logo" 
           className="h-32 w-auto object-contain"/>
@@ -52,7 +52,7 @@ className="text-white hover:text-gray-300 transition duration-300 transform hove
         </div>
 
         {/* Policy Links */}
-        <div className="flex flex-wrap justify-center gap-8 mb-12 text-sm text-white">
+        <div className="flex flex-wrap justify-center gap-8 mb-12 text-sm text-white font-semibold">
           {[
             ["Terms and Conditions", "/terms-and-conditions"],
             ["Shipping Policy", "/shipping-policy"],
@@ -73,7 +73,7 @@ className="text-white hover:text-gray-300 transition duration-300 transform hove
 
       </div>
         {/* Copyright */}
-        <div className="text-xs text-white-300 font-mono tracking-wide select-none py-2 bg-pink-700">
+        <div className="text-xs text-white-300 font-mono tracking-wide select-none py-2 bg-pink-600">
           &copy; {new Date().getFullYear()} Lambda House — All rights reserved.
         </div>
     </footer>
