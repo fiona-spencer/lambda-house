@@ -15,14 +15,14 @@ function Header() {
   };
 
   return (
-    <header className="bg-white shadow-inner py-4 mb-6">
+    <header className="bg-white shadow-inner py-4">
       <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="flex items-center">
           <img
             src={lhSmallLogo}
             alt="Lambda House Logo"
-            className="h-24 w-auto object-contain hover:opacity-90 transition duration-200"
+            className="h-24 w-auto object-contain hover:opacity-50 transition duration-200"
           />
         </Link>
 
