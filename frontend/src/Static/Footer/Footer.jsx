@@ -1,6 +1,6 @@
 import React from "react";
 import { FaYoutube, FaGithub, FaEnvelope, FaCube } from "react-icons/fa";
-import lgTransparent from '../../assets/lg-transparent.svg'
+import lgTransparent from '../../assets/lh-transparent.svg'
 
 function Footer() {
   return (
@@ -10,7 +10,7 @@ function Footer() {
         {/* Logo */}
      <img src={lgTransparent}
           alt="Lambda House Logo" 
-          className="h-24 w-auto object-contain hover:opacity-90 transition duration-200"  />
+          className="h-32 w-auto object-contain hover:opacity-90 transition duration-200"/>
         {/* Social Icons */}
         <div className="flex justify-center gap-14 mb-14 text-6xl">
           <a
