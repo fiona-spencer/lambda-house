@@ -1,11 +1,11 @@
 import React from 'react';
+import printer from '../../assets/printer.png'
 
 export default function Equipment() {
   return (
     <div className="max-w-3xl mx-auto p-8 bg-white text-black rounded shadow-md">
-      {/* Image */}
       <img
-        src="/path-to-your-image/bambu-lab-ps1.jpg"
+        src={printer}
         alt="Bambu Lab Printing PS1 with AMS"
         className="w-full h-auto rounded mb-6 object-contain"
       />

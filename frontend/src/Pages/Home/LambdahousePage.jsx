@@ -11,17 +11,14 @@ const sections = [
     component: Hero,
   },
   {
-    title: "EQUIPMENT",
-    component: Equipment,
-  },
-  {
-    title: "FILAMENT TYPES",
-    component: Filament,
-  },
-  {
     title: "OUR SERVICES",
     component: Sections,
   },
+  {
+    title: "EQUIPMENT",
+    component: Equipment,
+  },
+ 
   {
     title: "CONTACT",
     component: EmailContact,
