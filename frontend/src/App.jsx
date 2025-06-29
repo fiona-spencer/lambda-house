@@ -20,8 +20,8 @@ function App() {
     <BrowserRouter>
       <div className="flex flex-col min-h-screen bg-white text-gray-900">
         <Header />
-        <Navbar />
-        <main className="p-6 mx-auto flex-grow">
+        <Header />
+        <main className="p-6 mx-auto d">
           <Routes>
             <Route path="/" element={<LambdaHousePage />} />
             <Route path="/studio" element={<StudioPage />} />
