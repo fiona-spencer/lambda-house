@@ -5,7 +5,7 @@ import tvBg from '../../assets/tv-bars.svg'
 
 function Footer() {
   return (
-    <footer className="relative overflow-hidden text-center text-white shadow-lg mt-10"
+    <footer className="relative overflow-hidden text-center text-white shadow-lg mt-10 w-full"
     style={{ backgroundImage: `url(${tvBg})` }}>
       {/* Content container */}
       <div className="relative z-10 max-w-7xl mx-auto">
