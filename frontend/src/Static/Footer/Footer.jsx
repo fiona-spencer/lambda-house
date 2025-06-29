@@ -8,7 +8,7 @@ function Footer() {
       {/* Content container */}
       <div className="relative z-10 max-w-7xl mx-auto">
 <div
-  className="flex justify-center items-center mb-10 select-none py-3 
+  className="flex justify-center items-center mb-10 bg-red-500 select-none py-3 
              bg-[url('../../assets/tv-bars.svg')] 
              bg-center bg-cover bg-no-repeat"
 >
