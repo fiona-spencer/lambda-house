@@ -11,27 +11,28 @@ const sectionData = [
     link: "/studio",
   },
   {
-    title: "Ready-to-Print Models",
-    subtitle: "Download & Go",
-    description: "Browse STL files from our curated design collection.",
+    title: "PRODUCTS",
+    subtitle: "Download/Shop & Go",
+  description: "Shop finished 3D prints, browse STL/3MF files from our curated design collection, and custom gear.",
     link: "/products",
   },
   {
-    title: "Projects & Builds",
+    title: "PROJECTS",
     subtitle: "Innovation in action",
-    description: "Explore our electronics-integrated prototypes and devices.",
+    description: 
+    "Explore our electronics-integrated prototypes and devices.",
     link: "/projects",
   },
   {
-    title: "Logs & Insights",
+    title: "LOGS",
     subtitle: "Behind the scenes",
     description: "See our process, experiments, and ideas in progress.",
     link: "/logs",
   },
   {
-    title: "Learning Resources",
+    title: "ABOUT",
     subtitle: "For makers & tinkerers",
-    description: "Tutorials, tips, and educational content to grow your skills.",
+  description: "Who we are — a Toronto-based 3D printing service. Get a quote or ask us anything.",
     link: "/about",
   },
 ];
