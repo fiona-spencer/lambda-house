@@ -4,7 +4,7 @@ import LambdaLogo from '../../assets/lh-small-logo.svg'
 
 export default function Hero() {
   const handleVideoClick = () => {
-    window.scrollBy({ top: 800, behavior: 'smooth' });
+    window.scrollBy({ top: 1200, behavior: 'smooth' });
   };
 
   return (
@@ -22,8 +22,7 @@ export default function Hero() {
   muted
   playsInline
   className="absolute top-0 left-0 w-full h-full object-cover filter brightness-125"
-  style={{ cursor: 'url({LambdaLogo}), auto' }} // adjust path as needed
->
+style={{ cursor: `url(${LambdaCursor}), auto` }}>
 
         <source src={floatingLambda} type="video/mp4" />
         Your browser does not support the video tag.
