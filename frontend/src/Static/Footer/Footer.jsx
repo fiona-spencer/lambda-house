@@ -12,7 +12,7 @@ function Footer() {
         <div className="flex justify-center items-center my-4 select-none py-3">
               <img src={lgTransparent}
           alt="Lambda House Logo" 
-          className="h-32 w-auto object-contain"/>
+          className="h-40 w-auto object-contain"/>
         </div>
         <div className="flex justify-center gap-20 mb-10 text-4xl">
           <a
