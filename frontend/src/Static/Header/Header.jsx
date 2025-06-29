@@ -15,99 +15,64 @@ function Header() {
   };
 
   return (
-    <header className="bg-white shadow-inner py-4">
-      <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
-        {/* Logo */}
-        <Link to="/" className="flex items-center">
-          <img
-            src={lhSmallLogo}
-            alt="Lambda House Logo"
-            className="h-16 w-auto object-contain hover:opacity-50 transition duration-200"
-          />
-        </Link>
+<header className="bg-white shadow-inner py-4">
+  <div className="max-w-6xl mx-auto px-6 flex flex-wrap items-center">
+    {/* Logo */}
+    <Link to="/" className="flex items-center order-1 sm:order-1 w-auto">
+      <img
+        src={lhSmallLogo}
+        alt="Lambda House Logo"
+        className="h-16 w-auto object-contain hover:opacity-50 transition duration-200"
+      />
+    </Link>
 
-        {/* Search Bar */}
-<div className="flex flex-wrap items-center">
-  {/* Other header items */}
-  
-  {/* Search Bar */}
-  <div className="flex-grow max-w-xl mx-6 relative order-2 sm:order-1 sm:w-full w-auto">
-    <input
-      type="search"
-      placeholder="Search"
-      className="w-full border-b border-black bg-transparent text-black placeholder-black/60 py-2 pr-10 focus:outline-none focus:border-b-2 focus:border-black"
-    />
-    <FaSearch className="absolute right-2 top-1/2 transform -translate-y-1/2 text-black" />
+    {/* Search Bar */}
+    <div className="flex-grow max-w-xl mx-6 relative order-3 sm:order-2 w-full sm:w-auto mt-4 sm:mt-0">
+      <input
+        type="search"
+        placeholder="Search"
+        className="w-full border-b border-black bg-transparent text-black placeholder-black/60 py-2 pr-10 focus:outline-none focus:border-b-2 focus:border-black"
+      />
+      <FaSearch className="absolute right-2 top-1/2 transform -translate-y-1/2 text-black" />
+    </div>
+
+    {/* User + Cart */}
+    <div className="flex items-center space-x-10 order-2 sm:order-3 w-auto">
+      <Dropdown
+        inline
+        label={
+          loggedIn ? (
+            <Avatar
+              alt="User avatar"
+              img={user.avatarUrl}
+              rounded
+              className="ring-2 ring-black"
+            />
+          ) : (
+            <FaUserCircle className="text-black text-4xl cursor-pointer transition duration-300" />
+          )
+        }
+      >
+        {/* Dropdown content */}
+      </Dropdown>
+
+      {/* Cart */}
+      <button
+        aria-label="Shopping Cart"
+        className="relative text-black transition duration-300"
+        onClick={() => alert("Go to cart")}
+      >
+        <FaShoppingCart className="text-4xl" />
+        {cartCount > 0 && (
+          <span className="absolute -top-1 -right-3 bg-black text-white rounded-full text-xs w-5 h-5 flex items-center justify-center font-semibold shadow-lg">
+            {cartCount}
+          </span>
+        )}
+      </button>
+    </div>
   </div>
+</header>
 
-  {/* Other header items */}
-</div>
-
-
-        {/* User + Cart */}
-        <div className="flex items-center space-x-10">
-          <Dropdown
-            inline
-            label={
-              loggedIn ? (
-                <Avatar
-                  alt="User avatar"
-                  img={user.avatarUrl}
-                  rounded
-                  className="ring-2 ring-black"
-                />
-              ) : (
-                <FaUserCircle className="text-black text-4xl cursor-pointer transition duration-300" />
-              )
-            }
-          >
-            {loggedIn ? (
-              <>
-                <Dropdown.Header>
-                  <span className="block text-sm text-black">{user.name}</span>
-                  <span className="block truncate text-sm font-medium text-gray-600">
-                    user@example.com
-                  </span>
-                </Dropdown.Header>
-                <Dropdown.Item className="hover:text-black" onClick={() => alert("Go to profile")}>
-                  Profile
-                </Dropdown.Item>
-                <Dropdown.Item className="hover:text-black" onClick={() => alert("Go to settings")}>
-                  Settings
-                </Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item className="hover:text-black" onClick={() => setLoggedIn(false)}>
-                  Sign out
-                </Dropdown.Item>
-              </>
-            ) : (
-              <>
-                <Dropdown.Item className="hover:text-black" onClick={() => setLoggedIn(true)}>
-                  Sign in
-                </Dropdown.Item>
-                <Dropdown.Item className="hover:text-black" onClick={() => alert("Go to Register")}>
-                  Register
-                </Dropdown.Item>
-              </>
-            )}
-          </Dropdown>
-
-          {/* Cart */}
-          <button
-            aria-label="Shopping Cart"
-            className="relative text-black transition duration-300"
-            onClick={() => alert("Go to cart")}
-          >
-            <FaShoppingCart className="text-4xl" />
-            {cartCount > 0 && (
-              <span className="absolute -top-1 -right-3 bg-black text-white rounded-full text-xs w-5 h-5 flex items-center justify-center font-semibold shadow-lg">
-                {cartCount}
-              </span>
-            )}
-          </button>
-        </div>
-      </div>
-    </header>
   );
 }
 
