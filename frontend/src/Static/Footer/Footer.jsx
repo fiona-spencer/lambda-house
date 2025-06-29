@@ -1,25 +1,20 @@
 import React from "react";
 import { FaYoutube, FaGithub, FaEnvelope, FaCube } from "react-icons/fa";
 import lgTransparent from '../../assets/lh-transparent.svg'
+import tvBg from '../../assets/tv-bars.svg'
 
 function Footer() {
   return (
-    <footer className="relative overflow-hidden text-center text-white shadow-lg mt-10">
+    <footer className="relative overflow-hidden text-center text-white shadow-lg mt-10"
+    style={{ backgroundImage: `url(${tvBg})` }}>
       {/* Content container */}
-<div
-  className="flex justify-center items-center mb-10 select-none py-3 
-  bg-[url('../../assets/tv-bars.svg')] 
-  bg-center bg-cover bg-no-repeat"
->
-  <img
-    src={lgTransparent}
-    alt="Lambda House Logo"
-    className="h-32 w-auto object-contain"
-  />
-</div>
-
-  <div className="relative z-10 max-w-7xl mx-auto bg-[#636060]">
-        <div className="flex justify-center gap-14 mb-10 text-3xl ">
+      <div className="relative z-10 max-w-7xl mx-auto">
+        <div className="flex justify-center items-center mb-10 select-none py-3">
+              <img src={lgTransparent}
+          alt="Lambda House Logo" 
+          className="h-32 w-auto object-contain"/>
+        </div>
+        <div className="flex justify-center gap-14 mb-10 text-3xl">
           <a
             href="https://www.youtube.com/@LambdaHouse416"
             target="_blank"
