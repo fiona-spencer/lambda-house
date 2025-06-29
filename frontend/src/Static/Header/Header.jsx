@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Avatar, Dropdown } from "flowbite-react";
 import { FaUserCircle, FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import lhSmallLogo from '../../assets/lg-small-logo.svg'
 
 function Header() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -17,10 +18,13 @@ function Header() {
     <header className="bg-[#0d335cd7] shadow-inner py-4 mb-6">
       <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
       
-   <Link 
-            to="/" 
-            className="text-3xl font-extrabold text-white hover:font-bold"
-          >Lambda House</Link>
+ <Link to="/" className="flex items-center">
+  <img 
+    src={lhSmallLogo} 
+    alt="Lambda House Logo" 
+    className="h-10 w-auto object-contain hover:opacity-90 transition duration-200" 
+  />
+</Link> 
         {/* Search Bar */}
         <div className="flex-grow max-w-xl mx-6">
           <input
