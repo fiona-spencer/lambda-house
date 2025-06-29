@@ -1,10 +1,15 @@
 import React from 'react';
+import Hero from './Hero';
 import Equipment from './Equipment';
 import Filament from './Filament';
 import Sections from './Sections';
 import EmailContact from '../../Components/EmailContact';
 
 const sections = [
+  {
+    title: "",
+    component: Hero,
+  },
   {
     title: "EQUIPMENT",
     component: Equipment,
