@@ -52,7 +52,7 @@ className="text-white hover:text-gray-300 transition duration-300 transform hove
         </div>
 
         {/* Policy Links */}
-        <div className="flex flex-wrap justify-center gap-8 mb-12 text-sm text-white font-semibold bg-black p-4">
+        <div className="flex flex-wrap justify-center gap-8 text-sm text-white bg-black p-4">
           {[
             ["Terms and Conditions", "/terms-and-conditions"],
             ["Shipping Policy", "/shipping-policy"],
