@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom'; // Assuming you're using React Router
 
 const sectionData = [
   {
-    title: "Custom 3D Prints",
-    subtitle: "Made for you",
-    description: "Get tailor-made prints using PLA, TPU, ABS, and more.",
+    title: "STUDIO",
+    subtitle: "Customize Your Prints",
+    description: 
+    "In-house CAD enables you to upload files, choose slicer settings & filament types, from small batches to large-scale, ensuring high-quality prints.",
     link: "/studio",
   },
   {
