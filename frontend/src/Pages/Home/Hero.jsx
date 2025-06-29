@@ -39,11 +39,6 @@ export default function Hero() {
           </p>
         </div>
       </div>
-
-      {/* Next Section (scroll target) */}
-      <div ref={nextSectionRef} className="h-screen bg-white flex items-center justify-center">
-        <h2 className="text-3xl font-semibold">You’ve scrolled to the next section!</h2>
-      </div>
     </>
   );
 }
