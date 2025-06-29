@@ -11,22 +11,22 @@ function Footer() {
         <div className="flex justify-center items-center mb-2 select-none">
               <img src={lgTransparent}
           alt="Lambda House Logo" 
-          className="h-40 w-auto object-contain"/>
+          className="h-32 w-auto object-contain"/>
         </div>
-        <div className="flex justify-center gap-14 mb-4 text-6xl">
+        <div className="flex justify-center gap-14 mb-10 text-3xl">
           <a
             href="https://www.youtube.com/@LambdaHouse416"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="YouTube"
-            className="text-blue-400 hover:text-blue-300 transition duration-300 transform hover:scale-125 hover:drop-shadow-[0_0_20px_rgba(59,130,246,0.8)]"
+className="text-white hover:text-gray-300 transition duration-300 transform hover:scale-125"
           >
             <FaYoutube />
           </a>
           <a
             href="mailto:lambdahouse416@gmail.com"
             aria-label="Email"
-            className="text-blue-400 hover:text-blue-300 transition duration-300 transform hover:scale-125 hover:drop-shadow-[0_0_20px_rgba(59,130,246,0.8)]"
+className="text-white hover:text-gray-300 transition duration-300 transform hover:scale-125"
           >
             <FaEnvelope />
           </a>
@@ -35,7 +35,7 @@ function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
-            className="text-blue-400 hover:text-blue-300 transition duration-300 transform hover:scale-125 hover:drop-shadow-[0_0_20px_rgba(59,130,246,0.8)]"
+className="text-white hover:text-gray-300 transition duration-300 transform hover:scale-125"
           >
             <FaGithub />
           </a>
@@ -44,7 +44,7 @@ function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="MakerWorld"
-            className="text-blue-400 hover:text-blue-300 transition duration-300 transform hover:rotate-12 hover:scale-125 hover:drop-shadow-[0_0_20px_rgba(59,130,246,0.8)]"
+className="text-white hover:text-gray-300 transition duration-300 transform hover:scale-125"
           >
             <FaCube />
           </a>
