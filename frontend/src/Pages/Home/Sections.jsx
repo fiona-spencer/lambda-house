@@ -39,26 +39,29 @@ const sectionData = [
 
 export default function Sections() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-0">
-      {sectionData.map((item, index) => (
-        <div
-          key={index}
-      className="relative border border-black border-t-0 border-l-0 first:border-t first:sm:border-t first:md:border-t sm:first:border-l md:first:border-l p-6"
-        >
-          <div>
-            <h3 className="text-xl font-bold mb-1">{item.title}</h3>
-            <h4 className="text-md font-medium text-gray-600 mb-2">{item.subtitle}</h4>
-            <p className="text-sm text-gray-800 mb-4">{item.description}</p>
-          </div>
-<Link to={item.link} className="mt-auto absolute bottom-6 items-center justify-center group">
-  <span className="px-10 py-2 rounded-full transition duration-300 group-hover:bg-pink-500/50">
-    <FaArrowRight className="text-2xl transition-transform duration-300 group-hover:translate-x-1" />
-  </span>
-</Link>
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-0">
+  {sectionData.map((item, index) => (
+    <div
+      key={index}
+      className="relative border border-black border-t-0 border-l-0 first:border-t first:sm:border-t first:md:border-t sm:first:border-l md:first:border-l p-6 flex flex-col"
+    >
+      <div>
+        <h3 className="text-xl font-bold mb-1">{item.title}</h3>
+        <h4 className="text-md font-medium text-gray-600 mb-2">{item.subtitle}</h4>
+        <p className="text-sm text-gray-800 mb-4">{item.description}</p>
+      </div>
 
-
-        </div>
-      ))}
+      <Link
+        to={item.link}
+        className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center justify-center group"
+      >
+        <span className="px-10 py-2 rounded-full transition duration-300 group-hover:bg-pink-500/50">
+          <FaArrowRight className="text-2xl transition-transform duration-300 group-hover:translate-x-1" />
+        </span>
+      </Link>
     </div>
+  ))}
+</div>
+
   );
 }
