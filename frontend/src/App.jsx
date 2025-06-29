@@ -17,11 +17,11 @@ import Footer from './Static/Footer/Footer';
 function App() {
   return (
     <BrowserRouter>
-      <div className="flex flex-col min-h-screen bg-pink-500 text-gray-900">
+      <div className="flex flex-col min-h-screen bg-white text-gray-900">
         <Header />
 
         {/* MENU */}
-        <nav className="bg-gray-100 p-4 flex space-x-6 shadow-md justify-center">
+        <nav className="bg-pink-300 p-4 flex space-x-6 shadow-md justify-center">
           <Link 
             to="/studio" 
             className="text-gray-800 hover:text-gray-600 font-semibold"
