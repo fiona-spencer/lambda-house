@@ -37,7 +37,7 @@ function Header() {
     </div>
 
     {/* User + Cart */}
-    <div className="absolute space-x-10 order-2 sm:order-3 w-auto text-right">
+    <div className="absolute space-x-10 order-2 sm:order-3 w-auto right-10">
       <Dropdown
         inline
         label={
