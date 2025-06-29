@@ -18,7 +18,7 @@ import Navbar from './Navbar'
 function App() {
   return (
     <BrowserRouter>
-      <div className=" bg-white text-gray-900">
+      <div className="min-h-screen bg-white text-gray-900">
         <Header />
         <Navbar />
         <main className="">
