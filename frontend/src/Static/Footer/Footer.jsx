@@ -51,7 +51,7 @@ className="text-white hover:text-gray-300 transition duration-300 transform hove
         </div>
 
         {/* Policy Links */}
-        <div className="flex flex-wrap gap-8 mb-12 text-md text-white font-bold">
+        <div className="flex flex-wrap justify-center gap-8 mb-12 text-md text-white font-bold">
           {[
             ["Terms and Conditions", "/terms-and-conditions"],
             ["Shipping Policy", "/shipping-policy"],
@@ -70,11 +70,11 @@ className="text-white hover:text-gray-300 transition duration-300 transform hove
           ))}
         </div>
 
+      </div>
         {/* Copyright */}
-        <div className="text-xs text-white-300 font-mono tracking-wide select-none">
+        <div className="text-xs text-white-300 font-mono tracking-wide select-none py-2 bg-pink-700">
           &copy; {new Date().getFullYear()} Lambda House — All rights reserved.
         </div>
-      </div>
     </footer>
   );
 }
