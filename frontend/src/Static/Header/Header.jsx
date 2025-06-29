@@ -31,7 +31,7 @@ function Header() {
   {/* Other header items */}
   
   {/* Search Bar */}
-  <div className="flex-grow max-w-xl mx-6 relative order-2 sm:order-1 w-full sm:w-auto">
+  <div className="flex-grow max-w-xl mx-6 relative order-2 sm:order-1 sm:w-full w-auto">
     <input
       type="search"
       placeholder="Search"
