@@ -15,7 +15,7 @@ function Header() {
   };
 
   return (
-    <header className="bg-[#0d335cd7] shadow-inner py-4 mb-6">
+    <header className="bg-white shadow-inner py-4 mb-6">
       <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
       
  <Link to="/" className="flex items-center">
@@ -43,7 +43,7 @@ function Header() {
                   alt="User avatar"
                   img={user.avatarUrl}
                   rounded
-                  className="ring-2 ring-white"
+                  className="ring-2 ring-black"
                 />
               ) : (
                 <FaUserCircle className="text-white text-4xl cursor-pointer transition duration-300" />
@@ -53,8 +53,8 @@ function Header() {
             {loggedIn ? (
               <>
                 <Dropdown.Header>
-                  <span className="block text-sm text-white">{user.name}</span>
-                  <span className="block truncate text-sm font-medium text-white/70">
+                  <span className="block text-sm text-black">{user.name}</span>
+                  <span className="block truncate text-sm font-medium text-black/70">
                     user@example.com
                   </span>
                 </Dropdown.Header>

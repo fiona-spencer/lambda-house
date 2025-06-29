@@ -14,7 +14,7 @@ function Footer() {
           alt="Lambda House Logo" 
           className="h-32 w-auto object-contain"/>
         </div>
-        <div className="flex justify-center gap-14 mb-10 text-3xl">
+        <div className="flex justify-center gap-20 mb-10 text-4xl">
           <a
             href="https://www.youtube.com/@LambdaHouse416"
             target="_blank"
