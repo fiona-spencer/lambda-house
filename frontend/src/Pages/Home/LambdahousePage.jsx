@@ -1,5 +1,5 @@
 import React from 'react';
-import Equipemt from './Equipment';
+import Equipment from './Equipment';
 import Filament from './Filament';
 import Sections from './Sections';
 import EmailContact from '../../Components/EmailContact';
