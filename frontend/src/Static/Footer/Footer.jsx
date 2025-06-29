@@ -8,12 +8,12 @@ function Footer() {
       {/* Content container */}
       <div className="relative z-10 max-w-7xl mx-auto px-2">
         {/* Logo */}
-        <div className="flex justify-center items-center mb-12 select-none">
+        <div className="flex justify-center items-center mb-2 select-none">
               <img src={lgTransparent}
           alt="Lambda House Logo" 
           className="h-40 w-auto object-contain"/>
         </div>
-        <div className="flex justify-center gap-14 mb-14 text-6xl">
+        <div className="flex justify-center gap-14 mb-4 text-6xl">
           <a
             href="https://www.youtube.com/@LambdaHouse416"
             target="_blank"
