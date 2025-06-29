@@ -27,14 +27,22 @@ function Header() {
         </Link>
 
         {/* Search Bar */}
-<div className="flex-grow max-w-xl mx-6 relative">
-  <input
-    type="search"
-    placeholder="Search"
-    className="w-full border-b border-black bg-transparent text-black placeholder-black/60 py-2 pr-10 focus:outline-none focus:border-b-2 focus:border-black"
-  />
-  <FaSearch className="absolute right-2 top-1/2 transform -translate-y-1/2 text-black" />
+<div className="flex flex-wrap items-center">
+  {/* Other header items */}
+  
+  {/* Search Bar */}
+  <div className="flex-grow max-w-xl mx-6 relative order-2 sm:order-1 w-full sm:w-auto">
+    <input
+      type="search"
+      placeholder="Search"
+      className="w-full border-b border-black bg-transparent text-black placeholder-black/60 py-2 pr-10 focus:outline-none focus:border-b-2 focus:border-black"
+    />
+    <FaSearch className="absolute right-2 top-1/2 transform -translate-y-1/2 text-black" />
+  </div>
+
+  {/* Other header items */}
 </div>
+
 
         {/* User + Cart */}
         <div className="flex items-center space-x-10">
