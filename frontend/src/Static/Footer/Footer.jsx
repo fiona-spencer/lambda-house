@@ -7,11 +7,18 @@ function Footer() {
     <footer className="relative overflow-hidden bg-[#636060]  text-center text-white shadow-lg mt-10">
       {/* Content container */}
       <div className="relative z-10 max-w-7xl mx-auto">
-        <div className="flex justify-center items-center mb-10 select-none bg-opacity-0 py-3">
-              <img src={lgTransparent}
-          alt="Lambda House Logo" 
-          className="h-32 w-auto object-contain"/>
-        </div>
+<div
+  className="flex justify-center items-center mb-10 select-none py-3 
+             bg-[url('../../assets/tv-bars.svg')] 
+             bg-center bg-cover bg-no-repeat"
+>
+  <img
+    src={lgTransparent}
+    alt="Lambda House Logo"
+    className="h-32 w-auto object-contain"
+  />
+</div>
+
         <div className="flex justify-center gap-14 mb-10 text-3xl">
           <a
             href="https://www.youtube.com/@LambdaHouse416"
