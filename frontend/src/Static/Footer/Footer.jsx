@@ -64,7 +64,7 @@ className="text-white hover:text-gray-300 transition duration-300 transform hove
             <a
               key={label}
               href={href}
-              className="hover:text-white transition duration-200 underline-offset-2 hover:underline"
+className="bg-black text-transparent hover:text-white hover:opacity-50 transition duration-200 underline-offset-2 hover:underline p-2"
             >
               {label}
             </a>
