@@ -37,7 +37,7 @@ const sectionData = [
 
 export default function Sections() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 p-4 gap-0">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-0">
       {sectionData.map((item, index) => (
         <div
           key={index}
@@ -48,9 +48,12 @@ export default function Sections() {
             <h4 className="text-md font-medium text-gray-600 mb-2">{item.subtitle}</h4>
             <p className="text-sm text-gray-800 mb-4">{item.description}</p>
           </div>
-          <Link to={item.link} className="flex items-center text-blue-600 hover:underline mt-auto">
-            Learn More <FaArrowRight className="ml-2" />
-          </Link>
+          <Link to={item.link} className="mt-auto inline-flex items-center group">
+<span className="px-3 py-2 rounded-lg transition duration-300 group-hover:bg-black/50">
+    <FaArrowRight className="text-2xl" /> {/* Increase icon size here */}
+  </span>
+</Link>
+
         </div>
       ))}
     </div>
