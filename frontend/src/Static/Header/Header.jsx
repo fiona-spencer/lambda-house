@@ -64,7 +64,7 @@ function Header() {
       >
         <FaShoppingCart className="text-4xl" />
         {cartCount > 0 && (
-          <span className="absolute -top-1 -right-3 bg-black text-white rounded-full text-xs w-5 h-5 flex items-center justify-center font-semibold shadow-lg">
+          <span className="absolute -top-1 bg-black text-white rounded-full text-xs w-5 h-5 flex items-center justify-center font-semibold shadow-lg">
             {cartCount}
           </span>
         )}
