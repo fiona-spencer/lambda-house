@@ -21,7 +21,7 @@ function App() {
         <Header />
 
         {/* MENU */}
-        <nav className="bg-pink-300 p-4 flex space-x-6 shadow-md justify-center">
+        <nav className="bg-pink-500 p-4 flex space-x-6 shadow-md justify-center">
           <Link 
             to="/studio" 
             className="text-gray-800 hover:text-gray-600 font-semibold"

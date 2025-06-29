@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Avatar, Dropdown } from "flowbite-react";
-import { FaUserCircle, FaShoppingCart } from "react-icons/fa";
+import { FaUserCircle, FaShoppingCart, FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import lhSmallLogo from '../../assets/lg-small-logo.svg';
 
@@ -27,13 +27,14 @@ function Header() {
         </Link>
 
         {/* Search Bar */}
-        <div className="flex-grow max-w-xl mx-6">
-          <input
-            type="search"
-            placeholder="Search..."
-            className="w-full px-4 py-2 border border-black bg-transparent text-black rounded-md focus:outline-none focus:ring-2 focus:ring-black placeholder-black/60"
-          />
-        </div>
+<div className="flex-grow max-w-xl mx-6 relative">
+  <input
+    type="search"
+    placeholder="Search"
+    className="w-full border-b border-black bg-transparent text-black placeholder-black/60 py-2 pr-10 focus:outline-none focus:border-b-2 focus:border-black"
+  />
+  <FaSearch className="absolute right-2 top-1/2 transform -translate-y-1/2 text-black opacity-70" />
+</div>
 
         {/* User + Cart */}
         <div className="flex items-center space-x-8">
