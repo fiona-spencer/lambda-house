@@ -125,7 +125,7 @@ export default function FilamentGallery() {
             <p className="text-gray-700 mb-1">{selectedFilament.description}</p>
             <span
               className={`inline-block px-3 py-1 rounded-full text-sm font-semibold ${
-                selectedFilament.available ? "bg-pink-500 text-white" : "bg-gray-400 text-gray-800"
+                selectedFilament.available ? "bg-pink-500 text-white" : "bg-red-600 text-white"
               }`}
             >
               {selectedFilament.available ? "Available" : "Unavailable"}
@@ -141,13 +141,12 @@ export default function FilamentGallery() {
                 className={`w-12 h-12 rounded-full border-4 ${
                   idx === selectedColorIndex ? "border-pink-500" : "border-transparent"
                 } focus:outline-none`}
-                disabled={!available}
                 style={{
                   backgroundImage: `url(${image})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
-                  filter: available ? "none" : "grayscale(100%) brightness(70%)",
-                  cursor: available ? "pointer" : "not-allowed",
+                  filter: available ? "none" : "grayscale(70%)",
+                  cursor: "pointer",
                 }}
                 aria-label={name}
                 title={name}
