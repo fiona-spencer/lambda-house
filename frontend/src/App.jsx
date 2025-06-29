@@ -17,7 +17,7 @@ import Footer from './Static/Footer/Footer';
 function App() {
   return (
     <BrowserRouter>
-      <div className="flex flex-col min-h-screen bg-white text-gray-900">
+      <div className="flex flex-col min-h-screen bg-pink-500 text-gray-900">
         <Header />
 
         {/* MENU */}
