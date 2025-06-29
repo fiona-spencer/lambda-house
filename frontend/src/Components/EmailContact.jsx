@@ -1,8 +1,9 @@
 import React from 'react';
+import { FaPaperPlane } from 'react-icons/fa';
 
 export default function EmailContact() {
   return (
-    <div className="max-w-md mx-auto p-6 bg-white text-black">
+    <div className="max-w-full mx-auto p-6 bg-white text-black">
       <form className="space-y-6">
         {/* First Name */}
         <div>
@@ -96,9 +97,9 @@ export default function EmailContact() {
         {/* Submit button */}
         <button
           type="submit"
-          className="bg-pink-500 text-white font-semibold py-2 px-6 rounded-none hover:bg-pink-600 transition"
+          className="bg-pink-500 text-white font-semibold py-2 px-6 rounded-none hover:bg-pink-600 transition flex items-center justify-center gap-2"
         >
-          Send
+          Send <FaPaperPlane />
         </button>
       </form>
     </div>
