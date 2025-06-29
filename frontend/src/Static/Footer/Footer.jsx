@@ -6,8 +6,9 @@ function Footer() {
   return (
     <footer className="relative overflow-hidden bg-opacity-70 bg-black  text-center text-white shadow-lg mt-10">
       {/* Content container */}
+      <div className="relative z-10 max-w-7xl mx-auto pt-8">
         {/* Logo */}
-        <div className="flex justify-center items-center mb-10 select-none bg-red-500 py-4">
+        <div className="flex justify-center items-center mb-10 select-none bg-red-500">
               <img src={lgTransparent}
           alt="Lambda House Logo" 
           className="h-32 w-auto object-contain"/>
