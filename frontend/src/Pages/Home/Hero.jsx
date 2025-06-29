@@ -3,7 +3,7 @@ import floatingLambda from '../../assets/floating.mp4';
 
 export default function Hero() {
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="flex w-full h-screen overflow-hidden">
       <video
         autoPlay
         loop
