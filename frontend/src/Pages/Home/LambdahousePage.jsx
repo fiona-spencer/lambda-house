@@ -4,6 +4,14 @@ import EmailContact from '../../Components/EmailContact';
 
 const sections = [
   {
+    title: "EQUIPMENT",
+    component: Sections,
+  },
+  {
+    title: "FILAMENT TYPES",
+    component: Sections,
+  },
+  {
     title: "OUR SERVICES",
     component: Sections,
   },
@@ -15,7 +23,7 @@ const sections = [
 
 export default function LambdahousePage() {
   return (
-    <div className="space-y-12 px-6">
+    <div className="space-y-12">
       {sections.map(({ title, component: Component }, idx) => (
         <div key={idx}>
           <div className="text-4xl font-bold text-black mb-6">{title}</div>
