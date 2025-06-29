@@ -18,10 +18,10 @@ import Navbar from './Navbar'
 function App() {
   return (
     <BrowserRouter>
-      <div className="flex min-h-screen bg-white text-gray-900">
+      <div className="flex flex-col min-h-screen bg-white text-gray-900">
         <Header />
         <Navbar />
-        <main className="">
+        <main className="p-6 mx-auto flex-grow">
           <Routes>
             <Route path="/" element={<LambdaHousePage />} />
             <Route path="/studio" element={<StudioPage />} />
