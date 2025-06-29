@@ -3,7 +3,7 @@ import { FaPaperPlane } from 'react-icons/fa';
 
 export default function EmailContact() {
   return (
-    <div className="max-w-full mx-auto p-6 bg-white text-black">
+    <div className="max-w-full mx-auto p-6 bg-white text-black border-10 border-black">
       <form className="space-y-6">
         {/* First Name */}
         <div>
