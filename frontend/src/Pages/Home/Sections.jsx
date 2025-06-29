@@ -48,7 +48,7 @@ export default function Sections() {
       <div>
         <h3 className="text-xl font-bold mb-1">{item.title}</h3>
         <h4 className="text-md font-medium text-gray-600 mb-2">{item.subtitle}</h4>
-        <p className="text-sm text-gray-800 mb-4">{item.description}</p>
+        <p className="text-sm text-gray-800 mb-10">{item.description}</p>
       </div>
 
       <Link
