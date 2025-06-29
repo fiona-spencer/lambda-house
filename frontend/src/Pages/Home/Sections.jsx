@@ -41,7 +41,7 @@ export default function Sections() {
       {sectionData.map((item, index) => (
         <div
           key={index}
-          className="bg-white text-black p-6 border border-black flex flex-col justify-between"
+      className="border border-black border-t-0 border-l-0 first:border-t first:sm:border-t first:md:border-t sm:first:border-l md:first:border-l p-6"
         >
           <div>
             <h3 className="text-xl font-bold mb-1">{item.title}</h3>
@@ -49,7 +49,7 @@ export default function Sections() {
             <p className="text-sm text-gray-800 mb-4">{item.description}</p>
           </div>
           <Link to={item.link} className="mt-auto inline-flex items-center group">
-<span className="px-3 py-2 rounded-lg transition duration-300 group-hover:bg-black/50">
+<span className="px-5 py-2 rounded-full transition duration-300 group-hover:bg-pink-500/50">
     <FaArrowRight className="text-2xl" /> {/* Increase icon size here */}
   </span>
 </Link>
