@@ -1,5 +1,5 @@
 import React from 'react';
-import floatingLambda from '../../assets/floating.mp4'
+import floatingLambda from '../../assets/floating.mp4';
 
 export default function Hero() {
   return (
@@ -9,7 +9,7 @@ export default function Hero() {
         loop
         muted
         playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover"
+        className="absolute top-0 left-0 w-full h-full object-cover filter brightness-125"
       >
         <source src={floatingLambda} type="video/mp4" />
         Your browser does not support the video tag.

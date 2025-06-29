@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function NavBar() {
   return (
-    <nav className="bg-pink-500 p-4 flex space-x-6 shadow-md justify-center">
+    <nav className="bg-pink-500 pt-4 flex space-x-6 shadow-md justify-center">
       <Link to="/studio" className="text-gray-800 hover:text-gray-600 font-semibold">
         Studio
       </Link>
