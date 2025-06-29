@@ -4,9 +4,9 @@ import lgTransparent from '../../assets/lh-transparent.svg'
 
 function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-opacity-70 bg-black py-12 text-center text-white shadow-lg mt-10">
+    <footer className="relative overflow-hidden bg-opacity-70 bg-black  text-center text-white shadow-lg mt-10">
       {/* Content container */}
-      <div className="relative z-10 max-w-7xl mx-auto px-2">
+      <div className="relative z-10 max-w-7xl mx-auto py-12 px-2">
         {/* Logo */}
         <div className="flex justify-center items-center mb-10 select-none">
               <img src={lgTransparent}
