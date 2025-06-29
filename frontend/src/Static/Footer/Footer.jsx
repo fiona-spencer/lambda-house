@@ -4,16 +4,16 @@ import lgTransparent from '../../assets/lh-transparent.svg'
 
 function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-opacity-30 bg-black py-16 text-center text-white shadow-lg mt-20">
+    <footer className="relative overflow-hidden bg-opacity-60 bg-black py-12 text-center text-white shadow-lg mt-10">
       {/* Content container */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <div className="relative z-10 max-w-7xl mx-auto px-2">
         {/* Logo */}
         <div className="flex justify-center items-center mb-12 select-none">
               <img src={lgTransparent}
           alt="Lambda House Logo" 
           className="h-40 w-auto object-contain"/>
         </div>
-        <div className="flex justify-center gap-14 mb-14 text-6xl bg-[#081c31d7]">
+        <div className="flex justify-center gap-14 mb-14 text-6xl">
           <a
             href="https://www.youtube.com/@LambdaHouse416"
             target="_blank"
