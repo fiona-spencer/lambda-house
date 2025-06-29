@@ -4,7 +4,7 @@ import lgTransparent from '../../assets/lh-transparent.svg'
 
 function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-[#636060]  text-center text-white shadow-lg mt-10">
+    <footer className="relative overflow-hidden   text-center text-white shadow-lg mt-10">
       {/* Content container */}
       <div className="relative z-10 max-w-7xl mx-auto">
 <div
@@ -19,7 +19,7 @@ function Footer() {
   />
 </div>
 
-        <div className="flex justify-center gap-14 mb-10 text-3xl">
+        <div className="flex justify-center gap-14 mb-10 text-3xl bg-[#636060]">
           <a
             href="https://www.youtube.com/@LambdaHouse416"
             target="_blank"
