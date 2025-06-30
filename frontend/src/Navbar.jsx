@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Dropdown, DropdownItem } from "flowbite-react";
 
 const navItems = [
   {
@@ -49,32 +48,44 @@ const navItems = [
 
 export default function NavBar() {
   return (
-    <nav className="bg-pink-500 p-4 flex justify-center space-x-8 shadow-md">
-      {navItems.map(({ page, link, subpages }) => (
-        <Dropdown
-          key={page}
-          label={
-            <Link
-              to={link}
-              className="font-semibold text-gray-800 hover:text-pink-500 cursor-pointer"
-            >
-              {page}
-            </Link>
-          }
-          inline
-          dismissOnClick={false}
-          className="bg-pink-500 text-black px-4 py-2 rounded hover:bg-pink-600 focus:ring-2 focus:ring-pink-400"
-          renderTrigger={(triggerProps) => (
-            <span {...triggerProps} className="cursor-pointer" />
-          )}
+<nav className="bg-pink-500 p-4 flex justify-center space-x-8 shadow-md relative">
+  {navItems.map(({ page, link, subpages }) => (
+    <div key={page} className="relative group">
+      <Link
+        to={link}
+        className="text-gray-800 font-semibold hover:text-gray-600"
+      >
+        {page}
+      </Link>
+
+      {/* Dropdown menu */}
+      {subpages && subpages.length > 0 && (
+        <div
+          className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg
+          opacity-0 invisible
+          group-hover:opacity-100 group-hover:visible
+          transition-opacity duration-200 z-50"
+          // Add pointer events so dropdown can be interacted with
+          onMouseEnter={e => e.currentTarget.style.visibility = 'visible'}
+          onMouseLeave={e => e.currentTarget.style.visibility = 'hidden'}
         >
-          {subpages.map(({ title, link: subLink }) => (
-            <DropdownItem key={title} className="hover:text-pink-500">
-              <Link to={subLink}>{title}</Link>
-            </DropdownItem>
-          ))}
-        </Dropdown>
-      ))}
-    </nav>
+          <ul>
+            {subpages.map(({ title, link: subLink }) => (
+              <li key={title}>
+                <Link
+                  to={subLink}
+                  className="block px-4 py-2 text-gray-700 hover:bg-pink-500 hover:text-white"
+                >
+                  {title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  ))}
+</nav>
+
   );
 }
