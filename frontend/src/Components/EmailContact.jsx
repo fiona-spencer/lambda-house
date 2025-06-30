@@ -97,7 +97,7 @@ export default function EmailContact() {
         {/* Submit button */}
         <button
           type="submit"
-          className="bg-pink-500 text-white font-semibold py-2 px-6 rounded-none hover:bg-pink-600 transition flex items-center justify-center gap-2"
+          className="flex bg-pink-500 text-white font-semibold py-2 px-20 rounded-none hover:bg-pink-600 transition flex items-center justify-center gap-2"
         >
           Send <FaPaperPlane />
         </button>
