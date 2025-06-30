@@ -1,3 +1,4 @@
+import React from 'react';
 import House from './House'; // Make sure this import is correct
 
 export default function LambdahousePage() {
