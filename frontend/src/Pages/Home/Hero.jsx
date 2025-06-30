@@ -8,7 +8,7 @@ export default function Hero() {
   };
 
   return (
-    <div className="flex w-full h-screen overflow-hidden -h-20">
+    <div className="flex w-full h-screen overflow-hidden -pb-20">
       {/* Top Small Text */}
       <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-20 text-white text-sm tracking-widest uppercase">
         Welcome to Lambda House
