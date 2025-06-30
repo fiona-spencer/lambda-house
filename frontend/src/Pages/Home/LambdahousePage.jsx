@@ -1,6 +1,6 @@
 import React from 'react';
 import Hero from './Hero';
-import Hero from './HeroText';
+import HeroText from './HeroText';
 import Equipment from './Equipment';
 import Filament from './Filament';
 import Sections from './Sections';
