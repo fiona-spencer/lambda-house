@@ -1,6 +1,6 @@
 import React from 'react';
 import printer from '../../assets/printer.png';
-import hotend from '../../assets/hotend.png'; // <-- Add another image if you have one
+import hotend from '../../assets/hotend.jpg'; // <-- Add another image if you have one
 
 export default function Equipment() {
   return (
