@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "../../../public/libs/three-js/build/three.module.js";
-import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
+import { STLLoader } from "../../../public/libs/three-js/examples/jsm/loaders/STLLoader.js";
 import lambdaHouse from '../../../public/libs/three-js/build/three.module.js'
 
 export default function House() {
