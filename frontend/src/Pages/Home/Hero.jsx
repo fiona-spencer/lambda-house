@@ -1,6 +1,6 @@
 import React from 'react';
 import floatingLambda from '../../assets/floating.mp4';
-import LambdaLogo from '../../assets/lh-small-logo.svg'
+import LambdaLogo from '../../assets/lh-small-logo.png'
 
 export default function Hero() {
   const handleVideoClick = () => {
@@ -22,7 +22,7 @@ export default function Hero() {
   muted
   playsInline
   className="absolute top-0 left-0 w-full h-full object-cover filter brightness-125"
-style={{ cursor: `url(${LambdaLogo}), auto` }}>
+style={{ cursor: `url(${LambdaLogo}) 16 16, auto` }}>
 
         <source src={floatingLambda} type="video/mp4" />
         Your browser does not support the video tag.
