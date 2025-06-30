@@ -90,9 +90,9 @@ export default function FilamentGallery() {
   };
 
   return (
-    <div className="md:max-w-6xl max-w-5xl flex mx-auto p-6 bg-white rounded shadow">
+    <div className="md:max-w-6xl max-w-5xl mx-auto p-6 bg-white rounded shadow">
       {/* Type Tabs */}
-      <div className="flex space-x-6 mb-8 justify-center">
+      <div className="flex sm:space-x-6 space-x-1 mb-8 justify-center">
         {filamentData.map(({ type }, i) => (
           <button
             key={type}
