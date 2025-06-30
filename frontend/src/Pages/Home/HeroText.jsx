@@ -13,7 +13,7 @@ export default function HeroText() {
 
       {/* Sign In button */}
       <div className="px-8 py-6">
-        <button className="mx-auto group w-full py-3 border border-black text-black hover:bg-black hover:text-white transition-colors duration-300 flex items-center gap-2">
+        <button className="mx-auto group md:px-32 px-20 py-3 border border-black text-black hover:bg-black hover:text-white transition-colors duration-300 flex items-center gap-2">
           Sign In
           <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
         </button>
