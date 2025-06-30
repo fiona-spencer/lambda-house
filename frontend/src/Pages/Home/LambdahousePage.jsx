@@ -45,7 +45,7 @@ export default function LambdahousePage() {
       ))}
       {/* Responsive layout for House components */}
     <div className="flex flex-col sm:flex-row justify-center sm:gap-6 items-center space-y-6 sm:space-y-0">
-  <House />
+  <House className="sm:block"/>
   <div className="hidden sm:block">
     <House />
   </div>
