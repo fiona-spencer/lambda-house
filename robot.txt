@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://lambdahouse.xyz/sitemap.xml
