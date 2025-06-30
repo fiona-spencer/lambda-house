@@ -57,12 +57,7 @@ export default function Viewer() {
     controls.dampingFactor = 0.05;
     controlsRef.current = controls;
 
-    // Only X-Y grid
-    const gridXY = new THREE.GridHelper(256, 64, 0x888888, 0x444444);
-    gridXY.rotation.x = Math.PI / 2;
-    scene.add(gridXY);
-
-    // Bed plate on X-Y plane (256 x 256 mm)
+    // ONLY bed plate plane, no grids:
     const bedPlate = new THREE.Mesh(
       new THREE.PlaneGeometry(256, 256),
       new THREE.MeshStandardMaterial({
@@ -78,18 +73,17 @@ export default function Viewer() {
     // Position coordinate arrows at bottom-left corner of bed
     const cornerPos = new THREE.Vector3(-128, 0, -128);
 
- // Y axis arrow (red), pointing along +Y
-const yArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), cornerPos, 50, 0xff0000);
-scene.add(yArrow);
+    // Y axis arrow (red), pointing along +Y
+    const yArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), cornerPos, 50, 0xff0000);
+    scene.add(yArrow);
 
-// X axis arrow (blue), pointing along +X
-const xArrow = new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), cornerPos, 50, 0x0000ff);
-scene.add(xArrow);
+    // X axis arrow (blue), pointing along +X
+    const xArrow = new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), cornerPos, 50, 0x0000ff);
+    scene.add(xArrow);
 
-// Z axis arrow (green), pointing along +Z
-const zArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), cornerPos, 50, 0x00ff00);
-scene.add(zArrow);
-
+    // Z axis arrow (green), pointing along +Z
+    const zArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), cornerPos, 50, 0x00ff00);
+    scene.add(zArrow);
 
     // Store refs for reset function
     cameraRef.current = camera;
@@ -97,17 +91,11 @@ scene.add(zArrow);
 
     // Define function to reset camera to "home" view
     function resetCamera() {
-      // Center of bed plate is at (0,0,0)
-      // We'll position the camera so the bed is centered
-      // and coordinate arrows at bottom-left corner are visible.
-      // Let's move camera back and up, looking at center.
-
       camera.position.set(0, 200, 300); // Elevated and pulled back
       controls.target.set(0, 0, 0); // Look at bed plate center
       controls.update();
     }
 
-    // Call it once on init so camera starts here
     resetCamera();
 
     function animate() {
@@ -120,8 +108,6 @@ scene.add(zArrow);
     mountRef.current.scene = scene;
     mountRef.current.camera = camera;
     mountRef.current.renderer = renderer;
-
-    // Expose resetCamera to ref so we can call it from button
     mountRef.current.resetCamera = resetCamera;
 
     return () => {
