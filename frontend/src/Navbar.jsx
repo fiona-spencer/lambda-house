@@ -1,109 +1,76 @@
-import React, { useState, useRef } from "react";
-import { Dropdown, DropdownItem } from "flowbite-react";
+import React from "react";
 import { Link } from "react-router-dom";
+import { Dropdown, DropdownItem } from "flowbite-react";
 
 const navItems = [
   {
-    label: "STUDIO",
+    page: "Studio",
     link: "/studio",
     subpages: [
-      { label: "Upload Files", link: "/studio/upload" },
-      { label: "Settings", link: "/studio/settings" },
-      { label: "Filaments", link: "/studio/filaments" },
+      { title: "Custom Prints", link: "/studio/custom-prints" },
+      { title: "Upload Files", link: "/studio/upload" },
+      { title: "Settings", link: "/studio/settings" },
     ],
   },
   {
-    label: "PRODUCTS",
+    page: "Products",
     link: "/products",
     subpages: [
-      { label: "Shop Prints", link: "/products/prints" },
-      { label: "Download Files", link: "/products/files" },
-      { label: "Custom Gear", link: "/products/gear" },
+      { title: "3D Prints", link: "/products/prints" },
+      { title: "Files", link: "/products/files" },
+      { title: "Custom Merch", link: "/products/merch" },
     ],
   },
   {
-    label: "PROJECTS",
+    page: "Projects",
     link: "/projects",
     subpages: [
-      { label: "Prototypes", link: "/projects/prototypes" },
-      { label: "Electronics", link: "/projects/electronics" },
+      { title: "Prototypes", link: "/projects/prototypes" },
+      { title: "Electronics", link: "/projects/electronics" },
     ],
   },
   {
-    label: "LOGS",
+    page: "Logs",
     link: "/logs",
     subpages: [
-      { label: "Process", link: "/logs/process" },
-      { label: "Experiments", link: "/logs/experiments" },
-      { label: "Ideas", link: "/logs/ideas" },
+      { title: "Experiments", link: "/logs/experiments" },
+      { title: "Ideas", link: "/logs/ideas" },
     ],
   },
   {
-    label: "ABOUT",
+    page: "About",
     link: "/about",
     subpages: [
-      { label: "Company", link: "/about/company" },
-      { label: "Contact", link: "/about/contact" },
-      { label: "Quotes", link: "/about/quotes" },
+      { title: "Company Info", link: "/about/company" },
+      { title: "Contact", link: "/about/contact" },
     ],
   },
 ];
 
 export default function NavBar() {
-  // Track open dropdown by index, or null if none open
-  const [openIndex, setOpenIndex] = useState(null);
-  const timeoutRef = useRef(null);
-
-  const handleMouseEnter = (index) => {
-    clearTimeout(timeoutRef.current);
-    setOpenIndex(index);
-  };
-
-  const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => {
-      setOpenIndex(null);
-    }, 150);
-  };
-
   return (
-    <nav className="bg-pink-500 p-4 flex justify-center space-x-6 shadow-md">
-      {navItems.map((item, index) => (
+    <nav className="bg-pink-500 p-4 flex justify-center space-x-8 shadow-md">
+      {navItems.map(({ page, link, subpages }) => (
         <Dropdown
-          key={index}
+          key={page}
           label={
             <Link
-              to={item.link}
-              className={`font-semibold ${
-                openIndex === index ? "text-pink-500" : "text-gray-800"
-              } hover:text-pink-500 cursor-pointer`}
+              to={link}
+              className="font-semibold text-gray-800 hover:text-pink-500 cursor-pointer"
             >
-              {item.label}
+              {page}
             </Link>
           }
-          show={openIndex === index}
+          inline
           dismissOnClick={false}
-          onClick={() =>
-            setOpenIndex(openIndex === index ? null : index)
-          }
+          className="bg-pink-500 text-black px-4 py-2 rounded hover:bg-pink-600 focus:ring-2 focus:ring-pink-400"
           renderTrigger={(triggerProps) => (
-            <span
-              {...triggerProps}
-              onMouseEnter={() => handleMouseEnter(index)}
-              onMouseLeave={handleMouseLeave}
-              className="cursor-pointer"
-            />
+            <span {...triggerProps} className="cursor-pointer" />
           )}
-          onMouseEnter={() => handleMouseEnter(index)}
-          onMouseLeave={handleMouseLeave}
         >
-          {item.subpages.map((sub, subIndex) => (
-            <DropdownItem key={subIndex}>
-              <Link
-                to={sub.link}
-                className="hover:text-pink-500"
-              >
-                {sub.label}
-              </Link>
+          {subpages.map(({ title, link: subLink }) => (
+            <DropdownItem key={title} className="hover:text-pink-500">
+              <Link to={subLink}>{title}</Link>
             </DropdownItem>
           ))}
         </Dropdown>
