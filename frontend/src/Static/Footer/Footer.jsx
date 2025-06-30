@@ -6,7 +6,7 @@ import tvBg from '../../assets/tv-bars.svg'
 function Footer() {
   return (
     <footer 
-  className="relative overflow-hidden text-center text-white bg-[#2e2c2cba] shadow-lg mt-10 w-full bg-cover bg-center bg-no-repeat"
+  className="relative overflow-hidden text-center text-white bg-[#76767691] shadow-lg mt-10 w-full bg-cover bg-center bg-no-repeat"
     >
       {/* Content container */}
       <div className="relative z-10 max-w-7xl mx-auto">
