@@ -35,7 +35,7 @@ export default function House() {
     // Lights
     scene.add(new THREE.AmbientLight(0xffffff, 0.7));
     const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    dirLight.position.set(10, 20, 10);
+    dirLight.position.set(10, 30, 10);
     scene.add(dirLight);
 
     // OrbitControls
