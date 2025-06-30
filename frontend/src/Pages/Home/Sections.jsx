@@ -35,15 +35,21 @@ const sectionData = [
   description: "Who we are — a Toronto-based 3D printing service. Get a quote or ask us anything.",
     link: "/about",
   },
+  {
+    title: "",
+    subtitle: "",
+    description: "",
+    link: "",
+  },
 ];
 
 export default function Sections() {
   return (
-<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1 bg-black border-2 border-black">
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-0.5 bg-black border-2 border-black">
   {sectionData.map((item, index) => (
     <div
       key={index}
-      className="relative bg-gray-100 p-6 flex flex-co"
+      className="relative bg-white p-6 flex flex-co"
     >
       <div>
         <h3 className="text-xl font-bold mb-1">{item.title}</h3>
