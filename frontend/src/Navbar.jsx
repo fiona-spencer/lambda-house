@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Dropdown } from "flowbite-react";
 
 const navItems = [
   {
@@ -49,36 +48,35 @@ const navItems = [
 
 export default function NavBar() {
   return (
-    <Navbar fluid rounded className="bg-pink-500 px-6 py-3 shadow-md justify-center">
-      <div className="flex space-x-6">
-        {navItems.map(({ page, link, subpages }) => (
-          <Dropdown
-            key={page}
-            inline
-            label={
-              <Link
-                to={link}
-                className="text-gray-800 font-semibold hover:text-gray-600"
-              >
-                {page}
-              </Link>
-            }
-            dismissOnClick={false}
-            placement="bottom"
-            arrowIcon={false}
-            onOpenChange={(open) => {
-              // Optional: control open state if needed
-            }}
-            className="group"
-            >
-            {subpages.map(({ title, link: subLink }) => (
-              <Dropdown.Item key={title} as="a" href={subLink}>
-                {title}
-              </Dropdown.Item>
-            ))}
-          </Dropdown>
-        ))}
-      </div>
-    </Navbar>
+    <nav className="bg-pink-500 p-4 flex justify-center space-x-8 shadow-md relative">
+      {navItems.map(({ page, link, subpages }) => (
+        <div key={page} className="relative group">
+          <Link
+            to={link}
+            className="text-gray-800 font-semibold hover:text-gray-600"
+          >
+            {page}
+          </Link>
+
+          {/* Dropdown menu */}
+          {subpages && subpages.length > 0 && (
+            <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-50">
+              <ul>
+                {subpages.map(({ title, link: subLink }) => (
+                  <li key={title}>
+                    <Link
+                      to={subLink}
+                      className="block px-4 py-2 text-gray-700 hover:bg-pink-500 hover:text-white"
+                    >
+                      {title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      ))}
+    </nav>
   );
 }
