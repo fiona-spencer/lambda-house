@@ -15,7 +15,7 @@ export default function StudioPage() {
 
         {/* Viewer below text */}
         <div
-          className="border-2 border-pink-500 rounded-lg shadow-lg"
+          className=""
           style={{ width: viewerSize, height: viewerSize }}
         >
           <Viewer />

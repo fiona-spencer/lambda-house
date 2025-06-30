@@ -8,15 +8,16 @@ export default function Viewer() {
   const controlsRef = useRef(null);
   const meshRef = useRef(null);
   const [error, setError] = useState(null);
+  const [objectSize, setObjectSize] = useState(null);
   const [size, setSize] = useState({
     width: window.innerWidth * 0.8,
-    height: window.innerWidth * 0.8, // square based on width
+    height: window.innerWidth * 0.8, // square viewport
   });
 
   useEffect(() => {
     function handleResize() {
-      const width = window.innerWidth * 0.8; // 80% of window width
-      setSize({ width, height: width }); // keep square shape
+      const width = window.innerWidth * 0.8;
+      setSize({ width, height: width });
     }
 
     window.addEventListener("resize", handleResize);
@@ -28,7 +29,6 @@ export default function Viewer() {
   useEffect(() => {
     if (!mountRef.current) return;
 
-    // Clear previous renderer dom element before creating new one
     while (mountRef.current.firstChild) {
       mountRef.current.removeChild(mountRef.current.firstChild);
     }
@@ -42,7 +42,7 @@ export default function Viewer() {
       0.1,
       1000
     );
-    camera.position.set(0, 0, 20);
+    camera.position.set(0, 200, 300);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(size.width, size.height);
@@ -58,7 +58,25 @@ export default function Viewer() {
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
+    controls.target.set(0, 0, 0);
     controlsRef.current = controls;
+
+    // 3D printer bed plate
+    const gridHelper = new THREE.GridHelper(256, 64, 0x888888, 0x444444);
+    gridHelper.rotation.x = Math.PI / 2;
+    scene.add(gridHelper);
+
+    const bedPlate = new THREE.Mesh(
+      new THREE.PlaneGeometry(256, 256),
+      new THREE.MeshStandardMaterial({
+        color: 0x222222,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.5,
+      })
+    );
+    bedPlate.rotation.x = -Math.PI / 2;
+    scene.add(bedPlate);
 
     function animate() {
       requestAnimationFrame(animate);
@@ -71,9 +89,32 @@ export default function Viewer() {
     mountRef.current.camera = camera;
     mountRef.current.renderer = renderer;
 
+    function handleKeyDown(e) {
+      if (!meshRef.current) return;
+      const moveStep = 5;
+      switch (e.key) {
+        case "ArrowUp":
+          meshRef.current.position.y += moveStep;
+          break;
+        case "ArrowDown":
+          meshRef.current.position.y -= moveStep;
+          break;
+        case "ArrowLeft":
+          meshRef.current.position.x -= moveStep;
+          break;
+        case "ArrowRight":
+          meshRef.current.position.x += moveStep;
+          break;
+        default:
+          return;
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
       controls.dispose();
       renderer.dispose();
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [size]);
 
@@ -102,10 +143,23 @@ export default function Viewer() {
         mountRef.current.scene.add(mesh);
 
         const box = new THREE.Box3().setFromObject(mesh);
-        const sizeBox = box.getSize(new THREE.Vector3()).length();
+        const sizeVec = box.getSize(new THREE.Vector3());
         const center = box.getCenter(new THREE.Vector3());
 
-        mountRef.current.camera.position.set(center.x, center.y, sizeBox * 1.5);
+        setObjectSize({
+          width: sizeVec.x.toFixed(2),
+          height: sizeVec.y.toFixed(2),
+          depth: sizeVec.z.toFixed(2),
+        });
+
+        // Center on bed
+        mesh.position.x = -center.x;
+        mesh.position.y = -center.y;
+        mesh.position.z = -center.z + sizeVec.z / 2;
+
+        // Update camera to frame model
+        const sizeBox = box.getSize(new THREE.Vector3()).length();
+        mountRef.current.camera.position.set(center.x, center.y + sizeBox * 1.2, sizeBox * 1.2);
         mountRef.current.camera.lookAt(center);
         controlsRef.current.target.copy(center);
         controlsRef.current.update();
@@ -115,7 +169,6 @@ export default function Viewer() {
     };
 
     reader.onerror = () => setError("Failed to read file");
-
     reader.readAsArrayBuffer(file);
   }
 
@@ -135,9 +188,18 @@ export default function Viewer() {
       />
       <div
         ref={mountRef}
-        style={{ width: size.width/2, height: size.height }}
+        style={{ width: size.width / 2, height: size.height }}
         className="mx-auto"
       />
+      {objectSize && (
+        <div className="mt-3 text-sm text-center">
+          <p>STL Dimensions (mm):</p>
+          <p>
+            X: {objectSize.width} &nbsp; Y: {objectSize.depth} &nbsp; Z: {objectSize.height}
+          </p>
+          <p className="mt-1 text-xs text-gray-500">Use arrow keys to move object on plate</p>
+        </div>
+      )}
       {error && (
         <div className="absolute bottom-4 left-4 text-red-500 bg-red-900 px-3 py-1 rounded">
           {error}
