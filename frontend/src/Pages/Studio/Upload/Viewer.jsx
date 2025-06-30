@@ -84,7 +84,7 @@ const filamentData = [
 
 function FilamentSelector({ model, onChange }) {
   return (
-    <div className="filament-selector p-2 border rounded my-2 bg-gray-800 text-white">
+    <div className="filament-selector p-2 border rounded my-2 bg-white text-black max-w-xl mx-auto">
       <h3 className="font-semibold mb-1">{model.fileName}</h3>
       {filamentData.map((type) => (
         <div key={type.type} className="my-1">
@@ -125,6 +125,8 @@ export default function Viewer() {
 
   const cameraRef = useRef(null);
   const sceneRef = useRef(null);
+
+  const [selectedModelIndex, setSelectedModelIndex] = useState(null);
 
   useEffect(() => {
     function handleResize() {
@@ -259,159 +261,118 @@ export default function Viewer() {
 
         mountRef.current.dragControls = dragControls;
 
-        // Adjust camera to fit all meshes
-        const box = new THREE.Box3();
-        meshesRef.current.forEach((m) => box.expandByObject(m.mesh));
-        const sizeBox = box.getSize(new THREE.Vector3()).length();
-        const center = box.getCenter(new THREE.Vector3());
+        setSelectedModelIndex(meshesRef.current.length - 1); // auto-select last added model
 
-        mountRef.current.camera.position.set(center.x, center.y + sizeBox * 0.8, center.z + sizeBox * 1.5);
-        mountRef.current.camera.lookAt(center);
-        controlsRef.current.target.copy(center);
-        controlsRef.current.update();
-      } catch (err) {
-        setError("Failed to parse STL file: " + err.message);
+      } catch (e) {
+        setError("Failed to load STL file.");
       }
     };
-
-    reader.onerror = () => setError("Failed to read file");
 
     reader.readAsArrayBuffer(file);
   }
 
-  function handleFileChange(event) {
-    const files = event.target.files;
-    if (files.length > 0) {
-      for (let i = 0; i < files.length; i++) {
-        loadSTLFromFile(files[i]);
-      }
-    }
-  }
-
-  function handleHomeClick() {
-    if (mountRef.current?.resetCamera) {
-      mountRef.current.resetCamera();
-    }
-  }
-
-  function handleArrangeClick() {
-    if (!meshesRef.current.length) return;
-
-    const padding = 10; // space between meshes in mm
-    const bedSize = 256; // size of bed plate
-
-    // Compute bounding boxes for all meshes
-    const boxes = meshesRef.current.map(({ mesh }) => new THREE.Box3().setFromObject(mesh));
-    const sizes = boxes.map((box) => box.getSize(new THREE.Vector3()));
-
-    const count = meshesRef.current.length;
-    const cols = Math.ceil(Math.sqrt(count));
-    const rows = Math.ceil(count / cols);
-
-    // Max width and depth including padding
-    const maxWidth = Math.max(...sizes.map((s) => s.x)) + padding;
-    const maxDepth = Math.max(...sizes.map((s) => s.z)) + padding;
-
-    let x = -((cols - 1) * maxWidth) / 2;
-    let z = -((rows - 1) * maxDepth) / 2;
-
-    for (let i = 0; i < count; i++) {
-      const col = i % cols;
-      const row = Math.floor(i / cols);
-      const { mesh, selectedFilament } = meshesRef.current[i];
-
-      mesh.position.set(
-        x + col * maxWidth,
-        0,
-        z + row * maxDepth
-      );
-      mesh.rotation.x = -Math.PI / 2;
-    }
-  }
-
+  // Mapping filament name to color hex values
   const filamentColors = {
-    "Bright Yellow": 0xffff00,
-    Black: 0x000000,
-    Blue: 0x0000ff,
-    "Cocoa Brown": 0xa0522d,
-    Green: 0x008000,
-    "Light Grey": 0xd3d3d3,
-    Orange: 0xffa500,
-    Turquoise: 0x40e0d0,
-    White: 0xffffff,
-    Yellow: 0xffff00,
-    Azure: 0x007fff,
+    "Bright Yellow": 0xFAD02E,
+    Black: 0x232323,
+    Blue: 0x3657E8,
+    "Cocoa Brown": 0x4B2E05,
+    Green: 0x2AA650,
+    "Light Grey": 0xD3D3D3,
+    Orange: 0xF68644,
+    Turquoise: 0x56B5B1,
+    White: 0xE2E2E2,
+    Yellow: 0xFADA5E,
+    Azure: 0x4189F7,
+    Orange: 0xF68644,
+    Translucent: 0xb9c8d5,
+    Black: 0x232323,
   };
 
   return (
     <>
       <div className="flex items-center gap-4 text-white p-3 bg-zinc-900">
         <label
-          htmlFor="uploadInput"
-          className="flex cursor-pointer items-center gap-1 rounded border border-gray-300 bg-zinc-800 p-2 hover:bg-zinc-700"
-          title="Load STL file(s)"
+          htmlFor="upload-file"
+          className="cursor-pointer rounded bg-zinc-700 px-3 py-1 hover:bg-zinc-600"
+          title="Upload STL File"
         >
           <FiUpload />
-          Upload
-          <input
-            type="file"
-            multiple
-            accept=".stl"
-            id="uploadInput"
-            className="hidden"
-            onChange={handleFileChange}
-          />
         </label>
+        <input
+          id="upload-file"
+          type="file"
+          accept=".stl"
+          className="hidden"
+          onChange={(e) => {
+            if (e.target.files.length > 0) {
+              loadSTLFromFile(e.target.files[0]);
+            }
+          }}
+        />
 
         <button
-          onClick={handleArrangeClick}
-          className="rounded border border-gray-300 bg-zinc-800 p-2 hover:bg-zinc-700"
-          title="Arrange models on bed"
-        >
-          Arrange
-        </button>
-
-        <button
-          onClick={handleHomeClick}
-          className="rounded border border-gray-300 bg-zinc-800 p-2 hover:bg-zinc-700"
-          title="Reset camera"
+          onClick={() => {
+            if (mountRef.current && mountRef.current.resetCamera) {
+              mountRef.current.resetCamera();
+            }
+          }}
+          className="rounded bg-zinc-700 px-3 py-1 hover:bg-zinc-600"
+          title="Reset Camera"
         >
           <FiHome />
-          Home
         </button>
+
+        {error && (
+          <div className="text-red-400 ml-4 font-semibold">{error}</div>
+        )}
       </div>
 
-      {error && (
-        <div className="my-2 rounded border border-red-600 bg-red-200 p-2 text-red-700 max-w-4xl mx-auto">
-          Error: {error}
+      <div className="flex max-w-6xl mx-auto mt-4 gap-4">
+        {/* Sidebar listing loaded files */}
+        <div className="w-48 bg-gray-100 p-2 rounded border overflow-auto max-h-[500px]">
+          <h2 className="font-bold mb-2">Loaded Models</h2>
+          {meshesRef.current.length === 0 && <p>No models loaded</p>}
+          {meshesRef.current.map((model, idx) => (
+            <button
+              key={idx}
+              onClick={() => setSelectedModelIndex(idx)}
+              className={`block w-full text-left p-2 rounded mb-1 ${
+                selectedModelIndex === idx
+                  ? "bg-yellow-300 font-semibold"
+                  : "hover:bg-yellow-100"
+              }`}
+            >
+              {model.fileName}
+            </button>
+          ))}
         </div>
-      )}
 
-      <div
-        ref={mountRef}
-        style={{ width: size.width, height: size.height, margin: "1rem auto" }}
-      />
-
-      {/* Filament selectors per mesh */}
-      <div className="max-w-4xl mx-auto px-4">
-        {meshesRef.current.length === 0 && (
-          <p className="text-center text-gray-600 mt-8">Upload STL files to see models here.</p>
-        )}
-        {meshesRef.current.map((model, idx) => (
-          <FilamentSelector
-            key={idx}
-            model={model}
-            onChange={(filament) => {
-              model.selectedFilament = filament.name;
-              if (model.mesh.material) {
-                const color = filamentColors[filament.name] ?? 0xfc6c85;
-                model.mesh.material.color.setHex(color);
-                model.mesh.material.needsUpdate = true;
-              }
-              // No need to trigger React state update, since we don't display filament state here
-            }}
+        {/* Viewer and filament selector */}
+        <div>
+          <div
+            ref={mountRef}
+            style={{ width: size.width, height: size.height, marginBottom: "1rem" }}
           />
-        ))}
+          {selectedModelIndex !== null && meshesRef.current[selectedModelIndex] ? (
+            <FilamentSelector
+              model={meshesRef.current[selectedModelIndex]}
+              onChange={(filament) => {
+                const model = meshesRef.current[selectedModelIndex];
+                model.selectedFilament = filament.name;
+                if (model.mesh.material) {
+                  const color = filamentColors[filament.name] ?? 0xfc6c85;
+                  model.mesh.material.color.setHex(color);
+                  model.mesh.material.needsUpdate = true;
+                }
+              }}
+            />
+          ) : meshesRef.current.length > 0 ? (
+            <p className="text-gray-600">
+              Select a model on the left to change its filament color.
+            </p>
+          ) : null}
+        </div>
       </div>
     </>
   );

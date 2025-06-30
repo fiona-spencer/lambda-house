@@ -87,7 +87,7 @@ export default function NavBar() {
             {/* Dropdown menu */}
             {subpages && subpages.length > 0 && isOpen && (
               <div
-                className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg z-50"
+                className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-48 bg-white border-4 border-black z-50"
               >
                 <ul>
                   {subpages.map(({ title, link: subLink }) => (
