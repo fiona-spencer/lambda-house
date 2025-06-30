@@ -13,13 +13,12 @@ export default function StudioPage() {
           Select an STL file to upload and view it in the 3D viewer on the right.
         </p>
 
-      
         
       </div>
 
       {/* Right Viewer */}
       <div
-        className="flex-grow border-2 border-pink-500 rounded-lg shadow-lg"
+        className="flex-col border-2 border-pink-500 rounded-lg shadow-lg"
         style={{ width: viewerSize, height: viewerSize }}
       >
         <Viewer />
