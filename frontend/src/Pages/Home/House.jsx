@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "../../../public/libs/three-js/build/three.module.js";
 import { STLLoader } from "../../../public/libs/three-js/examples/jsm/loaders/STLLoader.js";
-import { OrbitControls } from "../../../public/libs/three-js/examples/jsm/controls/OrbitControls.js";
 import lambdaHouse from '../../../public/models/lambda-logo.stl';
 
 export default function House() {
@@ -38,13 +37,15 @@ export default function House() {
     dirLight.position.set(10, 30, 10);
     scene.add(dirLight);
 
-    // OrbitControls
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
+    // Raycaster for interaction
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
 
     // Load STL
     const loader = new STLLoader();
     let mesh;
+    let clickAnimation = false;
+    let animationStartTime = 0;
 
     loader.load(
       lambdaHouse,
@@ -55,8 +56,6 @@ export default function House() {
 
         geometry.center();
         mesh.scale.set(1, 1, 1);
-
-        // Rotate model upright (90° around X-axis)
         mesh.rotation.x = -Math.PI / 2;
 
         scene.add(mesh);
@@ -67,12 +66,42 @@ export default function House() {
       }
     );
 
+    // Handle click
+    const onClick = (event) => {
+      const bounds = renderer.domElement.getBoundingClientRect();
+      mouse.x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
+      mouse.y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(scene.children);
+
+      if (intersects.find(i => i.object === mesh)) {
+        clickAnimation = true;
+        animationStartTime = performance.now();
+      }
+    };
+    renderer.domElement.addEventListener("click", onClick);
+
     // Animate
-    const animate = () => {
+    const animate = (time) => {
       requestIdRef.current = requestAnimationFrame(animate);
 
       if (mesh) {
-        mesh.rotation.z += 0.01; // 👉 Spin right (clockwise Y-axis)
+        // Regular rotation
+        mesh.rotation.z += 0.01;
+
+        // Fun animation on click
+        if (clickAnimation) {
+          const elapsed = time - animationStartTime;
+
+          // Bounce for 500ms
+          if (elapsed < 500) {
+            mesh.scale.setScalar(1 + 0.2 * Math.sin((elapsed / 500) * Math.PI));
+          } else {
+            mesh.scale.set(1, 1, 1);
+            clickAnimation = false;
+          }
+        }
       }
 
       renderer.render(scene, camera);
@@ -84,6 +113,7 @@ export default function House() {
       cancelAnimationFrame(requestIdRef.current);
       renderer.dispose();
       mountRef.current.removeChild(renderer.domElement);
+      renderer.domElement.removeEventListener("click", onClick);
     };
   }, []);
 
