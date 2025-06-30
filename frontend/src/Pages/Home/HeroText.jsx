@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaArrowRight } from 'react-icons/fa';
 
 export default function HeroText() {
   return (
@@ -10,10 +11,11 @@ export default function HeroText() {
         artists, and businesses.
       </div>
 
-      {/* Sign up button */}
+      {/* Sign In button */}
       <div className="px-8 py-6">
-        <button className="px-6 py-3 border border-black text-black hover:bg-black hover:text-white transition-colors duration-300">
-          Sign Up
+        <button className="group px-6 py-3 border border-black text-black hover:bg-black hover:text-white transition-colors duration-300 flex items-center gap-2">
+          Sign In
+          <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
         </button>
       </div>
     </div>
