@@ -147,9 +147,8 @@ export default function Viewer() {
     reader.onerror = () => setError("Failed to read file");
 
     reader.readAsArrayBuffer(file);
-  }
 
-  // Inside your existing useEffect where you setup the scene, after creating the bedPlate mesh:
+    // Inside your existing useEffect where you setup the scene, after creating the bedPlate mesh:
 
 // Helper function to create text sprites with canvas texture
 function createTextSprite(message, parameters = {}) {
@@ -198,6 +197,9 @@ label156.position.set(128 + 20, 0.1, 0);  // right edge, slightly above bed
 label156.rotation.y = -Math.PI / 2;
 scene.add(label156);
 
+  }
+
+  
 
   function handleFileChange(event) {
     if (event.target.files.length > 0) {
