@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@react-three/drei": "^8.12.0",
-    "@react-three/fiber": "^8.18.0",
+    "@emailjs/browser": "^4.3.3",
+    "@react-three/drei": "^9.102.6",
+    "@react-three/fiber": "^8.16.0",
+    "three": "^0.162.0",
     "@reduxjs/toolkit": "^2.7.0",
     "axios": "^1.6.2",
     "firebase": "^11.6.0",
@@ -20,8 +22,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.5.0",
-    "react-router-dom": "^6.21.0",
-    "three": "^0.177.0"
+    "react-router-dom": "^6.21.0"
   },
   "resolutions": {
     "rollup": "npm:@rollup/wasm-node"
