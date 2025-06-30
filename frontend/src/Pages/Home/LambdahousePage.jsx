@@ -1,38 +1,4 @@
-import React from 'react';
-import Hero from './Hero';
-import HeroText from './HeroText';
-import Equipment from './Equipment';
-import Filament from './Filament';
-import Sections from './Sections';
-import EmailContact from '../../Components/EmailContact';
-import House from './House';
-
-const sections = [
-  {
-    title: "",
-    component: Hero,
-  },
-  {
-    title: "TORONTO 3D PRINTING",
-    component: HeroText,
-  },
-  {
-    title: "OUR SERVICES",
-    component: Sections,
-  },
-  {
-    title: "EQUIPMENT",
-    component: Equipment,
-  },
-  {
-    title: "FILAMENT",
-    component: Filament,
-  },
-  {
-    title: "CONTACT",
-    component: EmailContact,
-  },
-];
+import House from './House'; // Make sure this import is correct
 
 export default function LambdahousePage() {
   return (
@@ -43,7 +9,13 @@ export default function LambdahousePage() {
           <Component />
         </div>
       ))}
-    <House/>
+
+      {/* Responsive layout for House components */}
+      <div className="flex flex-col sm:flex-row sm:justify-center sm:gap-6 items-center space-y-6 sm:space-y-0">
+        <House />
+        <House />
+        <House />
+      </div>
     </div>
   );
 }
