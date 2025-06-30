@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "../../../../public/libs/three-js/build/three.module.js";
 import { STLLoader } from "../../../../public/libs/three-js/examples/jsm/loaders/STLLoader.js";
 import { OrbitControls } from "../../../../public/libs/three-js/examples/jsm/controls/OrbitControls.js";
+import { DragControls } from "../../../../public/libs/three-js/examples/jsm/controls/DragControls.js";
 import { FiUpload, FiDownload } from "react-icons/fi";
 
 export default function Viewer() {
@@ -52,7 +53,6 @@ export default function Viewer() {
     controls.dampingFactor = 0.05;
     controlsRef.current = controls;
 
-    // Add grid and coordinate helpers
     const gridXY = new THREE.GridHelper(256, 64, 0x888888, 0x444444);
     gridXY.rotation.x = Math.PI / 2;
     scene.add(gridXY);
@@ -67,16 +67,20 @@ export default function Viewer() {
     const gridYZ = new THREE.GridHelper(256, 64, 0x333333, 0x222222);
     gridYZ.rotation.z = Math.PI / 2;
     gridYZ.position.x = -128;
+    gridYZ.material.opacity = 0.2;
+    gridYZ.material.transparent = true;
     scene.add(gridYZ);
 
     const gridXZ = new THREE.GridHelper(256, 64, 0x333333, 0x222222);
     gridXZ.position.z = 128;
+    gridXZ.material.opacity = 0.2;
+    gridXZ.material.transparent = true;
     scene.add(gridXZ);
 
     const origin = new THREE.Vector3(0, 0, 0);
-    scene.add(new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), origin, 50, 0xff0000)); // X
-    scene.add(new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), origin, 50, 0x00ff00)); // Y
-    scene.add(new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), origin, 50, 0x0000ff)); // Z
+    scene.add(new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), origin, 50, 0xff0000));
+    scene.add(new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), origin, 50, 0x00ff00));
+    scene.add(new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), origin, 50, 0x0000ff));
 
     function animate() {
       requestAnimationFrame(animate);
@@ -118,6 +122,14 @@ export default function Viewer() {
 
         meshRef.current = mesh;
         mountRef.current.scene.add(mesh);
+
+        const dragControls = new DragControls([mesh], mountRef.current.camera, mountRef.current.renderer.domElement);
+        dragControls.addEventListener('dragstart', () => {
+          controlsRef.current.enabled = false;
+        });
+        dragControls.addEventListener('dragend', () => {
+          controlsRef.current.enabled = true;
+        });
 
         const box = new THREE.Box3().setFromObject(mesh);
         const sizeBox = box.getSize(new THREE.Vector3()).length();
