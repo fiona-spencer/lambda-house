@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import * as THREE from "three";
+import * as THREE from "../../../public/libs/three-js/build/three.module.js";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
+import lambdaHouse from '../../../public/libs/three-js/build/three.module.js'
 
 export default function House() {
   const mountRef = useRef(null);
@@ -41,7 +42,7 @@ export default function House() {
 
     let mesh;
     loader.load(
-      "/house.stl", // Put your STL file in public folder or adjust path
+      lambdaHouse, // Put your STL file in public folder or adjust path
       (geometry) => {
         geometry.computeVertexNormals();
         const material = new THREE.MeshStandardMaterial({ color: 0x8B4513 }); // brown
