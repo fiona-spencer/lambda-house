@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "../../../public/libs/three-js/build/three.module.js";
 import { STLLoader } from "../../../public/libs/three-js/examples/jsm/loaders/STLLoader.js";
-import lambdaHouse from '../../../public/libs/three-js/build/three.module.js'
+import lambdaHouse from '../../../public/models/lambda-logo.stl'
 
 export default function House() {
   const mountRef = useRef(null);
