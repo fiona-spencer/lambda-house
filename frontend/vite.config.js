@@ -10,6 +10,6 @@ export default (config) => {
     server: {
       allowedHosts: true,
     },
-    assetsInclude: ['**/*.xml'],
+    assetsInclude: ['**/*.xml', '**/*.stl'], // include .xml and .stl files
   });
 };
