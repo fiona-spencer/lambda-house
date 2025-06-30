@@ -1,11 +1,20 @@
 import React from 'react';
 import Hero from './Hero';
+import Hero from './HeroText';
 import Equipment from './Equipment';
 import Filament from './Filament';
 import Sections from './Sections';
 import EmailContact from '../../Components/EmailContact';
 
 const sections = [
+  {
+    title: "",
+    component: Hero,
+  },
+  {
+    title: "TORONTO BASED 3D PRINTING",
+    component: HeroText,
+  },
   {
     title: "",
     component: Hero,
@@ -18,7 +27,10 @@ const sections = [
     title: "EQUIPMENT",
     component: Equipment,
   },
- 
+  {
+    title: "FILAMENT",
+    component: Filament,
+  },
   {
     title: "CONTACT",
     component: EmailContact,
