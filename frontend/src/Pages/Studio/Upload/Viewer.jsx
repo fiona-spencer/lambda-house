@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "../../../../public/libs/three-js/build/three.module.js";
 import { STLLoader } from "../../../../public/libs/three-js/examples/jsm/loaders/STLLoader.js";
 
+import capSTL from "../../../../public/models/cap.stl"
+
 export default function Viewer() {
   const mountRef = useRef(null);
   const [error, setError] = useState(null);
@@ -37,7 +39,7 @@ export default function Viewer() {
 
     // Example: load from URL or add your own local .stl path here:
     loader.load(
-      "frontend/public/models/top case.stl",
+      {capSTL},
       (geometry) => {
         const material = new THREE.MeshStandardMaterial({ color: 0xff6600 });
         const mesh = new THREE.Mesh(geometry, material);
