@@ -5,11 +5,12 @@ export default (config) => {
     resolve: {
       alias: {
         '@': '/src',
+        three: 'three', // ✅ Explicit alias for 'three'
       },
     },
     server: {
       allowedHosts: true,
     },
-    assetsInclude: ['**/*.xml'], // 👈 This should be outside the server block
+    assetsInclude: ['**/*.xml'],
   });
 };
