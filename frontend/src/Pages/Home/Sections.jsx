@@ -43,7 +43,7 @@ export default function Sections() {
   {sectionData.map((item, index) => (
     <div
       key={index}
-      className="relative bg-gray-100 p-6 flex flex-co gap-1l"
+      className="relative bg-gray-100 p-6 flex flex-co gap-1"
     >
       <div>
         <h3 className="text-xl font-bold mb-1">{item.title}</h3>
