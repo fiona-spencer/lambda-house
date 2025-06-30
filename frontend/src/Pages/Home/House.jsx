@@ -13,7 +13,7 @@ export default function House() {
 
     // Scene setup
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xf0f0f0);
+    scene.background = new THREE.Color(0xFFF);
 
     // Camera
     const camera = new THREE.PerspectiveCamera(
@@ -22,7 +22,7 @@ export default function House() {
       0.1,
       1000
     );
-    camera.position.set(0, 100, 100);
+    camera.position.set(0, 20, 100);
 
     // Renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -50,7 +50,7 @@ export default function House() {
       lambdaHouse,
       (geometry) => {
         geometry.computeVertexNormals();
-        const material = new THREE.MeshStandardMaterial({ color: 0xff69b4 }); // 💖 Hot Pink
+        const material = new THREE.MeshStandardMaterial({ color: 0xff69b4 });
         mesh = new THREE.Mesh(geometry, material);
 
         geometry.center();
