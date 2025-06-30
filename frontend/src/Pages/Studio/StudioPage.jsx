@@ -5,7 +5,7 @@ export default function StudioPage() {
   const [viewerSize, setViewerSize] = useState(400); // size in px
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-200 flex p-8 space-x-8">
+    <div className="min-h-screen bg-white text-black flex p-8 space-x-8">
       {/* Single Column: Text + Viewer */}
       <div className="flex flex-col space-y-6 max-w-sm">
         <h1 className="text-3xl font-bold mb-4">Upload STL File</h1>
