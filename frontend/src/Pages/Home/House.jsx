@@ -75,7 +75,6 @@ export default function House() {
         mesh.rotation.z += 0.01; // 👉 Spin right (clockwise Y-axis)
       }
 
-      controls.update();
       renderer.render(scene, camera);
     };
     animate();
