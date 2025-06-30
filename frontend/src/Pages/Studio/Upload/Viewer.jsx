@@ -8,7 +8,7 @@ import { FiUpload, FiDownload, FiHome } from "react-icons/fi";
 export default function Viewer() {
   const mountRef = useRef(null);
   const controlsRef = useRef(null);
-  const meshesRef = useRef([]);  // Store all loaded meshes here
+  const meshesRef = useRef([]); // Store all loaded meshes here
   const [error, setError] = useState(null);
   const [size, setSize] = useState({
     width: window.innerWidth * 0.8,
@@ -139,7 +139,6 @@ export default function Viewer() {
 
         dragControls.addEventListener("dragstart", () => {
           controlsRef.current.enabled = false;
-          // Change cursor to grabbing on drag start
           mountRef.current.style.cursor = "grabbing";
         });
         dragControls.addEventListener("dragend", () => {
@@ -184,13 +183,58 @@ export default function Viewer() {
     }
   }
 
+  function handleArrangeClick() {
+    if (!meshesRef.current.length) return;
+
+    const padding = 10; // space between meshes in mm
+    const bedSize = 256; // size of bed plate
+
+    // Compute bounding boxes for all meshes
+    const boxes = meshesRef.current.map((mesh) => new THREE.Box3().setFromObject(mesh));
+    const sizes = boxes.map((box) => box.getSize(new THREE.Vector3()));
+
+    const count = meshesRef.current.length;
+    const cols = Math.ceil(Math.sqrt(count));
+    const rows = Math.ceil(count / cols);
+
+    // Max width and depth including padding
+    const maxWidth = Math.max(...sizes.map((s) => s.x)) + padding;
+    const maxDepth = Math.max(...sizes.map((s) => s.z)) + padding;
+
+    // Center grid on the bed
+    const startX = -((cols - 1) * maxWidth) / 2;
+    const startZ = -((rows - 1) * maxDepth) / 2;
+
+    meshesRef.current.forEach((mesh, i) => {
+      const size = sizes[i];
+      const col = i % cols;
+      const row = Math.floor(i / cols);
+
+      // Bottom y offset to place mesh on bed (y=0)
+      const box = boxes[i];
+      const yOffset = box.min.y;
+
+      mesh.position.set(
+        startX + col * maxWidth,
+        -yOffset, // place bottom on plane
+        startZ + row * maxDepth
+      );
+
+      mesh.rotation.x = -Math.PI / 2; // maintain orientation
+    });
+
+    // Reset orbit controls target to center bed
+    controlsRef.current.target.set(0, 0, 0);
+    controlsRef.current.update();
+  }
+
   return (
     <div className="relative bg-gray-900 text-gray-400">
       <div className="absolute top-4 left-4 z-10 flex gap-2 items-center">
         <label className="p-2 bg-gray-800 border border-gray-600 rounded text-sm cursor-pointer flex items-center gap-2">
           <FiUpload size={16} />
           <span>Upload STL</span>
-          {/* Allow multiple STL files to be selected */}
+          {/* Allow multiple STL files */}
           <input
             type="file"
             accept=".stl"
@@ -209,12 +253,10 @@ export default function Viewer() {
         </button>
 
         <button
-          onClick={() => {
-            // You can implement Drop to Bed functionality here
-          }}
+          onClick={handleArrangeClick}
           className="p-2 bg-gray-800 border border-gray-600 rounded text-sm flex items-center gap-2 hover:bg-gray-700"
         >
-          <FiDownload size={16} /> Drop to Bed
+          <FiDownload size={16} /> Arrange
         </button>
       </div>
 
