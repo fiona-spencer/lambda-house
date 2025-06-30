@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const navItems = [
@@ -47,45 +47,66 @@ const navItems = [
 ];
 
 export default function NavBar() {
+  // Track which dropdown is open by page name, null if none
+  const [openDropdown, setOpenDropdown] = useState(null);
+
+  // Toggle dropdown open/close on click
+  const toggleDropdown = (page) => {
+    setOpenDropdown((current) => (current === page ? null : page));
+  };
+
+  // Close dropdown when clicking outside
+  React.useEffect(() => {
+    function handleClickOutside(event) {
+      // Close if click is outside any dropdown
+      if (!event.target.closest(".nav-item")) {
+        setOpenDropdown(null);
+      }
+    }
+    window.addEventListener("click", handleClickOutside);
+    return () => window.removeEventListener("click", handleClickOutside);
+  }, []);
+
   return (
-<nav className="bg-pink-500 p-4 flex justify-center space-x-8 shadow-md relative">
-  {navItems.map(({ page, link, subpages }) => (
-    <div key={page} className="relative group">
-      <Link
-        to={link}
-        className="text-gray-800 font-semibold hover:text-gray-600"
-      >
-        {page}
-      </Link>
+    <nav className="bg-pink-500 p-4 flex justify-center space-x-8 shadow-md relative">
+      {navItems.map(({ page, link, subpages }) => {
+        const isOpen = openDropdown === page;
+        return (
+          <div
+            key={page}
+            className="relative nav-item"
+          >
+            <button
+              onClick={() => toggleDropdown(page)}
+              className="text-gray-800 font-semibold hover:text-gray-600 focus:outline-none"
+              type="button"
+            >
+              {page}
+            </button>
 
-      {/* Dropdown menu */}
-      {subpages && subpages.length > 0 && (
-        <div
-          className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg
-          opacity-0 invisible
-          group-hover:opacity-100 group-hover:visible
-          transition-opacity duration-200 z-50"
-          // Add pointer events so dropdown can be interacted with
-          onMouseEnter={e => e.currentTarget.style.visibility = 'visible'}
-          onMouseLeave={e => e.currentTarget.style.visibility = 'hidden'}
-        >
-          <ul>
-            {subpages.map(({ title, link: subLink }) => (
-              <li key={title}>
-                <Link
-                  to={subLink}
-                  className="block px-4 py-2 text-gray-700 hover:bg-pink-500 hover:text-white"
-                >
-                  {title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  ))}
-</nav>
-
+            {/* Dropdown menu */}
+            {subpages && subpages.length > 0 && isOpen && (
+              <div
+                className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg z-50"
+              >
+                <ul>
+                  {subpages.map(({ title, link: subLink }) => (
+                    <li key={title}>
+                      <Link
+                        to={subLink}
+                        className="block px-4 py-2 text-gray-700 hover:bg-pink-500 hover:text-white"
+                        onClick={() => setOpenDropdown(null)} // close on item click
+                      >
+                        {title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </nav>
   );
 }
