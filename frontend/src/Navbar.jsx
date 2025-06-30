@@ -1,91 +1,113 @@
-import React from "react";
+import React, { useState, useRef } from "react";
+import { Dropdown, DropdownItem } from "flowbite-react";
 import { Link } from "react-router-dom";
 
 const navItems = [
   {
-    page: "Studio",
+    label: "STUDIO",
     link: "/studio",
     subpages: [
-      { title: "Custom Prints", link: "/studio/custom-prints" },
-      { title: "Upload Files", link: "/studio/upload" },
-      { title: "Settings", link: "/studio/settings" },
+      { label: "Upload Files", link: "/studio/upload" },
+      { label: "Settings", link: "/studio/settings" },
+      { label: "Filaments", link: "/studio/filaments" },
     ],
   },
   {
-    page: "Products",
+    label: "PRODUCTS",
     link: "/products",
     subpages: [
-      { title: "3D Prints", link: "/products/prints" },
-      { title: "Files", link: "/products/files" },
-      { title: "Custom Merch", link: "/products/merch" },
+      { label: "Shop Prints", link: "/products/prints" },
+      { label: "Download Files", link: "/products/files" },
+      { label: "Custom Gear", link: "/products/gear" },
     ],
   },
   {
-    page: "Projects",
+    label: "PROJECTS",
     link: "/projects",
     subpages: [
-      { title: "Prototypes", link: "/projects/prototypes" },
-      { title: "Electronics", link: "/projects/electronics" },
+      { label: "Prototypes", link: "/projects/prototypes" },
+      { label: "Electronics", link: "/projects/electronics" },
     ],
   },
   {
-    page: "Logs",
+    label: "LOGS",
     link: "/logs",
     subpages: [
-      { title: "Experiments", link: "/logs/experiments" },
-      { title: "Ideas", link: "/logs/ideas" },
+      { label: "Process", link: "/logs/process" },
+      { label: "Experiments", link: "/logs/experiments" },
+      { label: "Ideas", link: "/logs/ideas" },
     ],
   },
   {
-    page: "About",
+    label: "ABOUT",
     link: "/about",
     subpages: [
-      { title: "Company Info", link: "/about/company" },
-      { title: "Contact", link: "/about/contact" },
+      { label: "Company", link: "/about/company" },
+      { label: "Contact", link: "/about/contact" },
+      { label: "Quotes", link: "/about/quotes" },
     ],
   },
 ];
 
 export default function NavBar() {
+  // Track open dropdown by index, or null if none open
+  const [openIndex, setOpenIndex] = useState(null);
+  const timeoutRef = useRef(null);
+
+  const handleMouseEnter = (index) => {
+    clearTimeout(timeoutRef.current);
+    setOpenIndex(index);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setOpenIndex(null);
+    }, 150);
+  };
+
   return (
-<nav className="bg-pink-500 p-4 flex justify-center space-x-8 shadow-md relative">
-  {navItems.map(({ page, link, subpages }) => (
-    <div key={page} className="relative group">
-      <Link
-        to={link}
-        className="text-gray-800 font-semibold hover:text-gray-600"
-      >
-        {page}
-      </Link>
-
-      {/* Dropdown menu */}
-      {subpages && subpages.length > 0 && (
-        <div
-          className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg
-          opacity-0 invisible
-          group-hover:opacity-100 group-hover:visible
-          transition-opacity duration-200 z-50"
-          // Add pointer events so dropdown can be interacted with
-          onMouseEnter={e => e.currentTarget.style.visibility = 'visible'}
-          onMouseLeave={e => e.currentTarget.style.visibility = 'hidden'}
+    <nav className="bg-pink-500 p-4 flex justify-center space-x-6 shadow-md">
+      {navItems.map((item, index) => (
+        <Dropdown
+          key={index}
+          label={
+            <Link
+              to={item.link}
+              className={`font-semibold ${
+                openIndex === index ? "text-pink-500" : "text-gray-800"
+              } hover:text-pink-500 cursor-pointer`}
+            >
+              {item.label}
+            </Link>
+          }
+          show={openIndex === index}
+          dismissOnClick={false}
+          onClick={() =>
+            setOpenIndex(openIndex === index ? null : index)
+          }
+          renderTrigger={(triggerProps) => (
+            <span
+              {...triggerProps}
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={handleMouseLeave}
+              className="cursor-pointer"
+            />
+          )}
+          onMouseEnter={() => handleMouseEnter(index)}
+          onMouseLeave={handleMouseLeave}
         >
-          <ul>
-            {subpages.map(({ title, link: subLink }) => (
-              <li key={title}>
-                <Link
-                  to={subLink}
-                  className="block px-4 py-2 text-gray-700 hover:bg-pink-500 hover:text-white"
-                >
-                  {title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  ))}
-</nav>
-
+          {item.subpages.map((sub, subIndex) => (
+            <DropdownItem key={subIndex}>
+              <Link
+                to={sub.link}
+                className="hover:text-pink-500"
+              >
+                {sub.label}
+              </Link>
+            </DropdownItem>
+          ))}
+        </Dropdown>
+      ))}
+    </nav>
   );
 }
