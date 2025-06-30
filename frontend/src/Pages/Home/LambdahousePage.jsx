@@ -16,10 +16,6 @@ const sections = [
     component: HeroText,
   },
   {
-    title: "",
-    component: Hero,
-  },
-  {
     title: "OUR SERVICES",
     component: Sections,
   },
