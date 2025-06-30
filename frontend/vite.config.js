@@ -10,6 +10,6 @@ export default (config) => {
     server: {
       allowedHosts: true,
     },
+    assetsInclude: ['**/*.xml'], // 👈 This should be outside the server block
   });
 };
-
