@@ -77,17 +77,19 @@ export default function Viewer() {
 
     // Position coordinate arrows at bottom-left corner of bed
     const cornerPos = new THREE.Vector3(-128, 0, -128);
-    scene.add(new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), origin, 50, 0xff0000)); // red y
-scene.add(new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), origin, 50, 0x0000ff)); // blue x
-scene.add(new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), origin, 50, 0x00ff00)); // green z
-    // X axis arrow (red), pointing along +X
-    scene.add(xArrow);
 
-    // Y axis arrow (green), pointing along +Y
-    scene.add(yArrow);
+ // Y axis arrow (red), pointing along +Y
+const yArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), cornerPos, 50, 0xff0000);
+scene.add(yArrow);
 
-    // Z axis arrow (blue), pointing along +Z
-   scene.add(zArrow);
+// X axis arrow (blue), pointing along +X
+const xArrow = new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), cornerPos, 50, 0x0000ff);
+scene.add(xArrow);
+
+// Z axis arrow (green), pointing along +Z
+const zArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), cornerPos, 50, 0x00ff00);
+scene.add(zArrow);
+
 
     // Store refs for reset function
     cameraRef.current = camera;
