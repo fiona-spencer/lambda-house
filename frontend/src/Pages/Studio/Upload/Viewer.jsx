@@ -2,16 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "../../../../public/libs/three-js/build/three.module.js";
 import { STLLoader } from "../../../../public/libs/three-js/examples/jsm/loaders/STLLoader.js";
 import { OrbitControls } from "../../../../public/libs/three-js/examples/jsm/controls/OrbitControls.js";
+import { FiUpload, FiDownload } from "react-icons/fi";
 
 export default function Viewer() {
   const mountRef = useRef(null);
   const controlsRef = useRef(null);
   const meshRef = useRef(null);
   const [error, setError] = useState(null);
-  const [objectSize, setObjectSize] = useState(null);
   const [size, setSize] = useState({
     width: window.innerWidth * 0.8,
-    height: window.innerWidth * 0.8, // square viewport
+    height: window.innerWidth * 0.8,
   });
 
   useEffect(() => {
@@ -19,16 +19,13 @@ export default function Viewer() {
       const width = window.innerWidth * 0.8;
       setSize({ width, height: width });
     }
-
     window.addEventListener("resize", handleResize);
     handleResize();
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
     if (!mountRef.current) return;
-
     while (mountRef.current.firstChild) {
       mountRef.current.removeChild(mountRef.current.firstChild);
     }
@@ -36,13 +33,8 @@ export default function Viewer() {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color("#222");
 
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      size.width / size.height,
-      0.1,
-      1000
-    );
-    camera.position.set(0, 200, 300);
+    const camera = new THREE.PerspectiveCamera(75, size.width / size.height, 0.1, 1000);
+    camera.position.set(0, 100, 300);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(size.width, size.height);
@@ -58,25 +50,33 @@ export default function Viewer() {
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
-    controls.target.set(0, 0, 0);
     controlsRef.current = controls;
 
-    // 3D printer bed plate
-    const gridHelper = new THREE.GridHelper(256, 64, 0x888888, 0x444444);
-    gridHelper.rotation.x = Math.PI / 2;
-    scene.add(gridHelper);
+    // Add grid and coordinate helpers
+    const gridXY = new THREE.GridHelper(256, 64, 0x888888, 0x444444);
+    gridXY.rotation.x = Math.PI / 2;
+    scene.add(gridXY);
 
     const bedPlate = new THREE.Mesh(
       new THREE.PlaneGeometry(256, 256),
-      new THREE.MeshStandardMaterial({
-        color: 0x222222,
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.5,
-      })
+      new THREE.MeshStandardMaterial({ color: 0x222222, side: THREE.DoubleSide, transparent: true, opacity: 0.4 })
     );
     bedPlate.rotation.x = -Math.PI / 2;
     scene.add(bedPlate);
+
+    const gridYZ = new THREE.GridHelper(256, 64, 0x333333, 0x222222);
+    gridYZ.rotation.z = Math.PI / 2;
+    gridYZ.position.x = -128;
+    scene.add(gridYZ);
+
+    const gridXZ = new THREE.GridHelper(256, 64, 0x333333, 0x222222);
+    gridXZ.position.z = 128;
+    scene.add(gridXZ);
+
+    const origin = new THREE.Vector3(0, 0, 0);
+    scene.add(new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), origin, 50, 0xff0000)); // X
+    scene.add(new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), origin, 50, 0x00ff00)); // Y
+    scene.add(new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), origin, 50, 0x0000ff)); // Z
 
     function animate() {
       requestAnimationFrame(animate);
@@ -89,32 +89,9 @@ export default function Viewer() {
     mountRef.current.camera = camera;
     mountRef.current.renderer = renderer;
 
-    function handleKeyDown(e) {
-      if (!meshRef.current) return;
-      const moveStep = 5;
-      switch (e.key) {
-        case "ArrowUp":
-          meshRef.current.position.y += moveStep;
-          break;
-        case "ArrowDown":
-          meshRef.current.position.y -= moveStep;
-          break;
-        case "ArrowLeft":
-          meshRef.current.position.x -= moveStep;
-          break;
-        case "ArrowRight":
-          meshRef.current.position.x += moveStep;
-          break;
-        default:
-          return;
-      }
-    }
-
-    window.addEventListener("keydown", handleKeyDown);
     return () => {
       controls.dispose();
       renderer.dispose();
-      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [size]);
 
@@ -143,23 +120,10 @@ export default function Viewer() {
         mountRef.current.scene.add(mesh);
 
         const box = new THREE.Box3().setFromObject(mesh);
-        const sizeVec = box.getSize(new THREE.Vector3());
+        const sizeBox = box.getSize(new THREE.Vector3()).length();
         const center = box.getCenter(new THREE.Vector3());
 
-        setObjectSize({
-          width: sizeVec.x.toFixed(2),
-          height: sizeVec.y.toFixed(2),
-          depth: sizeVec.z.toFixed(2),
-        });
-
-        // Center on bed
-        mesh.position.x = -center.x;
-        mesh.position.y = -center.y;
-        mesh.position.z = -center.z + sizeVec.z / 2;
-
-        // Update camera to frame model
-        const sizeBox = box.getSize(new THREE.Vector3()).length();
-        mountRef.current.camera.position.set(center.x, center.y + sizeBox * 1.2, sizeBox * 1.2);
+        mountRef.current.camera.position.set(center.x, center.y + sizeBox * 0.8, center.z + sizeBox * 1.5);
         mountRef.current.camera.lookAt(center);
         controlsRef.current.target.copy(center);
         controlsRef.current.update();
@@ -169,6 +133,7 @@ export default function Viewer() {
     };
 
     reader.onerror = () => setError("Failed to read file");
+
     reader.readAsArrayBuffer(file);
   }
 
@@ -180,26 +145,29 @@ export default function Viewer() {
 
   return (
     <div className="relative bg-gray-900 text-gray-400">
-      <input
-        type="file"
-        accept=".stl"
-        onChange={handleFileChange}
-        className="absolute top-4 left-4 z-10 p-2 bg-gray-800 border border-gray-600 rounded text-sm cursor-pointer"
-      />
+      <div className="absolute top-4 left-4 z-10 flex gap-2 items-center">
+        <label className="p-2 bg-gray-800 border border-gray-600 rounded text-sm cursor-pointer flex items-center gap-2">
+          <FiUpload size={16} />
+          <span>Upload STL</span>
+          <input
+            type="file"
+            accept=".stl"
+            onChange={handleFileChange}
+            className="hidden"
+          />
+        </label>
+        <button
+          onClick={() => {}}
+          className="p-2 bg-gray-800 border border-gray-600 rounded text-sm flex items-center gap-2 hover:bg-gray-700"
+        >
+          <FiDownload size={16} /> Drop to Bed
+        </button>
+      </div>
       <div
         ref={mountRef}
         style={{ width: size.width / 2, height: size.height }}
         className="mx-auto"
       />
-      {objectSize && (
-        <div className="mt-3 text-sm text-center">
-          <p>STL Dimensions (mm):</p>
-          <p>
-            X: {objectSize.width} &nbsp; Y: {objectSize.depth} &nbsp; Z: {objectSize.height}
-          </p>
-          <p className="mt-1 text-xs text-gray-500">Use arrow keys to move object on plate</p>
-        </div>
-      )}
       {error && (
         <div className="absolute bottom-4 left-4 text-red-500 bg-red-900 px-3 py-1 rounded">
           {error}
