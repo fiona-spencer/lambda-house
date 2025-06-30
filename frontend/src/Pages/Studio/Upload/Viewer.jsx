@@ -32,7 +32,7 @@ export default function Viewer() {
     }
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color("#222");
+    scene.background = new THREE.Color("#111");
 
     const camera = new THREE.PerspectiveCamera(75, size.width / size.height, 0.1, 1000);
     camera.position.set(0, 100, 300);
