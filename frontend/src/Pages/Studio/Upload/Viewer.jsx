@@ -64,7 +64,7 @@ export default function Viewer() {
         color: 0x222222,
         side: THREE.DoubleSide,
         transparent: true,
-        opacity: 0.4,
+        opacity: 0.8,
       })
     );
     bedPlate.rotation.x = -Math.PI / 2;
@@ -118,7 +118,7 @@ export default function Viewer() {
         const geometry = loader.parse(contents);
 
         geometry.computeVertexNormals();
-        const material = new THREE.MeshStandardMaterial({ color: 0xff6600 });
+        const material = new THREE.MeshStandardMaterial({ color: 0xFC6C85 });
         const mesh = new THREE.Mesh(geometry, material);
         mesh.rotation.x = -Math.PI / 2;
 
