@@ -53,34 +53,38 @@ export default function Viewer() {
     controls.dampingFactor = 0.05;
     controlsRef.current = controls;
 
+    // Only X-Y grid
     const gridXY = new THREE.GridHelper(256, 64, 0x888888, 0x444444);
     gridXY.rotation.x = Math.PI / 2;
     scene.add(gridXY);
 
+    // Bed plate on X-Y plane (256 x 256 mm)
     const bedPlate = new THREE.Mesh(
       new THREE.PlaneGeometry(256, 256),
-      new THREE.MeshStandardMaterial({ color: 0x222222, side: THREE.DoubleSide, transparent: true, opacity: 0.4 })
+      new THREE.MeshStandardMaterial({
+        color: 0x222222,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.4,
+      })
     );
     bedPlate.rotation.x = -Math.PI / 2;
     scene.add(bedPlate);
 
-    const gridYZ = new THREE.GridHelper(256, 64, 0x333333, 0x222222);
-    gridYZ.rotation.z = Math.PI / 2;
-    gridYZ.position.x = -128;
-    gridYZ.material.opacity = 0.2;
-    gridYZ.material.transparent = true;
-    scene.add(gridYZ);
+    // Position coordinate arrows at bottom-left corner of bed
+    const cornerPos = new THREE.Vector3(-128, 0, -128);
 
-    const gridXZ = new THREE.GridHelper(256, 64, 0x333333, 0x222222);
-    gridXZ.position.z = 128;
-    gridXZ.material.opacity = 0.2;
-    gridXZ.material.transparent = true;
-    scene.add(gridXZ);
+    // X axis arrow (red), pointing along +X
+    const xArrow = new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), cornerPos, 50, 0xff0000);
+    scene.add(xArrow);
 
-    const origin = new THREE.Vector3(0, 0, 0);
-    scene.add(new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), origin, 50, 0xff0000));
-    scene.add(new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), origin, 50, 0x00ff00));
-    scene.add(new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), origin, 50, 0x0000ff));
+    // Y axis arrow (green), pointing along +Y
+    const yArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), cornerPos, 50, 0x00ff00);
+    scene.add(yArrow);
+
+    // Z axis arrow (blue), pointing along +Z
+    const zArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), cornerPos, 50, 0x0000ff);
+    scene.add(zArrow);
 
     function animate() {
       requestAnimationFrame(animate);
@@ -124,10 +128,10 @@ export default function Viewer() {
         mountRef.current.scene.add(mesh);
 
         const dragControls = new DragControls([mesh], mountRef.current.camera, mountRef.current.renderer.domElement);
-        dragControls.addEventListener('dragstart', () => {
+        dragControls.addEventListener("dragstart", () => {
           controlsRef.current.enabled = false;
         });
-        dragControls.addEventListener('dragend', () => {
+        dragControls.addEventListener("dragend", () => {
           controlsRef.current.enabled = true;
         });
 
@@ -147,59 +151,7 @@ export default function Viewer() {
     reader.onerror = () => setError("Failed to read file");
 
     reader.readAsArrayBuffer(file);
-
-    // Inside your existing useEffect where you setup the scene, after creating the bedPlate mesh:
-
-// Helper function to create text sprites with canvas texture
-function createTextSprite(message, parameters = {}) {
-  const fontface = parameters.fontface || "Arial";
-  const fontsize = parameters.fontsize || 24;
-  const borderThickness = parameters.borderThickness || 4;
-  const borderColor = parameters.borderColor || { r:0, g:0, b:0, a:1.0 };
-  const backgroundColor = parameters.backgroundColor || { r:255, g:255, b:255, a:1.0 };
-
-  const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d');
-  context.font = fontsize + "px " + fontface;
-
-  const metrics = context.measureText(message);
-  const textWidth = metrics.width;
-
-  // Background rectangle
-  context.fillStyle = `rgba(${backgroundColor.r},${backgroundColor.g},${backgroundColor.b},${backgroundColor.a})`;
-  context.strokeStyle = `rgba(${borderColor.r},${borderColor.g},${borderColor.b},${borderColor.a})`;
-  context.lineWidth = borderThickness;
-  context.fillRect(borderThickness/2, borderThickness/2, textWidth + borderThickness, fontsize * 1.4 + borderThickness);
-  context.strokeRect(borderThickness/2, borderThickness/2, textWidth + borderThickness, fontsize * 1.4 + borderThickness);
-
-  // Text color
-  context.fillStyle = "rgba(50,50,50,1.0)";
-  context.fillText(message, borderThickness, fontsize + borderThickness);
-
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.minFilter = THREE.LinearFilter;
-  texture.wrapS = THREE.ClampToEdgeWrapping;
-  texture.wrapT = THREE.ClampToEdgeWrapping;
-
-  const spriteMaterial = new THREE.SpriteMaterial({ map: texture });
-  const sprite = new THREE.Sprite(spriteMaterial);
-  sprite.scale.set(textWidth / 4, fontsize / 4, 1);
-  return sprite;
-}
-
-// Create and position dimension labels:
-const label256 = createTextSprite("256 mm");
-label256.position.set(0, 0.1, 128 + 10);  // slightly above front edge
-scene.add(label256);
-
-const label156 = createTextSprite("156 mm");
-label156.position.set(128 + 20, 0.1, 0);  // right edge, slightly above bed
-label156.rotation.y = -Math.PI / 2;
-scene.add(label156);
-
   }
-
-  
 
   function handleFileChange(event) {
     if (event.target.files.length > 0) {
@@ -213,12 +165,7 @@ scene.add(label156);
         <label className="p-2 bg-gray-800 border border-gray-600 rounded text-sm cursor-pointer flex items-center gap-2">
           <FiUpload size={16} />
           <span>Upload STL</span>
-          <input
-            type="file"
-            accept=".stl"
-            onChange={handleFileChange}
-            className="hidden"
-          />
+          <input type="file" accept=".stl" onChange={handleFileChange} className="hidden" />
         </label>
         <button
           onClick={() => {}}
@@ -233,9 +180,7 @@ scene.add(label156);
         className="mx-auto"
       />
       {error && (
-        <div className="absolute bottom-4 left-4 text-red-500 bg-red-900 px-3 py-1 rounded">
-          {error}
-        </div>
+        <div className="absolute bottom-4 left-4 text-red-500 bg-red-900 px-3 py-1 rounded">{error}</div>
       )}
     </div>
   );
