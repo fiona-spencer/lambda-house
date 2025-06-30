@@ -31,7 +31,7 @@ function App() {
             <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/logs" element={<LogsPage />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/sitemap" element={<Sitemap />} />
+            <Route path="/sitemap.xml" element={<Sitemap />} />
           </Routes>
         </main>
         <Footer />
