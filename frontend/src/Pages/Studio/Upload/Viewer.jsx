@@ -5,8 +5,34 @@ import { OrbitControls } from "../../../../public/libs/three-js/examples/jsm/con
 import { DragControls } from "../../../../public/libs/three-js/examples/jsm/controls/DragControls.js";
 import { FiUpload, FiDownload, FiHome } from "react-icons/fi";
 
-// Example filament images imports here if you want to use (optional)
-// import plaBrightYellow from '...';
+// ABS images
+import absAzure from "../../../assets/Filament/abs/abs-azure.jpg";
+import absBlack from "../../../assets/Filament/abs/abs-black.png";
+import absOrange from "../../../assets/Filament/abs/abs-orange.png";
+import absWhite from "../../../assets/Filament/abs/abs-white.png";
+import absYellow from "../../../assets/Filament/abs/abs-yellow.jpg";
+
+// PETG images
+import petgBlack from "../../../assets/Filament/petg/petg-black.jpg";
+import petgOrange from "../../../assets/Filament/petg/petg-orange.jpg";
+import petgTranslucent from "../../../assets/Filament/petg/petg-translucent.png";
+import petgWhite from "../../../assets/Filament/petg/petg-white.jpg";
+import petgYellow from "../../../assets/Filament/petg/petg-yellow.jpg";
+
+// PLA images
+import plaBrightYellow from "../../../assets/Filament/pla/pla--brightyellow.jpg";
+import plaBlack from "../../../assets/Filament/pla/pla-black.png";
+import plaBlue from "../../../assets/Filament/pla/pla-blue.jpg";
+import plaCocoaBrown from "../../../assets/Filament/pla/pla-cocoabrown.jpg";
+import plaGreen from "../../../assets/Filament/pla/pla-green.jpg";
+import plaLightGrey from "../../../assets/Filament/pla/pla-lightgrey.jpg";
+import plaOrange from "../../../assets/Filament/pla/pla-orange.jpg";
+import plaTurquoise from "../../../assets/Filament/pla/pla-turquoise.jpg";
+import plaWhite from "../../../assets/Filament/pla/pla-white.jpg";
+import plaYellow from "../../../assets/Filament/pla/pla-yellow.jpg";
+
+// TPU images
+import tpuBlack from "../../assets/Filament/tpu/tpu-black.png";
 
 const filamentData = [
   {
