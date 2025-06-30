@@ -8,14 +8,13 @@ import { FiUpload, FiDownload, FiHome } from "react-icons/fi";
 export default function Viewer() {
   const mountRef = useRef(null);
   const controlsRef = useRef(null);
-  const meshRef = useRef(null);
+  const meshesRef = useRef([]);  // Store all loaded meshes here
   const [error, setError] = useState(null);
   const [size, setSize] = useState({
     width: window.innerWidth * 0.8,
     height: window.innerWidth * 0.8,
   });
 
-  // Store references to key objects for resetting view
   const cameraRef = useRef(null);
   const sceneRef = useRef(null);
 
@@ -31,6 +30,8 @@ export default function Viewer() {
 
   useEffect(() => {
     if (!mountRef.current) return;
+
+    // Clear previous scene and canvas
     while (mountRef.current.firstChild) {
       mountRef.current.removeChild(mountRef.current.firstChild);
     }
@@ -57,7 +58,6 @@ export default function Viewer() {
     controls.dampingFactor = 0.05;
     controlsRef.current = controls;
 
-    // ONLY bed plate plane, no grids:
     const bedPlate = new THREE.Mesh(
       new THREE.PlaneGeometry(256, 256),
       new THREE.MeshStandardMaterial({
@@ -70,32 +70,20 @@ export default function Viewer() {
     bedPlate.rotation.x = -Math.PI / 2;
     scene.add(bedPlate);
 
-    // Position coordinate arrows at bottom-left corner of bed
+    // Coordinate arrows at bottom-left corner
     const cornerPos = new THREE.Vector3(-128, 0, -128);
+    scene.add(new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), cornerPos, 50, 0xff0000)); // Y - red
+    scene.add(new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), cornerPos, 50, 0x0000ff)); // X - blue
+    scene.add(new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), cornerPos, 50, 0x00ff00)); // Z - green
 
-    // Y axis arrow (red), pointing along +Y
-    const yArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), cornerPos, 50, 0xff0000);
-    scene.add(yArrow);
-
-    // X axis arrow (blue), pointing along +X
-    const xArrow = new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), cornerPos, 50, 0x0000ff);
-    scene.add(xArrow);
-
-    // Z axis arrow (green), pointing along +Z
-    const zArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), cornerPos, 50, 0x00ff00);
-    scene.add(zArrow);
-
-    // Store refs for reset function
     cameraRef.current = camera;
     sceneRef.current = scene;
 
-    // Define function to reset camera to "home" view
     function resetCamera() {
-      camera.position.set(0, 200, 300); // Elevated and pulled back
-      controls.target.set(0, 0, 0); // Look at bed plate center
+      camera.position.set(0, 200, 300);
+      controls.target.set(0, 0, 0);
       controls.update();
     }
-
     resetCamera();
 
     function animate() {
@@ -104,6 +92,9 @@ export default function Viewer() {
       renderer.render(scene, camera);
     }
     animate();
+
+    // Clear meshes on scene reset
+    meshesRef.current = [];
 
     mountRef.current.scene = scene;
     mountRef.current.camera = camera;
@@ -116,73 +107,77 @@ export default function Viewer() {
     };
   }, [size]);
 
-function loadSTLFromFile(file) {
-  setError(null);
-  const reader = new FileReader();
+  function loadSTLFromFile(file) {
+    setError(null);
+    const reader = new FileReader();
 
-  reader.onload = function (event) {
-    try {
-      const contents = event.target.result;
-      const loader = new STLLoader();
-      const geometry = loader.parse(contents);
+    reader.onload = function (event) {
+      try {
+        const contents = event.target.result;
+        const loader = new STLLoader();
+        const geometry = loader.parse(contents);
 
-      const material = new THREE.MeshStandardMaterial({ color: 0xff6600 });
-      const mesh = new THREE.Mesh(geometry, material);
-      mesh.rotation.x = -Math.PI / 2;
-      geometry.computeVertexNormals();
+        geometry.computeVertexNormals();
+        const material = new THREE.MeshStandardMaterial({ color: 0xff6600 });
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.rotation.x = -Math.PI / 2;
 
-      mountRef.current.scene.add(mesh);
-      meshesRef.current.push(mesh);
+        mountRef.current.scene.add(mesh);
+        meshesRef.current.push(mesh);
 
-      // Setup drag controls for all meshes
-      if (meshesRef.current.length > 0) {
-        // Dispose old drag controls if any
+        // Dispose old drag controls if exist
         if (mountRef.current.dragControls) {
           mountRef.current.dragControls.dispose();
         }
 
-        const dragControls = new DragControls(meshesRef.current, mountRef.current.camera, mountRef.current.renderer.domElement);
+        // Setup drag controls on all meshes
+        const dragControls = new DragControls(
+          meshesRef.current,
+          mountRef.current.camera,
+          mountRef.current.renderer.domElement
+        );
+
         dragControls.addEventListener("dragstart", () => {
           controlsRef.current.enabled = false;
+          // Change cursor to grabbing on drag start
+          mountRef.current.style.cursor = "grabbing";
         });
         dragControls.addEventListener("dragend", () => {
           controlsRef.current.enabled = true;
+          mountRef.current.style.cursor = "default";
         });
+
         mountRef.current.dragControls = dragControls;
+
+        // Adjust camera to fit all meshes
+        const box = new THREE.Box3();
+        meshesRef.current.forEach((m) => box.expandByObject(m));
+        const sizeBox = box.getSize(new THREE.Vector3()).length();
+        const center = box.getCenter(new THREE.Vector3());
+
+        mountRef.current.camera.position.set(center.x, center.y + sizeBox * 0.8, center.z + sizeBox * 1.5);
+        mountRef.current.camera.lookAt(center);
+        controlsRef.current.target.copy(center);
+        controlsRef.current.update();
+      } catch (err) {
+        setError("Failed to parse STL file: " + err.message);
       }
+    };
 
-      // Adjust camera to fit newly added mesh along with existing ones:
-      const box = new THREE.Box3();
-      meshesRef.current.forEach((m) => box.expandByObject(m));
-      const sizeBox = box.getSize(new THREE.Vector3()).length();
-      const center = box.getCenter(new THREE.Vector3());
+    reader.onerror = () => setError("Failed to read file");
 
-      mountRef.current.camera.position.set(center.x, center.y + sizeBox * 0.8, center.z + sizeBox * 1.5);
-      mountRef.current.camera.lookAt(center);
-      controlsRef.current.target.copy(center);
-      controlsRef.current.update();
-    } catch (err) {
-      setError("Failed to parse STL file: " + err.message);
-    }
-  };
+    reader.readAsArrayBuffer(file);
+  }
 
-  reader.onerror = () => setError("Failed to read file");
-
-  reader.readAsArrayBuffer(file);
-}
-
-
-function handleFileChange(event) {
-  const files = event.target.files;
-  if (files.length > 0) {
-    for (let i = 0; i < files.length; i++) {
-      loadSTLFromFile(files[i]);
+  function handleFileChange(event) {
+    const files = event.target.files;
+    if (files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        loadSTLFromFile(files[i]);
+      }
     }
   }
-}
 
-
-  // Home button handler to reset camera
   function handleHomeClick() {
     if (mountRef.current?.resetCamera) {
       mountRef.current.resetCamera();
@@ -195,7 +190,14 @@ function handleFileChange(event) {
         <label className="p-2 bg-gray-800 border border-gray-600 rounded text-sm cursor-pointer flex items-center gap-2">
           <FiUpload size={16} />
           <span>Upload STL</span>
-          <input type="file" accept=".stl" onChange={handleFileChange} className="hidden" />
+          {/* Allow multiple STL files to be selected */}
+          <input
+            type="file"
+            accept=".stl"
+            onChange={handleFileChange}
+            className="hidden"
+            multiple
+          />
         </label>
 
         <button
@@ -207,7 +209,9 @@ function handleFileChange(event) {
         </button>
 
         <button
-          onClick={() => {}}
+          onClick={() => {
+            // You can implement Drop to Bed functionality here
+          }}
           className="p-2 bg-gray-800 border border-gray-600 rounded text-sm flex items-center gap-2 hover:bg-gray-700"
         >
           <FiDownload size={16} /> Drop to Bed
@@ -221,7 +225,9 @@ function handleFileChange(event) {
       />
 
       {error && (
-        <div className="absolute bottom-4 left-4 text-red-500 bg-red-900 px-3 py-1 rounded">{error}</div>
+        <div className="absolute bottom-4 left-4 text-red-500 bg-red-900 px-3 py-1 rounded">
+          {error}
+        </div>
       )}
     </div>
   );
