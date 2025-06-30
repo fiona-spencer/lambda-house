@@ -13,7 +13,7 @@ export default function House() {
 
     // Scene setup
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xFFF);
+    scene.background = new THREE.Color(0xFFFFFF);
 
     // Camera
     const camera = new THREE.PerspectiveCamera(
