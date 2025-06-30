@@ -35,11 +35,11 @@ const sectionData = [
   description: "Who we are — a Toronto-based 3D printing service. Get a quote or ask us anything.",
     link: "/about",
   },
-  {
-    title: "",
-    subtitle: "",
-    description: "",
-    link: "",
+ {
+    title: "RELEASE NOTES",
+    subtitle: "Latest updates & improvements",
+    description: "Stay informed with the newest features, fixes, and improvements in our 3D printing services and products.",
+    link: "/release-notes",
   },
 ];
 
