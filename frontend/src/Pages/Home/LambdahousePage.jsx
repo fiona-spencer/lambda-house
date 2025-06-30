@@ -12,7 +12,7 @@ const sections = [
     component: Hero,
   },
   {
-    title: "TORONTO BASED 3D PRINTING",
+    title: "TORONTO 3D PRINTING",
     component: HeroText,
   },
   {
