@@ -39,7 +39,7 @@ export default function Viewer() {
 
     // Example: load from URL or add your own local .stl path here:
     loader.load(
-      {capSTL},
+      capSTL,
       (geometry) => {
         const material = new THREE.MeshStandardMaterial({ color: 0xff6600 });
         const mesh = new THREE.Mesh(geometry, material);
