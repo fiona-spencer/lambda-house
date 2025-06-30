@@ -2,8 +2,8 @@ import React from 'react'
 
 export default function HeroText() {
   return (
-    <div className="text-xl leading-relaxed py-4">
-      We specialize in high-quality 3D printing services, custom model design, and advanced engineering solutions, including electronics integration. Whether you're an artist, maker, or business, we bring your ideas to life with precision and innovation.
-    </div>
+    <div className="text-3xl leading-relaxed py-4 bg-pink-500">
+We are a Toronto-based 3D printing studio offering high-quality prints, custom model design, and integrated electronics solutions for makers, artists, and businesses 
+   </div>
   )
 }
