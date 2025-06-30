@@ -135,7 +135,7 @@ export default function Viewer() {
       />
       <div
         ref={mountRef}
-        style={{ width: size.width, height: size.height }}
+        style={{ width: size.width/2, height: size.height }}
         className="mx-auto"
       />
       {error && (
