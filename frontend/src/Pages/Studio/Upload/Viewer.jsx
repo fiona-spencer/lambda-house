@@ -150,7 +150,6 @@ export default function Viewer() {
 
         // Adjust camera to fit all meshes
         const box = new THREE.Box3();
-        mesh.userData.originalYOffset = box.min.y; 
         meshesRef.current.forEach((m) => box.expandByObject(m));
         const sizeBox = box.getSize(new THREE.Vector3()).length();
         const center = box.getCenter(new THREE.Vector3());
@@ -184,50 +183,50 @@ export default function Viewer() {
     }
   }
 
- function handleArrangeClick() {
-  if (!meshesRef.current.length) return;
+  function handleArrangeClick() {
+    if (!meshesRef.current.length) return;
 
-  const padding = 10; // space between meshes in mm
-  const bedSize = 256; // size of bed plate
+    const padding = 10; // space between meshes in mm
+    const bedSize = 256; // size of bed plate
 
-  // Compute bounding boxes for all meshes (for sizes only)
-  const boxes = meshesRef.current.map((mesh) => new THREE.Box3().setFromObject(mesh));
-  const sizes = boxes.map((box) => box.getSize(new THREE.Vector3()));
+    // Compute bounding boxes for all meshes
+    const boxes = meshesRef.current.map((mesh) => new THREE.Box3().setFromObject(mesh));
+    const sizes = boxes.map((box) => box.getSize(new THREE.Vector3()));
 
-  const count = meshesRef.current.length;
-  const cols = Math.ceil(Math.sqrt(count));
-  const rows = Math.ceil(count / cols);
+    const count = meshesRef.current.length;
+    const cols = Math.ceil(Math.sqrt(count));
+    const rows = Math.ceil(count / cols);
 
-  // Max width and depth including padding
-  const maxWidth = Math.max(...sizes.map((s) => s.x)) + padding;
-  const maxDepth = Math.max(...sizes.map((s) => s.z)) + padding;
+    // Max width and depth including padding
+    const maxWidth = Math.max(...sizes.map((s) => s.x)) + padding;
+    const maxDepth = Math.max(...sizes.map((s) => s.z)) + padding;
 
-  // Center grid on the bed
-  const startX = -((cols - 1) * maxWidth) / 2;
-  const startZ = -((rows - 1) * maxDepth) / 2;
+    // Center grid on the bed
+    const startX = -((cols - 1) * maxWidth) / 2;
+    const startZ = -((rows - 1) * maxDepth) / 2;
 
-  meshesRef.current.forEach((mesh, i) => {
-    const size = sizes[i];
-    const col = i % cols;
-    const row = Math.floor(i / cols);
+    meshesRef.current.forEach((mesh, i) => {
+      const size = sizes[i];
+      const col = i % cols;
+      const row = Math.floor(i / cols);
 
-    // Use stored original offset to prevent cumulative moving upwards
-    const yOffset = mesh.userData.originalYOffset ?? 0;
+      // Bottom y offset to place mesh on bed (y=0)
+      const box = boxes[i];
+      const yOffset = box.min.y;
 
-    mesh.position.set(
-      startX + col * maxWidth,
-      -yOffset, // place bottom on plane
-      startZ + row * maxDepth
-    );
+      mesh.position.set(
+        startX + col * maxWidth,
+        -yOffset, // place bottom on plane
+        startZ + row * maxDepth
+      );
 
-    mesh.rotation.x = -Math.PI / 2; // maintain orientation
-  });
+      mesh.rotation.x = -Math.PI / 2; // maintain orientation
+    });
 
-  // Reset orbit controls target to center bed
-  controlsRef.current.target.set(0, 0, 0);
-  controlsRef.current.update();
-}
-
+    // Reset orbit controls target to center bed
+    controlsRef.current.target.set(0, 0, 0);
+    controlsRef.current.update();
+  }
 
   return (
     <div className="relative bg-gray-900 text-gray-400">
