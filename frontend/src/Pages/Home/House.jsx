@@ -72,7 +72,7 @@ export default function House() {
       requestIdRef.current = requestAnimationFrame(animate);
 
       if (mesh) {
-        mesh.rotation.y += 0.01; // 👉 Spin right (clockwise Y-axis)
+        mesh.rotation.z += 0.01; // 👉 Spin right (clockwise Y-axis)
       }
 
       controls.update();
