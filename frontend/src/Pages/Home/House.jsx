@@ -54,7 +54,7 @@ export default function House() {
         mesh = new THREE.Mesh(geometry, material);
 
         geometry.center();
-        mesh.scale.set(0.5, 0.5, 0.5);
+        mesh.scale.set(1, 1, 1);
 
         // Rotate model upright (90° around X-axis)
         mesh.rotation.x = -Math.PI / 2;
