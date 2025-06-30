@@ -22,7 +22,7 @@ export default function House() {
       0.1,
       1000
     );
-    camera.position.set(0, 50, 100);
+    camera.position.set(0, 100, 100);
 
     // Renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -50,7 +50,7 @@ export default function House() {
       lambdaHouse,
       (geometry) => {
         geometry.computeVertexNormals();
-        const material = new THREE.MeshStandardMaterial({ color: 0x8B4513 });
+        const material = new THREE.MeshStandardMaterial({ color: 0xff69b4 }); // 💖 Hot Pink
         mesh = new THREE.Mesh(geometry, material);
 
         geometry.center();
@@ -70,6 +70,11 @@ export default function House() {
     // Animate
     const animate = () => {
       requestIdRef.current = requestAnimationFrame(animate);
+
+      if (mesh) {
+        mesh.rotation.y += 0.01; // 👉 Spin right (clockwise Y-axis)
+      }
+
       controls.update();
       renderer.render(scene, camera);
     };
