@@ -5,10 +5,92 @@ import { OrbitControls } from "../../../../public/libs/three-js/examples/jsm/con
 import { DragControls } from "../../../../public/libs/three-js/examples/jsm/controls/DragControls.js";
 import { FiUpload, FiDownload, FiHome } from "react-icons/fi";
 
+// Example filament images imports here if you want to use (optional)
+// import plaBrightYellow from '...';
+
+const filamentData = [
+  {
+    type: "PLA",
+    filaments: [
+      { name: "Bright Yellow", available: true, description: "Bright yellow, easy to print.", image: plaBrightYellow },
+      { name: "Black", available: true, description: "Classic black.", image: plaBlack },
+      { name: "Blue", available: false, description: "Cool blue.", image: plaBlue },
+      { name: "Cocoa Brown", available: true, description: "Warm brown tone.", image: plaCocoaBrown },
+      { name: "Green", available: true, description: "Natural green.", image: plaGreen },
+      { name: "Light Grey", available: true, description: "Subtle light grey.", image: plaLightGrey },
+      { name: "Orange", available: true, description: "Bright orange.", image: plaOrange },
+      { name: "Turquoise", available: false, description: "Refreshing turquoise.", image: plaTurquoise },
+      { name: "White", available: true, description: "Clean white.", image: plaWhite },
+      { name: "Yellow", available: true, description: "Sunshine yellow.", image: plaYellow },
+    ],
+  },
+  {
+    type: "ABS",
+    filaments: [
+      { name: "Azure", available: true, description: "Bright azure.", image: absAzure },
+      { name: "Black", available: true, description: "Strong black.", image: absBlack },
+      { name: "Orange", available: true, description: "Vibrant orange.", image: absOrange },
+      { name: "White", available: true, description: "Clean white.", image: absWhite },
+      { name: "Yellow", available: false, description: "Sun yellow.", image: absYellow },
+    ],
+  },
+  {
+    type: "PETG",
+    filaments: [
+      { name: "Black", available: true, description: "Deep black.", image: petgBlack },
+      { name: "Orange", available: true, description: "Bright orange.", image: petgOrange },
+      { name: "Translucent", available: true, description: "Semi-transparent.", image: petgTranslucent },
+      { name: "White", available: true, description: "Clean white.", image: petgWhite },
+      { name: "Yellow", available: true, description: "Sunny yellow.", image: petgYellow },
+    ],
+  },
+  {
+    type: "TPU",
+    filaments: [
+      { name: "Black", available: true, description: "Flexible black filament.", image: tpuBlack },
+    ],
+  },
+  {
+    type: "Other",
+    filaments: [],
+  },
+];
+
+function FilamentSelector({ model, onChange }) {
+  return (
+    <div className="filament-selector p-2 border rounded my-2 bg-gray-800 text-white">
+      <h3 className="font-semibold mb-1">{model.fileName}</h3>
+      {filamentData.map((type) => (
+        <div key={type.type} className="my-1">
+          <div className="font-bold">{type.type}</div>
+          <div className="flex flex-wrap gap-2 mt-1">
+            {type.filaments.map((f) => (
+              <button
+                key={f.name}
+                disabled={!f.available}
+                className={`p-1 rounded border text-xs ${
+                  model.selectedFilament === f.name
+                    ? "border-yellow-400"
+                    : "border-transparent"
+                }`}
+                style={{ backgroundColor: f.available ? f.name.toLowerCase() : "#555", cursor: f.available ? "pointer" : "not-allowed" }}
+                title={f.description}
+                onClick={() => f.available && onChange(f)}
+              >
+                {f.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function Viewer() {
   const mountRef = useRef(null);
   const controlsRef = useRef(null);
-  const meshesRef = useRef([]); // Store all loaded meshes here
+  const meshesRef = useRef([]); // Store {mesh, fileName, selectedFilament}
   const [error, setError] = useState(null);
   const [size, setSize] = useState({
     width: window.innerWidth * 0.8,
@@ -118,21 +200,24 @@ export default function Viewer() {
         const geometry = loader.parse(contents);
 
         geometry.computeVertexNormals();
-        const material = new THREE.MeshStandardMaterial({ color: 0xFC6C85 });
+        const material = new THREE.MeshStandardMaterial({ color: 0xFC6C85 }); // default pinkish color
         const mesh = new THREE.Mesh(geometry, material);
         mesh.rotation.x = -Math.PI / 2;
 
         mountRef.current.scene.add(mesh);
-        meshesRef.current.push(mesh);
 
-        // Dispose old drag controls if exist
+        meshesRef.current.push({
+          mesh,
+          fileName: file.name,
+          selectedFilament: null,
+        });
+
         if (mountRef.current.dragControls) {
           mountRef.current.dragControls.dispose();
         }
 
-        // Setup drag controls on all meshes
         const dragControls = new DragControls(
-          meshesRef.current,
+          meshesRef.current.map((m) => m.mesh),
           mountRef.current.camera,
           mountRef.current.renderer.domElement
         );
@@ -150,7 +235,7 @@ export default function Viewer() {
 
         // Adjust camera to fit all meshes
         const box = new THREE.Box3();
-        meshesRef.current.forEach((m) => box.expandByObject(m));
+        meshesRef.current.forEach((m) => box.expandByObject(m.mesh));
         const sizeBox = box.getSize(new THREE.Vector3()).length();
         const center = box.getCenter(new THREE.Vector3());
 
@@ -190,7 +275,7 @@ export default function Viewer() {
     const bedSize = 256; // size of bed plate
 
     // Compute bounding boxes for all meshes
-    const boxes = meshesRef.current.map((mesh) => new THREE.Box3().setFromObject(mesh));
+    const boxes = meshesRef.current.map(({ mesh }) => new THREE.Box3().setFromObject(mesh));
     const sizes = boxes.map((box) => box.getSize(new THREE.Vector3()));
 
     const count = meshesRef.current.length;
@@ -201,76 +286,107 @@ export default function Viewer() {
     const maxWidth = Math.max(...sizes.map((s) => s.x)) + padding;
     const maxDepth = Math.max(...sizes.map((s) => s.z)) + padding;
 
-    // Center grid on the bed
-    const startX = -((cols - 1) * maxWidth) / 2;
-    const startZ = -((rows - 1) * maxDepth) / 2;
+    let x = -((cols - 1) * maxWidth) / 2;
+    let z = -((rows - 1) * maxDepth) / 2;
 
-    meshesRef.current.forEach((mesh, i) => {
-      const size = sizes[i];
+    for (let i = 0; i < count; i++) {
       const col = i % cols;
       const row = Math.floor(i / cols);
-
-      // Bottom y offset to place mesh on bed (y=0)
-      const box = boxes[i];
-      const yOffset = box.min.y;
+      const { mesh, selectedFilament } = meshesRef.current[i];
 
       mesh.position.set(
-        startX + col * maxWidth,
-        -yOffset, // place bottom on plane
-        startZ + row * maxDepth
+        x + col * maxWidth,
+        0,
+        z + row * maxDepth
       );
-
-      mesh.rotation.x = -Math.PI / 2; // maintain orientation
-    });
-
-    // Reset orbit controls target to center bed
-    controlsRef.current.target.set(0, 0, 0);
-    controlsRef.current.update();
+      mesh.rotation.x = -Math.PI / 2;
+    }
   }
 
+  const filamentColors = {
+    "Bright Yellow": 0xffff00,
+    Black: 0x000000,
+    Blue: 0x0000ff,
+    "Cocoa Brown": 0xa0522d,
+    Green: 0x008000,
+    "Light Grey": 0xd3d3d3,
+    Orange: 0xffa500,
+    Turquoise: 0x40e0d0,
+    White: 0xffffff,
+    Yellow: 0xffff00,
+    Azure: 0x007fff,
+  };
+
   return (
-    <div className="relative bg-gray-900 text-gray-400">
-      <div className="absolute top-4 left-4 z-10 flex gap-2 items-center">
-        <label className="p-2 bg-gray-800 border border-gray-600 rounded text-sm cursor-pointer flex items-center gap-2">
-          <FiUpload size={16} />
-          <span>Upload STL</span>
-          {/* Allow multiple STL files */}
+    <>
+      <div className="flex items-center gap-4 text-white p-3 bg-zinc-900">
+        <label
+          htmlFor="uploadInput"
+          className="flex cursor-pointer items-center gap-1 rounded border border-gray-300 bg-zinc-800 p-2 hover:bg-zinc-700"
+          title="Load STL file(s)"
+        >
+          <FiUpload />
+          Upload
           <input
             type="file"
-            accept=".stl"
-            onChange={handleFileChange}
-            className="hidden"
             multiple
+            accept=".stl"
+            id="uploadInput"
+            className="hidden"
+            onChange={handleFileChange}
           />
         </label>
 
         <button
-          onClick={handleHomeClick}
-          className="p-2 bg-gray-800 border border-gray-600 rounded text-sm flex items-center gap-2 hover:bg-gray-700"
-          title="Reset View"
+          onClick={handleArrangeClick}
+          className="rounded border border-gray-300 bg-zinc-800 p-2 hover:bg-zinc-700"
+          title="Arrange models on bed"
         >
-          <FiHome size={16} /> Home
+          Arrange
         </button>
 
         <button
-          onClick={handleArrangeClick}
-          className="p-2 bg-gray-800 border border-gray-600 rounded text-sm flex items-center gap-2 hover:bg-gray-700"
+          onClick={handleHomeClick}
+          className="rounded border border-gray-300 bg-zinc-800 p-2 hover:bg-zinc-700"
+          title="Reset camera"
         >
-          <FiDownload size={16} /> Arrange
+          <FiHome />
+          Home
         </button>
       </div>
 
-      <div
-        ref={mountRef}
-        style={{ width: size.width / 2, height: size.height }}
-        className="mx-auto"
-      />
-
       {error && (
-        <div className="absolute bottom-4 left-4 text-red-500 bg-red-900 px-3 py-1 rounded">
-          {error}
+        <div className="my-2 rounded border border-red-600 bg-red-200 p-2 text-red-700 max-w-4xl mx-auto">
+          Error: {error}
         </div>
       )}
-    </div>
+
+      <div
+        ref={mountRef}
+        style={{ width: size.width, height: size.height, margin: "1rem auto" }}
+      />
+
+      {/* Filament selectors per mesh */}
+      <div className="max-w-4xl mx-auto px-4">
+        {meshesRef.current.length === 0 && (
+          <p className="text-center text-gray-600 mt-8">Upload STL files to see models here.</p>
+        )}
+        {meshesRef.current.map((model, idx) => (
+          <FilamentSelector
+            key={idx}
+            model={model}
+            onChange={(filament) => {
+              model.selectedFilament = filament.name;
+              if (model.mesh.material) {
+                const color = filamentColors[filament.name] ?? 0xfc6c85;
+                model.mesh.material.color.setHex(color);
+                model.mesh.material.needsUpdate = true;
+              }
+              // No need to trigger React state update, since we don't display filament state here
+            }}
+          />
+        ))}
+      </div>
+    </>
   );
 }
