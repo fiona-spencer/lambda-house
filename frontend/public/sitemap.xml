@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://lambdahouse.xyz/</loc></url>
+  <url><loc>https://lambdahouse.xyz/studio</loc></url>
+  <url><loc>https://lambdahouse.xyz/studio/custom-prints</loc></url>
+  <url><loc>https://lambdahouse.xyz/studio/upload</loc></url>
+  <url><loc>https://lambdahouse.xyz/studio/settings</loc></url>
+
+  <url><loc>https://lambdahouse.xyz/products</loc></url>
+  <url><loc>https://lambdahouse.xyz/products/prints</loc></url>
+  <url><loc>https://lambdahouse.xyz/products/files</loc></url>
+  <url><loc>https://lambdahouse.xyz/products/merch</loc></url>
+
+  <url><loc>https://lambdahouse.xyz/projects</loc></url>
+  <url><loc>https://lambdahouse.xyz/projects/prototypes</loc></url>
+  <url><loc>https://lambdahouse.xyz/projects/electronics</loc></url>
+
+  <url><loc>https://lambdahouse.xyz/logs</loc></url>
+  <url><loc>https://lambdahouse.xyz/logs/experiments</loc></url>
+  <url><loc>https://lambdahouse.xyz/logs/ideas</loc></url>
+
+  <url><loc>https://lambdahouse.xyz/about</loc></url>
+  <url><loc>https://lambdahouse.xyz/about/company</loc></url>
+  <url><loc>https://lambdahouse.xyz/about/contact</loc></url>
+</urlset>
