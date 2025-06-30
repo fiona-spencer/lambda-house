@@ -15,7 +15,7 @@ export default function EmailContact() {
             id="firstName"
             name="firstName"
             required
-            className="w-full border-b border-black bg-transparent py-2 px-1 focus:outline-none focus:border-pink-500"
+  className="w-full border-b border-black bg-transparent py-2 px-1 focus:outline-none focus:border-pink-500 focus:text-pink-500 focus:font-bold"
             placeholder="First Name"
           />
         </div>
@@ -30,7 +30,7 @@ export default function EmailContact() {
             id="lastName"
             name="lastName"
             required
-            className="w-full border-b border-black bg-transparent py-2 px-1 focus:outline-none focus:border-pink-500"
+  className="w-full border-b border-black bg-transparent py-2 px-1 focus:outline-none focus:border-pink-500 focus:text-pink-500 focus:font-bold"
             placeholder="Last Name"
           />
         </div>
@@ -45,7 +45,7 @@ export default function EmailContact() {
             id="email"
             name="email"
             required
-            className="w-full border-b border-black bg-transparent py-2 px-1 focus:outline-none focus:border-pink-500"
+  className="w-full border-b border-black bg-transparent py-2 px-1 focus:outline-none focus:border-pink-500 focus:text-pink-500 focus:font-bold"
             placeholder="Email"
           />
         </div>
@@ -60,7 +60,7 @@ export default function EmailContact() {
             id="subject"
             name="subject"
             required
-            className="w-full border-b border-black bg-transparent py-2 px-1 focus:outline-none focus:border-pink-500"
+  className="w-full border-b border-black bg-transparent py-2 px-1 focus:outline-none focus:border-pink-500 focus:text-pink-500 focus:font-bold"
             placeholder="Subject"
           />
         </div>
@@ -74,7 +74,7 @@ export default function EmailContact() {
             type="tel"
             id="phone"
             name="phone"
-            className="w-full border-b border-black bg-transparent py-2 px-1 focus:outline-none focus:border-pink-500"
+  className="w-full border-b border-black bg-transparent py-2 px-1 focus:outline-none focus:border-pink-500 focus:text-pink-500 focus:font-bold"
             placeholder="Phone Number"
           />
         </div>
