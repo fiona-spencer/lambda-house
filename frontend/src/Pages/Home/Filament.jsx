@@ -115,7 +115,7 @@ export default function FilamentGallery() {
             <img
               src={selectedFilament.image}
               alt={`${selectedType.type} - ${selectedFilament.name}`}
-              className="w-96 h-96 object-contain rounded-lg shadow-md border border-gray-300"
+              className="sm:w-96 sm:h-96 w-80 h-80 object-contain rounded-lg shadow-md border border-gray-300"
             />
           </div>
 
