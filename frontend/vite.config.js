@@ -5,7 +5,6 @@ export default (config) => {
     resolve: {
       alias: {
         '@': '/src',
-        three: 'three', // ✅ Explicit alias for 'three'
       },
     },
     server: {
