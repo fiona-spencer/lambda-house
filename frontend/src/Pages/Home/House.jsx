@@ -21,7 +21,7 @@ export default function House() {
       0.1,
       1000
     );
-    camera.position.set(0, 10, 100);
+    camera.position.set(0, 40, 100);
 
     // Renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true });
