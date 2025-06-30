@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "../../../public/libs/three-js/build/three.module.js";
 import { STLLoader } from "../../../public/libs/three-js/examples/jsm/loaders/STLLoader.js";
-import lambdaHouse from '../../../public/models/lambda-logo.stl'
+import { OrbitControls } from "../../../public/libs/three-js/examples/jsm/controls/OrbitControls.js";
+import lambdaHouse from '../../../public/models/lambda-logo.stl';
 
 export default function House() {
   const mountRef = useRef(null);
@@ -10,10 +11,11 @@ export default function House() {
   useEffect(() => {
     if (!mountRef.current) return;
 
-    // Scene, Camera, Renderer
+    // Scene setup
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xf0f0f0);
 
+    // Camera
     const camera = new THREE.PerspectiveCamera(
       75,
       mountRef.current.clientWidth / mountRef.current.clientHeight,
@@ -22,6 +24,7 @@ export default function House() {
     );
     camera.position.set(0, 50, 100);
 
+    // Renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(
       mountRef.current.clientWidth,
@@ -29,48 +32,47 @@ export default function House() {
     );
     mountRef.current.appendChild(renderer.domElement);
 
-    // Light
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
-    scene.add(ambientLight);
+    // Lights
+    scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    dirLight.position.set(10, 20, 10);
+    scene.add(dirLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionalLight.position.set(10, 20, 10);
-    scene.add(directionalLight);
+    // OrbitControls
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
 
     // Load STL
     const loader = new STLLoader();
-
     let mesh;
+
     loader.load(
-      lambdaHouse, // Put your STL file in public folder or adjust path
+      lambdaHouse,
       (geometry) => {
         geometry.computeVertexNormals();
-        const material = new THREE.MeshStandardMaterial({ color: 0x8B4513 }); // brown
+        const material = new THREE.MeshStandardMaterial({ color: 0x8B4513 });
         mesh = new THREE.Mesh(geometry, material);
 
-        // Center and scale the mesh (optional, adjust based on your STL)
         geometry.center();
         mesh.scale.set(0.5, 0.5, 0.5);
+
+        // Rotate model upright (90° around X-axis)
+        mesh.rotation.x = -Math.PI / 2;
 
         scene.add(mesh);
       },
       undefined,
       (error) => {
-        console.error("Error loading STL:", error);
+        console.error("STL Load Error:", error);
       }
     );
 
-    // Animate rotation
+    // Animate
     const animate = () => {
       requestIdRef.current = requestAnimationFrame(animate);
-
-      if (mesh) {
-        mesh.rotation.y += 0.01;
-      }
-
+      controls.update();
       renderer.render(scene, camera);
     };
-
     animate();
 
     // Cleanup
