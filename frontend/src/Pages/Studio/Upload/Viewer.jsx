@@ -116,61 +116,71 @@ export default function Viewer() {
     };
   }, [size]);
 
-  function loadSTLFromFile(file) {
-    setError(null);
-    const reader = new FileReader();
+function loadSTLFromFile(file) {
+  setError(null);
+  const reader = new FileReader();
 
-    reader.onload = function (event) {
-      try {
-        const contents = event.target.result;
-        const loader = new STLLoader();
-        const geometry = loader.parse(contents);
+  reader.onload = function (event) {
+    try {
+      const contents = event.target.result;
+      const loader = new STLLoader();
+      const geometry = loader.parse(contents);
 
-        if (meshRef.current) {
-          mountRef.current.scene.remove(meshRef.current);
-          meshRef.current.geometry.dispose();
-          meshRef.current.material.dispose();
+      const material = new THREE.MeshStandardMaterial({ color: 0xff6600 });
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.rotation.x = -Math.PI / 2;
+      geometry.computeVertexNormals();
+
+      mountRef.current.scene.add(mesh);
+      meshesRef.current.push(mesh);
+
+      // Setup drag controls for all meshes
+      if (meshesRef.current.length > 0) {
+        // Dispose old drag controls if any
+        if (mountRef.current.dragControls) {
+          mountRef.current.dragControls.dispose();
         }
 
-        const material = new THREE.MeshStandardMaterial({ color: 0xff6600 });
-        const mesh = new THREE.Mesh(geometry, material);
-        mesh.rotation.x = -Math.PI / 2;
-        geometry.computeVertexNormals();
-
-        meshRef.current = mesh;
-        mountRef.current.scene.add(mesh);
-
-        const dragControls = new DragControls([mesh], mountRef.current.camera, mountRef.current.renderer.domElement);
+        const dragControls = new DragControls(meshesRef.current, mountRef.current.camera, mountRef.current.renderer.domElement);
         dragControls.addEventListener("dragstart", () => {
           controlsRef.current.enabled = false;
         });
         dragControls.addEventListener("dragend", () => {
           controlsRef.current.enabled = true;
         });
-
-        const box = new THREE.Box3().setFromObject(mesh);
-        const sizeBox = box.getSize(new THREE.Vector3()).length();
-        const center = box.getCenter(new THREE.Vector3());
-
-        mountRef.current.camera.position.set(center.x, center.y + sizeBox * 0.8, center.z + sizeBox * 1.5);
-        mountRef.current.camera.lookAt(center);
-        controlsRef.current.target.copy(center);
-        controlsRef.current.update();
-      } catch (err) {
-        setError("Failed to parse STL file: " + err.message);
+        mountRef.current.dragControls = dragControls;
       }
-    };
 
-    reader.onerror = () => setError("Failed to read file");
+      // Adjust camera to fit newly added mesh along with existing ones:
+      const box = new THREE.Box3();
+      meshesRef.current.forEach((m) => box.expandByObject(m));
+      const sizeBox = box.getSize(new THREE.Vector3()).length();
+      const center = box.getCenter(new THREE.Vector3());
 
-    reader.readAsArrayBuffer(file);
-  }
+      mountRef.current.camera.position.set(center.x, center.y + sizeBox * 0.8, center.z + sizeBox * 1.5);
+      mountRef.current.camera.lookAt(center);
+      controlsRef.current.target.copy(center);
+      controlsRef.current.update();
+    } catch (err) {
+      setError("Failed to parse STL file: " + err.message);
+    }
+  };
 
-  function handleFileChange(event) {
-    if (event.target.files.length > 0) {
-      loadSTLFromFile(event.target.files[0]);
+  reader.onerror = () => setError("Failed to read file");
+
+  reader.readAsArrayBuffer(file);
+}
+
+
+function handleFileChange(event) {
+  const files = event.target.files;
+  if (files.length > 0) {
+    for (let i = 0; i < files.length; i++) {
+      loadSTLFromFile(files[i]);
     }
   }
+}
+
 
   // Home button handler to reset camera
   function handleHomeClick() {
