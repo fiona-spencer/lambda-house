@@ -1,12 +1,10 @@
-import React, { useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import * as THREE from 'three';
+import React, { useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import * as THREE from "three";
 
-function RotatingCube() {
+function RotatingBox() {
   const meshRef = useRef();
 
-  // Rotate the cube on every frame
   useFrame(() => {
     if (meshRef.current) {
       meshRef.current.rotation.x += 0.01;
@@ -24,12 +22,11 @@ function RotatingCube() {
 
 export default function Viewer() {
   return (
-    <div className="w-full h-screen bg-black">
+    <div style={{ width: "100%", height: "100vh" }}>
       <Canvas camera={{ position: [3, 3, 3] }}>
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
-        <RotatingCube />
-        <OrbitControls />
+        <RotatingBox />
       </Canvas>
     </div>
   );
