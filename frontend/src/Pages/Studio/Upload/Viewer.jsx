@@ -32,7 +32,7 @@ import plaWhite from "../../../assets/Filament/pla/pla-white.jpg";
 import plaYellow from "../../../assets/Filament/pla/pla-yellow.jpg";
 
 // TPU images
-import tpuBlack from "../../assets/Filament/tpu/tpu-black.png";
+import tpuBlack from "../../../assets/Filament/tpu/tpu-black.png";
 
 const filamentData = [
   {
