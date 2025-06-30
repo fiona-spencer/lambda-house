@@ -5,6 +5,7 @@ import Equipment from './Equipment';
 import Filament from './Filament';
 import Sections from './Sections';
 import EmailContact from '../../Components/EmailContact';
+import House from './House';
 
 const sections = [
   {
@@ -42,6 +43,7 @@ export default function LambdahousePage() {
           <Component />
         </div>
       ))}
+    <House/>
     </div>
   );
 }
