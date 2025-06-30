@@ -3,7 +3,7 @@ import * as THREE from "../../../../public/libs/three-js/build/three.module.js";
 import { STLLoader } from "../../../../public/libs/three-js/examples/jsm/loaders/STLLoader.js";
 import { OrbitControls } from "../../../../public/libs/three-js/examples/jsm/controls/OrbitControls.js";
 import { DragControls } from "../../../../public/libs/three-js/examples/jsm/controls/DragControls.js";
-import { FiUpload, FiDownload } from "react-icons/fi";
+import { FiUpload, FiDownload, FiHome } from "react-icons/fi";
 
 export default function Viewer() {
   const mountRef = useRef(null);
@@ -14,6 +14,10 @@ export default function Viewer() {
     width: window.innerWidth * 0.8,
     height: window.innerWidth * 0.8,
   });
+
+  // Store references to key objects for resetting view
+  const cameraRef = useRef(null);
+  const sceneRef = useRef(null);
 
   useEffect(() => {
     function handleResize() {
@@ -86,6 +90,25 @@ export default function Viewer() {
     const zArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), cornerPos, 50, 0x0000ff);
     scene.add(zArrow);
 
+    // Store refs for reset function
+    cameraRef.current = camera;
+    sceneRef.current = scene;
+
+    // Define function to reset camera to "home" view
+    function resetCamera() {
+      // Center of bed plate is at (0,0,0)
+      // We'll position the camera so the bed is centered
+      // and coordinate arrows at bottom-left corner are visible.
+      // Let's move camera back and up, looking at center.
+
+      camera.position.set(0, 200, 300); // Elevated and pulled back
+      controls.target.set(0, 0, 0); // Look at bed plate center
+      controls.update();
+    }
+
+    // Call it once on init so camera starts here
+    resetCamera();
+
     function animate() {
       requestAnimationFrame(animate);
       controls.update();
@@ -96,6 +119,9 @@ export default function Viewer() {
     mountRef.current.scene = scene;
     mountRef.current.camera = camera;
     mountRef.current.renderer = renderer;
+
+    // Expose resetCamera to ref so we can call it from button
+    mountRef.current.resetCamera = resetCamera;
 
     return () => {
       controls.dispose();
@@ -159,6 +185,13 @@ export default function Viewer() {
     }
   }
 
+  // Home button handler to reset camera
+  function handleHomeClick() {
+    if (mountRef.current?.resetCamera) {
+      mountRef.current.resetCamera();
+    }
+  }
+
   return (
     <div className="relative bg-gray-900 text-gray-400">
       <div className="absolute top-4 left-4 z-10 flex gap-2 items-center">
@@ -167,6 +200,15 @@ export default function Viewer() {
           <span>Upload STL</span>
           <input type="file" accept=".stl" onChange={handleFileChange} className="hidden" />
         </label>
+
+        <button
+          onClick={handleHomeClick}
+          className="p-2 bg-gray-800 border border-gray-600 rounded text-sm flex items-center gap-2 hover:bg-gray-700"
+          title="Reset View"
+        >
+          <FiHome size={16} /> Home
+        </button>
+
         <button
           onClick={() => {}}
           className="p-2 bg-gray-800 border border-gray-600 rounded text-sm flex items-center gap-2 hover:bg-gray-700"
@@ -174,11 +216,13 @@ export default function Viewer() {
           <FiDownload size={16} /> Drop to Bed
         </button>
       </div>
+
       <div
         ref={mountRef}
         style={{ width: size.width / 2, height: size.height }}
         className="mx-auto"
       />
+
       {error && (
         <div className="absolute bottom-4 left-4 text-red-500 bg-red-900 px-3 py-1 rounded">{error}</div>
       )}
