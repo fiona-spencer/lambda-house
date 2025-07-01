@@ -24,6 +24,6 @@ git commit -m "$commit_msg"
 git push origin main
 
 # SSH to server and pull latest
-ssh fiona_server 'cd /volume1/docker/lambda-house && git fetch origin && git reset --hard origin/main'
+ssh fiona_server 'cd /volume1/docker/lambda-house/backend && git fetch origin && git reset --hard origin/main'
 
 # add
