@@ -38,18 +38,6 @@ export const SendMail = async ({ type, to, subject, text, html }) => {
     },
   });
 
-  const commonAttachments = [
-    {
-      filename: 'logo.png',
-      path: path.resolve('./client/src/assets/logo.png'),
-      cid: 'banner',
-    },
-    {
-      filename: 'map.png',
-      path: path.resolve('./client/src/assets/map.png'),
-      cid: 'mapimage',
-    },
-  ];
 
   // Default options
   let mailOptions = {
@@ -58,7 +46,6 @@ export const SendMail = async ({ type, to, subject, text, html }) => {
     subject,
     text,
     html,
-    attachments: commonAttachments,
   };
 
   switch (type) {
