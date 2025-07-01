@@ -1,7 +1,7 @@
-const Contact = require('../models/Contact');
-const { sendMail } = require('../utils/SendMail.js'); // Optional
+import Contact from '../models/contact.model.js';
+import { sendMail } from '../utils/SendMail.js'; // Optional
 
-exports.submitContact = async (req, res) => {
+export async function submitContact(req, res) {
   try {
     const contactData = req.body;
 
@@ -27,4 +27,4 @@ exports.submitContact = async (req, res) => {
     console.error('Error submitting contact:', err);
     res.status(500).json({ message: 'Failed to submit contact form.' });
   }
-};
+}
