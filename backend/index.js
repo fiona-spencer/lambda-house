@@ -8,15 +8,13 @@ const app = express();
 app.use(express.json({ limit: '10mb' }));
 
 // MongoDB Connection
-mongoose.connect(process.env.DB_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.DB_URL)
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => {
     console.error("❌ MongoDB connection error:", err.message);
-    process.exit(1); // Exit if DB fails
+    process.exit(1);
   });
+
 
 // Example route (optional)
 app.get('/test', (req, res) => {
