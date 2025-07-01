@@ -9,22 +9,19 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
-  "dependencies": {
-    "@emailjs/browser": "^4.3.3",
-    "@react-three/drei": "^10.3.0",
-    "@react-three/fiber": "^9.1.4",
-    "@reduxjs/toolkit": "^2.7.0",
-    "axios": "^1.6.2",
-    "firebase": "^11.6.0",
-    "flowbite": "^3.1.2",
-    "flowbite-react": "^0.7.8",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-dropzone": "^14.2.3",
-    "react-icons": "^5.5.0",
-    "react-router-dom": "^6.21.0",
-    "three": "^0.178.0"
-  },
+ "dependencies": {
+  "@emailjs/browser": "^4.3.3",
+  "@reduxjs/toolkit": "^2.7.0",
+  "axios": "^1.6.2",
+  "firebase": "^11.6.0",
+  "flowbite": "^3.1.2",
+  "flowbite-react": "^0.7.8",
+  "react": "^18.2.0",
+  "react-dom": "^18.2.0",
+  "react-dropzone": "^14.2.3",
+  "react-icons": "^5.5.0",
+  "react-router-dom": "^6.21.0"
+},
   "resolutions": {
     "rollup": "npm:@rollup/wasm-node"
   },
