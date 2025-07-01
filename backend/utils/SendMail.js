@@ -13,6 +13,9 @@ const {
   REFRESH_TOKEN,
 } = process.env;
 
+console.log("CLIENT_ID:", process.env.CLIENT_ID);
+
+
 const EMAIL_USER = 'lambdahouse416@gmail.com'; // fixed sender address
 
 const oAuth2Client = new google.auth.OAuth2(
