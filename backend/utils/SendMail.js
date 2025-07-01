@@ -16,7 +16,7 @@ const {
 console.log("CLIENT_ID:", process.env.CLIENT_ID);
 
 
-const EMAIL_USER = 'lambdahouse416@gmail.com'; // fixed sender address
+const EMAIL_USER = 'fionagspencer@gmail.com'; // fixed sender address
 
 const oAuth2Client = new google.auth.OAuth2(
   CLIENT_ID,
