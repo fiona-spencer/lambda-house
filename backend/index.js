@@ -19,7 +19,7 @@ mongoose.connect(process.env.DB_URL, {
   });
 
 // Example route (optional)
-app.get('/', (req, res) => {
+app.get('/test', (req, res) => {
   res.send('🚀 API is running');
 });
 
