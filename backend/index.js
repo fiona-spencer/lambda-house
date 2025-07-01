@@ -16,20 +16,31 @@ mongoose.connect(process.env.DB_URL)
     process.exit(1);
   });
 
-// ✅ API routes
+// ✅ API route
 app.get('/api/test', (req, res) => {
   res.send('🚀 API is running from /api/test');
 });
 
-// Serve frontend static files
-app.use(express.static(path.join(__dirname, 'client/build')));
+// ✅ Static File Serving (Frontend)
+app.use(express.static(path.join(__dirname, '../client/dist')));
 
-// Catch-all for React frontend
+// ✅ Serve index.html for any unknown route
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client/build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
-// Server Start
+// ✅ Error Middleware
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || 'Internal Server Error';
+  res.status(statusCode).json({
+    success: false,
+    statusCode,
+    message,
+  });
+});
+
+// ✅ Start Server
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running on port ${PORT}`);
