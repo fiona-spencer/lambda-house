@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "../../../public/libs/three-js/build/three.module.js";
 import { STLLoader } from "../../../public/libs/three-js/examples/jsm/loaders/STLLoader.js";
-import lambdaHouse from '../../../public/models/lambda-logo.stl';
+import lambdaHouse from "../../../public/models/lambda-logo.stl";
 
 export default function House() {
   const mountRef = useRef(null);
@@ -12,23 +12,18 @@ export default function House() {
 
     // Scene setup
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xFFFFFF);
+    scene.background = new THREE.Color(0xffffff);
+
+    const width = mountRef.current.clientWidth;
+    const height = mountRef.current.clientHeight;
 
     // Camera
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      mountRef.current.clientWidth / mountRef.current.clientHeight,
-      0.1,
-      1000
-    );
+    const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
     camera.position.set(0, -10, 100);
 
     // Renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(
-      mountRef.current.clientWidth,
-      mountRef.current.clientHeight
-    );
+    renderer.setSize(width, height);
     mountRef.current.appendChild(renderer.domElement);
 
     // Lights
@@ -66,7 +61,7 @@ export default function House() {
       }
     );
 
-    // Handle click
+    // Click interaction
     const onClick = (event) => {
       const bounds = renderer.domElement.getBoundingClientRect();
       mouse.x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
@@ -75,26 +70,23 @@ export default function House() {
       raycaster.setFromCamera(mouse, camera);
       const intersects = raycaster.intersectObjects(scene.children);
 
-      if (intersects.find(i => i.object === mesh)) {
+      if (intersects.find((i) => i.object === mesh)) {
         clickAnimation = true;
         animationStartTime = performance.now();
       }
     };
     renderer.domElement.addEventListener("click", onClick);
 
-    // Animate
+    // Animation loop
     const animate = (time) => {
       requestIdRef.current = requestAnimationFrame(animate);
 
       if (mesh) {
-        // Regular rotation
         mesh.rotation.z += 0.01;
 
-        // Fun animation on click
         if (clickAnimation) {
           const elapsed = time - animationStartTime;
 
-          // Bounce for 500ms
           if (elapsed < 500) {
             mesh.scale.setScalar(1 + 0.2 * Math.sin((elapsed / 500) * Math.PI));
           } else {
@@ -120,7 +112,15 @@ export default function House() {
   return (
     <div
       ref={mountRef}
-      style={{ width: "600px", height: "400px", margin: "auto" }}
+      style={{
+        width: "100vw",
+        height: "500px", // Or make this responsive with media queries
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        margin: "0 auto",
+        overflow: "hidden",
+      }}
     />
   );
 }
