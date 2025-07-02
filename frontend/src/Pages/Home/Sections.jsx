@@ -64,7 +64,7 @@ export default function Sections() {
             to={item.link}
             className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center justify-center group"
           >
-            <span className="px-10 py-2 rounded-full transition duration-300 group-hover:bg-pink-500/30">
+            <span className="px-10 py-2 rounded-full transition duration-300 group-hover:bg-pink-500">
               <FaArrowRight className="text-2xl transition-transform duration-300 group-hover:translate-x-1" />
             </span>
           </Link>
