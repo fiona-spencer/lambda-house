@@ -9,7 +9,7 @@ export default function AboutPage() {
 <img
     src={smallLogo}
     alt="Lambda House Logo"
-    className="w-40 h-40 mx-auto wave object-contain mb-8"
+    className="w-40 h-40 mx-auto glitch-anim  object-contain mb-8"
   />
       {/* Intro Section */}
       <section className="max-w-4xl w-full bg-gray-200 p-8">
