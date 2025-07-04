@@ -7,11 +7,11 @@ import './index.css';
 // Pages
 import LambdaHousePage from './Pages/Home/LambdahousePage';
 import StudioPage from './Pages/Studio/StudioPage';
-import ProductPage from './Pages/Products/ProductPage';
-import ProjectsPage from './Pages/Projects/ProjectsPage';
+// import ProductPage from './Pages/Products/ProductPage';
+// import ProjectsPage from './Pages/Projects/ProjectsPage';
 // import LogsPage from './Pages/Log/LogsPage';
 import AboutPage from './Pages/About/AboutPage';
-
+import Construction from './Pages/Construction'
 // Components
 import Header from './Static/Header/Header';
 import Footer from './Static/Footer/Footer';
@@ -27,10 +27,11 @@ function App() {
           <Routes>
             <Route path="/" element={<LambdaHousePage />} />
             <Route path="/studio" element={<StudioPage />} />
-            <Route path="/products" element={<ProductPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/products" element={<Construction />} />
+            <Route path="/projects" element={<Construction />} />
             {/* <Route path="/logs" element={<LogsPage />} /> */}
             <Route path="/about" element={<AboutPage />} />
+            {/* <Route path="/construction" element={<Construction />} /> */}
             {/* <Route path="/sitemap.xml" element={<Sitemap />} /> */}
           </Routes>
         </main>
