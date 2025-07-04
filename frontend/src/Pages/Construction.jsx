@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import LogoImage from '../assets/lg-color-logo.svg'
+import LogoImage from '../assets/lh-color-logo.svg'
 
 export default function Construction() {
  return (
