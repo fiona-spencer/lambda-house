@@ -15,7 +15,7 @@ export default function Construction() {
       </h1>
       <Link
         to="/"
-        className="text-blue-600 hover:underline text-lg"
+        className="text-black font-extrabold hover:underline text-lg"
       >
         Go back to Home
       </Link>
