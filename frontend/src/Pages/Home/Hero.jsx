@@ -10,7 +10,7 @@ export default function Hero() {
   return (
     <div className="flex w-full sm:h-[calc(82vh)] h-[calc(80vh)] overflow-hidden">
       {/* Top Small Text */}
-      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-20 text-white text-sm tracking-widest uppercase">
+      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-20 text-white text-xs md:text-sm tracking-widest uppercase">
         Welcome to Lambda House
       </div>
 
