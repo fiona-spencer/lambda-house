@@ -6,12 +6,11 @@ export default function AboutPage() {
     <main className="min-h-screen text-gray-900 flex flex-col items-center justify-center p-8 space-y-12 bg-white relative">
       
       {/* Top-left image */}
-      <img
-        src={smallLogo}
-        alt="Lambda House Logo"
-        className="absolute top-4 left-4 w-20 h-20 object-contain"
-      />
-
+<img
+    src={smallLogo}
+    alt="Lambda House Logo"
+    className="w-40 h-40 mx-auto wave object-contain mb-8"
+  />
       {/* Intro Section */}
       <section className="max-w-4xl w-full bg-gray-200 p-8">
         <h1 className="text-5xl font-extrabold mb-6 text-gray-900">About Lambda House</h1>
