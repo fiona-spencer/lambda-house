@@ -42,7 +42,7 @@ className="text-white hover:text-gray-300 transition duration-300 transform hove
             <FaGithub />
           </a>
           <a
-            href="https://makerworld.com/en/u/YOUR_USERNAME"
+            href="https://makerworld.com/en/@lambdahouse"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="MakerWorld"
@@ -53,7 +53,7 @@ className="text-white hover:text-gray-300 transition duration-300 transform hove
         </div>
 
         {/* Policy Links */}
-<div className="flex flex-col md:flex-row justify-center gap-2 md:gap-8 text-sm text-white bg-black p-4">
+<div className="flex flex-col md:flex-row justify-center gap-2 md:gap-8 text-sm text-white bg-black p-4 w-auto">
           {[
             ["Terms and Conditions", "/terms-and-conditions"],
             ["Shipping Policy", "/shipping-policy"],
