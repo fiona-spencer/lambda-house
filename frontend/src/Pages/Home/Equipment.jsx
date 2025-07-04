@@ -21,7 +21,7 @@ export default function Equipment() {
 
       {/* Equipment Title */}
       <h2 className="text-3xl font-bold mb-6 border-b border-gray-300 pb-2">
-        Bambu Lab PS1 with AMS
+        Bambu Lab P1S with AMS
       </h2>
 
       {/* Specs Grid */}
