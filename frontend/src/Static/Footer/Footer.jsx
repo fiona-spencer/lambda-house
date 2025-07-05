@@ -4,7 +4,8 @@ import {
   FaGithub,
   FaEnvelope,
   FaCube,
-  FaTwitter, // ← Add this import
+  FaXTwitter, // ← Add this import
+  
 } from "react-icons/fa";
 import lgTransparent from '../../assets/lh-transparent.svg'
 import tvBg from '../../assets/tv-bars.svg'
@@ -45,7 +46,7 @@ className="text-white hover:text-gray-300 transition duration-300 transform hove
             aria-label="YouTube"
 className="text-white hover:text-gray-300 transition duration-300 transform hover:scale-125"
           >
-            <FaTwitter />
+            <FaXTwitter />
           </a>
           <a
             href="https://github.com/lambdahouse"
