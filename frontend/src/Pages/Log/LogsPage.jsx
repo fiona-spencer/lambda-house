@@ -41,23 +41,10 @@ function simpleMarkdownToHtml(md) {
     .replace(/^\> (.*$)/gim, "<blockquote class='border-l-4 border-pink-500 pl-4 italic text-gray-600 my-4'>$1</blockquote>")
     .replace(/\*\*(.*?)\*\*/gim, "<strong class='font-semibold'>$1</strong>")
     .replace(/\*(.*?)\*/gim, "<em class='italic'>$1</em>")
-  // Step 1: Replace individual images with markers
-.replace(/\!\[(.*?)\]\((.*?)\)/gim, (match, alt, src) => {
-  const fullSrc = src.startsWith("/") ? RAW_BASE + src : src;
-  return `
-<!--img-start-->
-<img alt='${alt}' src='${fullSrc}' class='w-1/4 rounded-lg my-4' />
-<!--img-end-->`;
-})
-
-// Step 2: Group consecutive images into a flex row
-.replace(/(<!--img-start-->.*?<!--img-end-->)+/gms, match => {
-  const images = match
-    .replace(/<!--img-start-->/g, "")
-    .replace(/<!--img-end-->/g, "");
-  return `<div class="flex flex-wrap justify-center gap-4 my-6">${images}</div>`;
-})
-
+    .replace(/\!\[(.*?)\]\((.*?)\)/gim, (match, alt, src) => {
+      const fullSrc = src.startsWith("/") ? RAW_BASE + src : src;
+      return `<img alt='${alt}' src='${fullSrc}' class='lg:w-1/4 w-auto mx-auto flex rounded-lg my-4' />`;
+    })
     .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2' class='text-pink-600 hover:underline'>$1</a>")
     .replace(/^\s*\n\-/gm, "<ul class='list-disc list-inside'><li>")
     .replace(/^\- (.*)$/gm, "<li>$1</li>")
