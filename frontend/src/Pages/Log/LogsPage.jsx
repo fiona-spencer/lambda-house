@@ -12,11 +12,14 @@ function simpleMarkdownToHtml(md) {
     .replace(/^\> (.*$)/gim, "<blockquote class='border-l-4 border-pink-500 pl-4 italic text-gray-600'>$1</blockquote>")
     .replace(/\*\*(.*?)\*\*/gim, "<strong class='font-bold'>$1</strong>")
     .replace(/\*(.*?)\*/gim, "<em class='italic'>$1</em>")
-    .replace(/\!\[(.*?)\]\((.*?)\)/gim, "<img class='my-4 rounded shadow' alt='$1' src='$2' />")
-    .replace(/\[(.*?)\]\((.*?)\)/gim, "<a class='text-pink-600 underline hover:text-pink-800' href='$2' target='_blank'>$1</a>")
+d    .replace(/\[(.*?)\]\((.*?)\)/gim, "<a class='text-pink-600 underline hover:text-pink-800' href='$2' target='_blank'>$1</a>")
     .replace(/^\s*\n\-/gm, "<ul class='list-disc ml-6'><li>")
     .replace(/^\- (.*)$/gm, "<li class='mb-1'>$1</li>")
-    .replace(/\n$/gim, "<br />");
+    .replace(/\n$/gim, "<br />")
+    .replace(
+    /\!\[(.*?)\]\((.*?)\)/gim,
+    `<img alt='$1' src='$2' class='max-w-full rounded-lg shadow-md my-4' />`
+    );
 
   if (html.includes("<ul class='list-disc ml-6'><li>")) html += "</ul>";
   return html.trim();
