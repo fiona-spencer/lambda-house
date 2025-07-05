@@ -55,9 +55,9 @@ export default function Sections() {
           className="relative bg-white hover:bg-pink-400 transition-colors duration-300 p-6 flex flex-col"
         >
           <div>
-            <h3 className="text-xl font-bold mb-1">{item.title}</h3>
-            <h4 className="text-md font-medium text-gray-600 mb-2">{item.subtitle}</h4>
-            <p className="text-sm text-gray-800 mb-14">{item.description}</p>
+            <h3 className="text-2xl font-bold mb-2">{item.title}</h3>
+            <h4 className="text-lg font-medium text-gray-600 mb-3">{item.subtitle}</h4>
+            <p className="text-base text-gray-800 mb-16">{item.description}</p>
           </div>
 
           <Link
@@ -73,3 +73,4 @@ export default function Sections() {
     </div>
   );
 }
+
