@@ -16,7 +16,7 @@ function simpleMarkdownToHtml(md) {
       const fullSrc = src.startsWith("/")
         ? RAW_BASE + src
         : src;
-      return `<img alt='${alt}' src='${fullSrc}' class='max-w-full rounded-lg my-4' />`;
+        return `<img alt='${alt}' src='${fullSrc}' class='w-1/4 mx-auto rounded-lg my-4' />`;
     })
     .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2' class='text-pink-600 hover:underline'>$1</a>")
     .replace(/^\s*\n\-/gm, "<ul class='list-disc list-inside'><li>")
