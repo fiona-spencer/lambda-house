@@ -74,7 +74,7 @@ export default function NavBar() {
           >
             <button
               onClick={() => navigate(link)}
-              className="text-gray-800 font-semibold hover:text-gray-600 focus:outline-none"
+              className="text-gray-800 font-semibold hover:text-white focus:outline-none"
               type="button"
               aria-haspopup="true"
               aria-expanded={isOpen}
