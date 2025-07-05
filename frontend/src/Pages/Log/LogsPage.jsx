@@ -43,7 +43,7 @@ function simpleMarkdownToHtml(md) {
     .replace(/\*(.*?)\*/gim, "<em class='italic'>$1</em>")
     .replace(/\!\[(.*?)\]\((.*?)\)/gim, (match, alt, src) => {
       const fullSrc = src.startsWith("/") ? RAW_BASE + src : src;
-      return `<img alt='${alt}' src='${fullSrc}' class='w-1/4 mx-auto rounded-lg my-4' />`;
+      return `<img alt='${alt}' src='${fullSrc}' class='w-1/4 mx-auto flex rounded-lg my-4' />`;
     })
     .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2' class='text-pink-600 hover:underline'>$1</a>")
     .replace(/^\s*\n\-/gm, "<ul class='list-disc list-inside'><li>")
