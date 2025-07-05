@@ -92,6 +92,11 @@ export default function LogsPage() {
 
   return (
     <div className="flex min-h-screen bg-white text-black">
+      <img
+  src="https://raw.githubusercontent.com/fiona-spencer/lambda-house-logs/main/Printer_Basics/images/White.jpg"
+  alt="3D Printer"
+  className="max-w-full rounded-lg shadow-md my-4"
+/>
       <aside className="w-64 border-r border-pink-300 bg-pink-50 p-4 overflow-y-auto">
         <ul>
 {categories.map((cat, index) => (
