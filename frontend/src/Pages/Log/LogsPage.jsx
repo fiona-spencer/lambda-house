@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { marked } from "marked";
+import marked from "marked";
 
 export default function LogsPage() {
   const [markdownContent, setMarkdownContent] = useState("");
