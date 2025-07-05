@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { FaBars } from "react-icons/fa"; // Hamburger icon
 
 const GITHUB_OWNER = "fiona-spencer";
 const GITHUB_REPO = "lambda-house-logs";
 const RAW_BASE = "https://raw.githubusercontent.com/fiona-spencer/lambda-house-logs/main";
 
+// Simple Markdown to HTML converter
 function simpleMarkdownToHtml(md) {
   let html = md
     .replace(/^### (.*$)/gim, "<h3 class='text-xl font-semibold mt-6 mb-3'>$1</h3>")
@@ -13,9 +15,7 @@ function simpleMarkdownToHtml(md) {
     .replace(/\*\*(.*?)\*\*/gim, "<strong class='font-semibold'>$1</strong>")
     .replace(/\*(.*?)\*/gim, "<em class='italic'>$1</em>")
     .replace(/\!\[(.*?)\]\((.*?)\)/gim, (match, alt, src) => {
-      const fullSrc = src.startsWith("/")
-        ? RAW_BASE + src
-        : src;
+      const fullSrc = src.startsWith("/") ? RAW_BASE + src : src;
       return `<img alt='${alt}' src='${fullSrc}' class='w-1/4 mx-auto rounded-lg my-4' />`;
     })
     .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2' class='text-pink-600 hover:underline'>$1</a>")
@@ -35,6 +35,7 @@ export default function LogsPage() {
   const [markdownHtml, setMarkdownHtml] = useState("");
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Sidebar toggle state
 
   useEffect(() => {
     fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/`)
@@ -75,6 +76,7 @@ export default function LogsPage() {
         const html = simpleMarkdownToHtml(text);
         setMarkdownHtml(html);
         setLoading(false);
+        setSidebarOpen(false); // Close sidebar on small screen when file is opened
       })
       .catch((err) => {
         console.error("Failed to fetch markdown content", err);
@@ -82,20 +84,15 @@ export default function LogsPage() {
       });
   }, [selectedFile]);
 
-  // Filter categories and files based on search term
   const filteredCategories = categories
     .map((cat) => {
-      // Check if category matches search term
       const categoryMatches = cat.name.toLowerCase().includes(searchTerm.toLowerCase());
-
-      // Filter files inside this category if loaded
       const filteredFiles = selectedCategory?.name === cat.name
         ? files.filter((file) =>
             file.name.toLowerCase().includes(searchTerm.toLowerCase())
           )
         : [];
 
-      // Only show category if category name or any of its files match
       if (categoryMatches || filteredFiles.length > 0) {
         return {
           ...cat,
@@ -108,12 +105,25 @@ export default function LogsPage() {
     .filter(Boolean);
 
   return (
-    <div className="flex min-h-screen bg-white text-black">
-      <aside className="w-64 border-r border-pink-300 bg-pink-50 p-4 overflow-y-auto flex flex-col">
+    <div className="flex flex-col sm:flex-row min-h-screen bg-white text-black relative">
+      {/* Toggle button for small screens */}
+      <button
+        className="sm:hidden p-4 text-pink-600 z-20"
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+      >
+        <FaBars size={24} />
+      </button>
+
+      {/* Sidebar */}
+      <aside
+        className={`${
+          sidebarOpen ? "block" : "hidden"
+        } sm:block absolute sm:relative z-10 w-64 border-r border-pink-300 bg-pink-50 p-4 overflow-y-auto sm:h-auto h-full transition-all`}
+      >
         <input
           type="text"
           placeholder="Search categories or files..."
-          className="mb-4 p-2 rounded border border-pink-300 focus:outline-none focus:ring focus:ring-pink-300"
+          className="mb-4 p-2 rounded border border-pink-300 focus:outline-none focus:ring focus:ring-pink-300 w-full"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -150,6 +160,7 @@ export default function LogsPage() {
         </ul>
       </aside>
 
+      {/* Main content */}
       <main className="flex-1 p-8 overflow-y-auto prose max-w-none prose-headings:text-pink-700 prose-a:text-pink-600">
         {loading && <p>Loading...</p>}
         {!loading && !markdownHtml && <p>Select a file to view its content</p>}
