@@ -1,18 +1,37 @@
 import React, { useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
 
 const GITHUB_OWNER = "fiona-spencer";
 const GITHUB_REPO = "lambda-house-logs";
+
+// Basic markdown-to-HTML converter
+function simpleMarkdownToHtml(md) {
+  let html = md
+    .replace(/^### (.*$)/gim, "<h3>$1</h3>")
+    .replace(/^## (.*$)/gim, "<h2>$1</h2>")
+    .replace(/^# (.*$)/gim, "<h1>$1</h1>")
+    .replace(/^\> (.*$)/gim, "<blockquote>$1</blockquote>")
+    .replace(/\*\*(.*?)\*\*/gim, "<strong>$1</strong>")
+    .replace(/\*(.*?)\*/gim, "<em>$1</em>")
+    .replace(/\!\[(.*?)\]\((.*?)\)/gim, "<img alt='$1' src='$2' />")
+    .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2'>$1</a>")
+    .replace(/^\s*\n\-/gm, "<ul><li>")
+    .replace(/^\- (.*)$/gm, "<li>$1</li>")
+    .replace(/\n$/gim, "<br />");
+
+  // Close ul if used
+  if (html.includes("<ul><li>")) html += "</ul>";
+  return html.trim();
+}
 
 export default function LogsPage() {
   const [categories, setCategories] = useState([]);
   const [files, setFiles] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [markdownContent, setMarkdownContent] = useState("");
+  const [markdownHtml, setMarkdownHtml] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Load root folders
+  // Fetch repo folders (categories)
   useEffect(() => {
     fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/`)
       .then((res) => res.json())
@@ -23,17 +42,17 @@ export default function LogsPage() {
       .catch((err) => console.error("Failed to load categories", err));
   }, []);
 
-  // Load files when category is selected
+  // Fetch files inside selected folder
   function selectCategory(category) {
     setSelectedCategory(category);
     setSelectedFile(null);
-    setMarkdownContent("");
+    setMarkdownHtml("");
     setLoading(true);
 
     fetch(category.url)
       .then((res) => res.json())
       .then((data) => {
-        const mdFiles = data.filter((item) => item.name.toLowerCase().endsWith(".md"));
+        const mdFiles = data.filter((item) => item.name.endsWith(".md"));
         setFiles(mdFiles);
         setLoading(false);
       })
@@ -43,7 +62,7 @@ export default function LogsPage() {
       });
   }
 
-  // Fetch markdown content, re-fetch every 60 seconds
+  // Fetch and update selected markdown file every 1 min
   useEffect(() => {
     if (!selectedFile) return;
 
@@ -52,19 +71,20 @@ export default function LogsPage() {
       fetch(selectedFile.download_url)
         .then((res) => res.text())
         .then((text) => {
-          setMarkdownContent(text);
+          const html = simpleMarkdownToHtml(text);
+          setMarkdownHtml(html);
           setLoading(false);
         })
         .catch((err) => {
-          console.error("Failed to load markdown", err);
+          console.error("Failed to fetch markdown content", err);
           setLoading(false);
         });
     };
 
-    fetchMarkdown(); // initial load
-    const intervalId = setInterval(fetchMarkdown, 60 * 1000); // every 1 minute
+    fetchMarkdown();
+    const interval = setInterval(fetchMarkdown, 60 * 1000); // 1 minute
 
-    return () => clearInterval(intervalId); // cleanup
+    return () => clearInterval(interval);
   }, [selectedFile]);
 
   return (
@@ -105,9 +125,9 @@ export default function LogsPage() {
 
       <main className="flex-1 p-8 overflow-y-auto prose max-w-none">
         {loading && <p>Loading...</p>}
-        {!loading && !markdownContent && <p>Select a category and file to view content</p>}
-        {!loading && markdownContent && (
-          <ReactMarkdown>{markdownContent}</ReactMarkdown>
+        {!loading && !markdownHtml && <p>Select a file to view its content</p>}
+        {!loading && markdownHtml && (
+          <article dangerouslySetInnerHTML={{ __html: markdownHtml }} />
         )}
       </main>
     </div>
