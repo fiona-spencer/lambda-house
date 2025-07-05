@@ -6,20 +6,19 @@ const GITHUB_REPO = "lambda-house-logs";
 // Basic markdown-to-HTML converter
 function simpleMarkdownToHtml(md) {
   let html = md
-    .replace(/^### (.*$)/gim, "<h3>$1</h3>")
-    .replace(/^## (.*$)/gim, "<h2>$1</h2>")
-    .replace(/^# (.*$)/gim, "<h1>$1</h1>")
-    .replace(/^\> (.*$)/gim, "<blockquote>$1</blockquote>")
-    .replace(/\*\*(.*?)\*\*/gim, "<strong>$1</strong>")
-    .replace(/\*(.*?)\*/gim, "<em>$1</em>")
-    .replace(/\!\[(.*?)\]\((.*?)\)/gim, "<img alt='$1' src='$2' />")
-    .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2'>$1</a>")
-    .replace(/^\s*\n\-/gm, "<ul><li>")
-    .replace(/^\- (.*)$/gm, "<li>$1</li>")
+    .replace(/^### (.*$)/gim, "<h3 class='text-lg font-semibold mt-4'>$1</h3>")
+    .replace(/^## (.*$)/gim, "<h2 class='text-xl font-bold mt-6'>$1</h2>")
+    .replace(/^# (.*$)/gim, "<h1 class='text-2xl font-bold mt-8'>$1</h1>")
+    .replace(/^\> (.*$)/gim, "<blockquote class='border-l-4 border-pink-500 pl-4 italic text-gray-600'>$1</blockquote>")
+    .replace(/\*\*(.*?)\*\*/gim, "<strong class='font-bold'>$1</strong>")
+    .replace(/\*(.*?)\*/gim, "<em class='italic'>$1</em>")
+    .replace(/\!\[(.*?)\]\((.*?)\)/gim, "<img class='my-4 rounded shadow' alt='$1' src='$2' />")
+    .replace(/\[(.*?)\]\((.*?)\)/gim, "<a class='text-pink-600 underline hover:text-pink-800' href='$2' target='_blank'>$1</a>")
+    .replace(/^\s*\n\-/gm, "<ul class='list-disc ml-6'><li>")
+    .replace(/^\- (.*)$/gm, "<li class='mb-1'>$1</li>")
     .replace(/\n$/gim, "<br />");
 
-  // Close ul if used
-  if (html.includes("<ul><li>")) html += "</ul>";
+  if (html.includes("<ul class='list-disc ml-6'><li>")) html += "</ul>";
   return html.trim();
 }
 
@@ -31,7 +30,6 @@ export default function LogsPage() {
   const [markdownHtml, setMarkdownHtml] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Fetch repo folders (categories)
   useEffect(() => {
     fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/`)
       .then((res) => res.json())
@@ -42,7 +40,6 @@ export default function LogsPage() {
       .catch((err) => console.error("Failed to load categories", err));
   }, []);
 
-  // Fetch files inside selected folder
   function selectCategory(category) {
     setSelectedCategory(category);
     setSelectedFile(null);
@@ -62,7 +59,6 @@ export default function LogsPage() {
       });
   }
 
-  // Fetch and update selected markdown file every 1 min
   useEffect(() => {
     if (!selectedFile) return;
 
@@ -82,21 +78,21 @@ export default function LogsPage() {
     };
 
     fetchMarkdown();
-    const interval = setInterval(fetchMarkdown, 60 * 1000); // 1 minute
+    const interval = setInterval(fetchMarkdown, 60 * 1000);
 
     return () => clearInterval(interval);
   }, [selectedFile]);
 
   return (
     <div className="flex min-h-screen bg-white text-black">
-      <aside className="w-64 border-r p-4 overflow-y-auto">
-        <h2 className="text-xl font-bold mb-4">Categories</h2>
+      <aside className="w-64 border-r border-pink-300 bg-pink-50 p-4 overflow-y-auto">
+        <h2 className="text-xl font-bold mb-4 text-pink-700">Categories</h2>
         <ul>
           {categories.map((cat) => (
             <li key={cat.name} className="mb-2">
               <button
-                className={`font-semibold hover:underline ${
-                  selectedCategory?.name === cat.name ? "text-blue-600" : ""
+                className={`font-semibold hover:text-pink-600 ${
+                  selectedCategory?.name === cat.name ? "text-pink-700" : ""
                 }`}
                 onClick={() => selectCategory(cat)}
               >
@@ -107,8 +103,8 @@ export default function LogsPage() {
                   {files.map((file) => (
                     <li key={file.name}>
                       <button
-                        className={`text-sm hover:text-blue-600 ${
-                          selectedFile?.name === file.name ? "font-bold" : ""
+                        className={`text-sm hover:text-pink-600 ${
+                          selectedFile?.name === file.name ? "font-bold text-pink-700" : ""
                         }`}
                         onClick={() => setSelectedFile(file)}
                       >
@@ -123,7 +119,7 @@ export default function LogsPage() {
         </ul>
       </aside>
 
-      <main className="flex-1 p-8 overflow-y-auto prose max-w-none">
+      <main className="flex-1 p-8 overflow-y-auto prose max-w-none prose-headings:text-pink-700 prose-a:text-pink-600">
         {loading && <p>Loading...</p>}
         {!loading && !markdownHtml && <p>Select a file to view its content</p>}
         {!loading && markdownHtml && (
