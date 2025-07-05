@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const navItems = [
   {
     page: "Studio",
     link: "/studio",
     subpages: [
-      { title: "STUDIO", link: "/studio" },
       { title: "Custom Prints", link: "/studio/custom-prints" },
       { title: "Upload Files", link: "/studio/upload" },
       { title: "Settings", link: "/studio/settings" },
@@ -16,7 +15,6 @@ const navItems = [
     page: "Products",
     link: "/products",
     subpages: [
-      { title: "PRODUCTS", link: "/products" },
       { title: "3D Prints", link: "/products/prints" },
       { title: "Files", link: "/products/files" },
       { title: "Custom Merch", link: "/products/merch" },
@@ -26,7 +24,6 @@ const navItems = [
     page: "Projects",
     link: "/projects",
     subpages: [
-      { title: "PROJECTS", link: "/projects" },
       { title: "Prototypes", link: "/projects/prototypes" },
       { title: "Electronics", link: "/projects/electronics" },
     ],
@@ -35,7 +32,6 @@ const navItems = [
     page: "Logs",
     link: "/logs",
     subpages: [
-      { title: "LOGS", link: "/logs" },
       { title: "Experiments", link: "/logs/experiments" },
       { title: "Ideas", link: "/logs/ideas" },
     ],
@@ -44,7 +40,6 @@ const navItems = [
     page: "About",
     link: "/about",
     subpages: [
-      { title: "ABOUT", link: "/about" },
       { title: "Company Info", link: "/about/company" },
       { title: "Contact", link: "/about/contact" },
     ],
@@ -52,55 +47,50 @@ const navItems = [
 ];
 
 export default function NavBar() {
-  // Track which dropdown is open by page name, null if none
   const [openDropdown, setOpenDropdown] = useState(null);
+  const timeoutRef = useRef(null);
+  const navigate = useNavigate();
 
-  // Toggle dropdown open/close on click
-  const toggleDropdown = (page) => {
-    setOpenDropdown((current) => (current === page ? null : page));
+  const handleMouseEnter = (page) => {
+    clearTimeout(timeoutRef.current);
+    setOpenDropdown(page);
   };
 
-  // Close dropdown when clicking outside
-  React.useEffect(() => {
-    function handleClickOutside(event) {
-      // Close if click is outside any dropdown
-      if (!event.target.closest(".nav-item")) {
-        setOpenDropdown(null);
-      }
-    }
-    window.addEventListener("click", handleClickOutside);
-    return () => window.removeEventListener("click", handleClickOutside);
-  }, []);
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => setOpenDropdown(null), 150);
+  };
 
   return (
-    <nav className="bg-pink-500 p-4 flex justify-center space-x-8 md:lg-space-12 lg:space-x-36 shadow-md relative">
+    <nav className="bg-pink-500 p-4 flex justify-center space-x-8 lg:space-x-36 shadow-md relative z-50">
       {navItems.map(({ page, link, subpages }) => {
         const isOpen = openDropdown === page;
+
         return (
           <div
             key={page}
             className="relative nav-item"
+            onMouseEnter={() => handleMouseEnter(page)}
+            onMouseLeave={handleMouseLeave}
           >
             <button
-              onClick={() => toggleDropdown(page)}
+              onClick={() => navigate(link)}
               className="text-gray-800 font-semibold hover:text-gray-600 focus:outline-none"
               type="button"
+              aria-haspopup="true"
+              aria-expanded={isOpen}
             >
               {page}
             </button>
 
-            {/* Dropdown menu */}
+            {/* Dropdown */}
             {subpages && subpages.length > 0 && isOpen && (
-              <div
-                className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-48 bg-white border-4 border-black z-50"
-              >
+              <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-48 bg-white border-4 border-black z-50 shadow-lg">
                 <ul>
                   {subpages.map(({ title, link: subLink }) => (
                     <li key={title}>
                       <Link
                         to={subLink}
                         className="block px-4 py-2 text-gray-700 hover:bg-pink-500 hover:text-white"
-                        onClick={() => setOpenDropdown(null)} // close on item click
                       >
                         {title}
                       </Link>
