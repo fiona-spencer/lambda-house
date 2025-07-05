@@ -16,7 +16,7 @@ function simpleMarkdownToHtml(md) {
       const fullSrc = src.startsWith("/")
         ? RAW_BASE + src
         : src;
-        return `<img alt='${alt}' src='${fullSrc}' class='w-1/4 mx-auto rounded-lg my-4' />`;
+      return `<img alt='${alt}' src='${fullSrc}' class='w-1/4 mx-auto rounded-lg my-4' />`;
     })
     .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2' class='text-pink-600 hover:underline'>$1</a>")
     .replace(/^\s*\n\-/gm, "<ul class='list-disc list-inside'><li>")
@@ -34,6 +34,7 @@ export default function LogsPage() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [markdownHtml, setMarkdownHtml] = useState("");
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/`)
@@ -64,57 +65,88 @@ export default function LogsPage() {
       });
   }
 
-useEffect(() => {
-  if (!selectedFile) return;
+  useEffect(() => {
+    if (!selectedFile) return;
 
-  setLoading(true);
-  fetch(selectedFile.download_url)
-    .then((res) => res.text())
-    .then((text) => {
-      const html = simpleMarkdownToHtml(text);
-      setMarkdownHtml(html);
-      setLoading(false);
+    setLoading(true);
+    fetch(selectedFile.download_url)
+      .then((res) => res.text())
+      .then((text) => {
+        const html = simpleMarkdownToHtml(text);
+        setMarkdownHtml(html);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch markdown content", err);
+        setLoading(false);
+      });
+  }, [selectedFile]);
+
+  // Filter categories and files based on search term
+  const filteredCategories = categories
+    .map((cat) => {
+      // Check if category matches search term
+      const categoryMatches = cat.name.toLowerCase().includes(searchTerm.toLowerCase());
+
+      // Filter files inside this category if loaded
+      const filteredFiles = selectedCategory?.name === cat.name
+        ? files.filter((file) =>
+            file.name.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+        : [];
+
+      // Only show category if category name or any of its files match
+      if (categoryMatches || filteredFiles.length > 0) {
+        return {
+          ...cat,
+          filteredFiles,
+          showFiles: selectedCategory?.name === cat.name,
+        };
+      }
+      return null;
     })
-    .catch((err) => {
-      console.error("Failed to fetch markdown content", err);
-      setLoading(false);
-    });
-}, [selectedFile]);
-
+    .filter(Boolean);
 
   return (
     <div className="flex min-h-screen bg-white text-black">
-      <aside className="w-64 border-r border-pink-300 bg-pink-50 p-4 overflow-y-auto">
-        <ul>
-{categories.map((cat, index) => (
-  <li key={cat.name} className="mb-4 pb-4 border-b border-pink-300">
-    <button
-      className={`font-semibold hover:underline ${
-        selectedCategory?.name === cat.name ? "text-pink-600" : ""
-      }`}
-      onClick={() => selectCategory(cat)}
-    >
-      {cat.name.replace(/_/g, " ")}
-    </button>
-    {selectedCategory?.name === cat.name && (
-      <ul className="ml-4 mt-2 space-y-1">
-        {files.map((file) => (
-          <li key={file.name}>
-            <button
-              className={`text-sm hover:text-pink-600 ${
-                selectedFile?.name === file.name ? "font-bold" : ""
-              }`}
-              onClick={() => setSelectedFile(file)}
-            >
-              {file.name.replace(".md", "").replace(/_/g, " ")}
-            </button>
-          </li>
-        ))}
-      </ul>
-    )}
-  </li>
-))}
+      <aside className="w-64 border-r border-pink-300 bg-pink-50 p-4 overflow-y-auto flex flex-col">
+        <input
+          type="text"
+          placeholder="Search categories or files..."
+          className="mb-4 p-2 rounded border border-pink-300 focus:outline-none focus:ring focus:ring-pink-300"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
 
+        <ul className="flex-grow overflow-y-auto">
+          {filteredCategories.map((cat) => (
+            <li key={cat.name} className="mb-4 pb-4 border-b border-pink-300">
+              <button
+                className={`font-semibold hover:underline ${
+                  selectedCategory?.name === cat.name ? "text-pink-600" : ""
+                }`}
+                onClick={() => selectCategory(cat)}
+              >
+                {cat.name.replace(/_/g, " ")}
+              </button>
+              {cat.showFiles && (
+                <ul className="ml-4 mt-2 space-y-1">
+                  {(searchTerm ? cat.filteredFiles : files).map((file) => (
+                    <li key={file.name}>
+                      <button
+                        className={`text-sm hover:text-pink-600 ${
+                          selectedFile?.name === file.name ? "font-bold" : ""
+                        }`}
+                        onClick={() => setSelectedFile(file)}
+                      >
+                        {file.name.replace(".md", "").replace(/_/g, " ")}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
         </ul>
       </aside>
 
