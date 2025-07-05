@@ -1,6 +1,5 @@
 import React from 'react';
 import { FaArrowRight } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 
 const sectionData = [
   {
@@ -62,18 +61,16 @@ export default function Sections() {
             <p className="text-base text-gray-800 mb-16">{item.description}</p>
           </div>
 
-          <Link
-            to={item.link}
+          <a
+            href={item.link}
             className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center justify-center group"
           >
             <span className="px-10 py-2 rounded-full transition duration-300 group-hover:bg-pink-500/50">
               <FaArrowRight className="text-2xl transition-transform duration-300 group-hover:translate-x-1" />
             </span>
-          </Link>
+          </a>
         </div>
       ))}
     </div>
   );
 }
-
-
