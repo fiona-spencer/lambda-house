@@ -2,30 +2,28 @@ import React, { useEffect, useState } from "react";
 
 const GITHUB_OWNER = "fiona-spencer";
 const GITHUB_REPO = "lambda-house-logs";
-const RAW_BASE = `https://raw.githubusercontent.com/fiona-spencer/lambda-house-logs/main`;
+const RAW_BASE = "https://raw.githubusercontent.com/fiona-spencer/lambda-house-logs/main";
 
-// Basic markdown-to-HTML converter
 function simpleMarkdownToHtml(md) {
   let html = md
-    .replace(/^### (.*$)/gim, "<h3 class='text-lg font-semibold mt-4'>$1</h3>")
-    .replace(/^## (.*$)/gim, "<h2 class='text-xl font-bold mt-6'>$1</h2>")
-    .replace(/^# (.*$)/gim, "<h1 class='text-2xl font-bold mt-8'>$1</h1>")
-    .replace(/^\> (.*$)/gim, "<blockquote class='border-l-4 border-pink-500 pl-4 italic text-gray-600'>$1</blockquote>")
-    .replace(/\*\*(.*?)\*\*/gim, "<strong class='font-bold'>$1</strong>")
+    .replace(/^### (.*$)/gim, "<h3 class='text-xl font-semibold mt-6 mb-3'>$1</h3>")
+    .replace(/^## (.*$)/gim, "<h2 class='text-2xl font-bold mt-8 mb-4'>$1</h2>")
+    .replace(/^# (.*$)/gim, "<h1 class='text-3xl font-extrabold mt-10 mb-6'>$1</h1>")
+    .replace(/^\> (.*$)/gim, "<blockquote class='border-l-4 border-pink-500 pl-4 italic text-gray-600 my-4'>$1</blockquote>")
+    .replace(/\*\*(.*?)\*\*/gim, "<strong class='font-semibold'>$1</strong>")
     .replace(/\*(.*?)\*/gim, "<em class='italic'>$1</em>")
-    .replace(/\[(.*?)\]\((.*?)\)/gim, "<a class='text-pink-600 underline hover:text-pink-800' href='$2' target='_blank'>$1</a>")
-    .replace(/^\s*\n\-/gm, "<ul class='list-disc ml-6'><li>")
-    .replace(/^\- (.*)$/gm, "<li class='mb-1'>$1</li>")
-    .replace(/\n$/gim, "<br />")
-        .replace(/\!\[(.*?)\]\((.*?)\)/gim, (match, alt, src) => {
-      // If src starts with /, prepend RAW_BASE; otherwise keep as is
+    .replace(/\!\[(.*?)\]\((.*?)\)/gim, (match, alt, src) => {
       const fullSrc = src.startsWith("/")
         ? RAW_BASE + src
         : src;
       return `<img alt='${alt}' src='${fullSrc}' class='max-w-full rounded-lg my-4' />`;
     })
+    .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2' class='text-pink-600 hover:underline'>$1</a>")
+    .replace(/^\s*\n\-/gm, "<ul class='list-disc list-inside'><li>")
+    .replace(/^\- (.*)$/gm, "<li>$1</li>")
+    .replace(/\n$/gim, "<br />");
 
-  if (html.includes("<ul class='list-disc ml-6'><li>")) html += "</ul>";
+  if (html.includes("<ul><li>")) html += "</ul>";
   return html.trim();
 }
 
