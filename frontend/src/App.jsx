@@ -29,7 +29,7 @@ function App() {
             <Route path="/studio" element={<StudioPage />} />
             <Route path="/products" element={<Construction />} />
             <Route path="/projects" element={<Construction />} />
-            {/* <Route path="/logs" element={<LogsPage />} /> */}
+            <Route path="/logs" element={<LogsPage />} />
             <Route path="/about" element={<AboutPage />} />
             {/* <Route path="/construction" element={<Construction />} /> */}
             {/* <Route path="/sitemap.xml" element={<Sitemap />} /> */}
