@@ -35,7 +35,7 @@ function simpleMarkdownToHtml(md) {
   // 2. Replace other markdown syntax
   let html = md
     .replace(/^### (.*$)/gim, "<h3 class='text-xl font-semibold mt-6 mb-3'>$1</h3>")
-    .replace(/^---$/gm, "<hr class='border-pink-300 mb-3' />")     // <-- this line added
+    .replace(/^---$/gm, "<hr class='border-pink-300 mt-2 mb-5' />")     // <-- this line added
     .replace(/^## (.*$)/gim, "<h2 class='text-2xl font-bold mt-8 mb-4'>$1</h2>")
     .replace(/^# (.*$)/gim, "<h1 class='text-3xl font-extrabold mt-10 mb-6'>$1</h1>")
     .replace(/^\> (.*$)/gim, "<blockquote class='border-l-4 border-pink-500 pl-4 italic text-gray-600 my-4'>$1</blockquote>")
