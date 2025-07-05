@@ -1,43 +1,20 @@
 import React, { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
 
 const GITHUB_OWNER = "fiona-spencer";
 const GITHUB_REPO = "lambda-house-logs";
 
-// Simple markdown-to-html converter for basic formatting
-function simpleMarkdownToHtml(md) {
-  let html = md
-    .replace(/^### (.*$)/gim, "<h3>$1</h3>") // h3
-    .replace(/^## (.*$)/gim, "<h2>$1</h2>")  // h2
-    .replace(/^# (.*$)/gim, "<h1>$1</h1>")   // h1
-    .replace(/^\> (.*$)/gim, "<blockquote>$1</blockquote>") // blockquote
-    .replace(/\*\*(.*)\*\*/gim, "<strong>$1</strong>") // bold **
-    .replace(/\*(.*)\*/gim, "<em>$1</em>") // italic *
-    .replace(/\!\[(.*?)\]\((.*?)\)/gim, "<img alt='$1' src='$2' />") // images
-    .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2'>$1</a>") // links
-    .replace(/^\s*\n\-/gm, "<ul><li>") // start ul
-    .replace(/^\- (.*)$/gm, "<li>$1</li>") // list items
-    .replace(/\n$/gim, "<br />"); // line breaks
-
-  // Close ul tags (simple fix)
-  if (html.includes("<ul><li>")) {
-    html += "</ul>";
-  }
-  return html.trim();
-}
-
 export default function LogsPage() {
-  const [categories, setCategories] = useState([]); // folders
-  const [files, setFiles] = useState([]); // files inside selected folder
+  const [categories, setCategories] = useState([]);
+  const [files, setFiles] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [markdownContent, setMarkdownContent] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Load root folders (categories)
+  // Load root folders
   useEffect(() => {
-    fetch(
-      `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/`
-    )
+    fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/`)
       .then((res) => res.json())
       .then((data) => {
         const folders = data.filter((item) => item.type === "dir");
@@ -56,9 +33,7 @@ export default function LogsPage() {
     fetch(category.url)
       .then((res) => res.json())
       .then((data) => {
-        const mdFiles = data.filter((item) =>
-          item.name.toLowerCase().endsWith(".md")
-        );
+        const mdFiles = data.filter((item) => item.name.toLowerCase().endsWith(".md"));
         setFiles(mdFiles);
         setLoading(false);
       })
@@ -68,22 +43,29 @@ export default function LogsPage() {
       });
   }
 
-  // Load markdown content of selected file and convert
-  function selectFile(file) {
-    setSelectedFile(file);
-    setLoading(true);
-    fetch(file.download_url)
-      .then((res) => res.text())
-      .then((text) => {
-        const html = simpleMarkdownToHtml(text);
-        setMarkdownContent(html);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Failed to load markdown", err);
-        setLoading(false);
-      });
-  }
+  // Fetch markdown content, re-fetch every 60 seconds
+  useEffect(() => {
+    if (!selectedFile) return;
+
+    const fetchMarkdown = () => {
+      setLoading(true);
+      fetch(selectedFile.download_url)
+        .then((res) => res.text())
+        .then((text) => {
+          setMarkdownContent(text);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error("Failed to load markdown", err);
+          setLoading(false);
+        });
+    };
+
+    fetchMarkdown(); // initial load
+    const intervalId = setInterval(fetchMarkdown, 60 * 1000); // every 1 minute
+
+    return () => clearInterval(intervalId); // cleanup
+  }, [selectedFile]);
 
   return (
     <div className="flex min-h-screen bg-white text-black">
@@ -108,9 +90,9 @@ export default function LogsPage() {
                         className={`text-sm hover:text-blue-600 ${
                           selectedFile?.name === file.name ? "font-bold" : ""
                         }`}
-                        onClick={() => selectFile(file)}
+                        onClick={() => setSelectedFile(file)}
                       >
-                        {file.name.replace(/_/g, " ").replace(".md", "")}
+                        {file.name.replace(".md", "").replace(/_/g, " ")}
                       </button>
                     </li>
                   ))}
@@ -123,13 +105,9 @@ export default function LogsPage() {
 
       <main className="flex-1 p-8 overflow-y-auto prose max-w-none">
         {loading && <p>Loading...</p>}
-
-        {!loading && !markdownContent && (
-          <p>Select a category and file to view content</p>
-        )}
-
+        {!loading && !markdownContent && <p>Select a category and file to view content</p>}
         {!loading && markdownContent && (
-          <article dangerouslySetInnerHTML={{ __html: markdownContent }} />
+          <ReactMarkdown>{markdownContent}</ReactMarkdown>
         )}
       </main>
     </div>
