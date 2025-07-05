@@ -52,11 +52,13 @@ export default function Sections() {
       {sectionData.map((item, index) => (
         <div
           key={index}
-          className="relative bg-white hover:bg-pink-400 transition-colors duration-300 p-6 flex flex-col"
+          className="relative bg-white hover:bg-pink-400 transition-colors duration-300 p-6 flex flex-col group"
         >
           <div>
             <h3 className="text-2xl font-bold mb-2">{item.title}</h3>
-            <h4 className="text-lg font-medium text-gray-600 mb-3">{item.subtitle}</h4>
+            <h4 className="text-xl font-medium text-pink-600 group-hover:text-white mb-3">
+              {item.subtitle}
+            </h4>
             <p className="text-base text-gray-800 mb-16">{item.description}</p>
           </div>
 
@@ -73,4 +75,5 @@ export default function Sections() {
     </div>
   );
 }
+
 
