@@ -36,7 +36,7 @@ const sections = [
 
 export default function LambdahousePage() {
   return (
-    <div className="space-y-12">
+    <div className="space-y-12 lg:px-10">
       {sections.map(({ title, component: Component }, idx) => (
         <div key={idx}>
           <div className="text-4xl font-bold text-black mb-6 ml-10">{title}</div>
