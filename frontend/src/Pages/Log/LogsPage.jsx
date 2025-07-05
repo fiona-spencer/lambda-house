@@ -83,7 +83,7 @@ export default function LogsPage() {
     };
 
     fetchMarkdown();
-    const interval = setInterval(fetchMarkdown, 60 * 1000);
+    const interval = setInterval(fetchMarkdown, 60 * 100);
 
     return () => clearInterval(interval);
   }, [selectedFile]);
