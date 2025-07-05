@@ -59,12 +59,13 @@ export default function LogsPage() {
   return (
     <div className="flex min-h-screen">
       <aside className="w-64 bg-gray-100 p-4 border-r overflow-y-auto">
+        <h2 className="text-lg font-bold mb-4"></h2>
         <ul>
           {repoContents.map((folder) => (
             <li key={folder.name} className="mb-3">
               <button
                 onClick={() => handleCategoryClick(folder)}
-                className="font-semibold text-black hover:underline"
+                className="font-semibold text-blue-600 hover:underline"
               >
                 {folder.name.replace(/_/g, " ")}
               </button>
@@ -74,7 +75,7 @@ export default function LogsPage() {
                     <li key={file.name}>
                       <button
                         onClick={() => handleFileClick(file)}
-                        className={`text-black hover:text-blue-600 ${
+                        className={`text-gray-700 hover:text-blue-600 ${
                           selectedFile === file.name ? "font-bold" : ""
                         }`}
                       >
@@ -88,7 +89,7 @@ export default function LogsPage() {
           ))}
         </ul>
       </aside>
-      <main className="flex-1 p-8 overflow-y-auto prose max-w-none text-black">
+      <main className="flex-1 p-8 overflow-y-auto prose max-w-none">
         {loading && <p>Loading...</p>}
         {!loading && !markdownContent && <p>Select a file to view the content</p>}
         {!loading && markdownContent && (
