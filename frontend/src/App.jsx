@@ -9,7 +9,7 @@ import LambdaHousePage from './Pages/Home/LambdahousePage';
 import StudioPage from './Pages/Studio/StudioPage';
 // import ProductPage from './Pages/Products/ProductPage';
 // import ProjectsPage from './Pages/Projects/ProjectsPage';
-// import LogsPage from './Pages/Log/LogsPage';
+import LogsPage from './Pages/Log/LogsPage';
 import AboutPage from './Pages/About/AboutPage';
 import Construction from './Pages/Construction'
 // Components
