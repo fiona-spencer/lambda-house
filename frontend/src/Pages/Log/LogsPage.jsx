@@ -44,8 +44,8 @@ function simpleMarkdownToHtml(md) {
     .replace(/\!\[(.*?)\]\((.*?)\)/gim, (match, alt, src) => {
       const fullSrc = src.startsWith("/") ? RAW_BASE + src : src;
       return `
-      <div class="flex flex-row items-center my-4">
-      <img alt='${alt}' src='${fullSrc}' class='w-1/4 mx-auto flex rounded-lg my-4' />
+      <div class="flex items-center my-4">
+      <img alt='${alt}' src='${fullSrc}' class='w-1/4 flex rounded-lg my-4' />
       </div>`;
     })
     .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2' class='text-pink-600 hover:underline'>$1</a>")
