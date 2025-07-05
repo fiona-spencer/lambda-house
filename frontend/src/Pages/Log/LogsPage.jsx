@@ -4,7 +4,7 @@ export default function LogsPage() {
   const [content, setContent] = useState("");
 
   useEffect(() => {
-    fetch("/Log/Index/Printer_Basics/Setup.md")
+fetch("/logs/Printer_Basics/Setup.md")
       .then((res) => res.text())
       .then((text) => {
         const html = window.marked.parse(text);
