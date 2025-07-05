@@ -64,29 +64,23 @@ export default function LogsPage() {
       });
   }
 
-  useEffect(() => {
-    if (!selectedFile) return;
+useEffect(() => {
+  if (!selectedFile) return;
 
-    const fetchMarkdown = () => {
-      setLoading(true);
-      fetch(selectedFile.download_url)
-        .then((res) => res.text())
-        .then((text) => {
-          const html = simpleMarkdownToHtml(text);
-          setMarkdownHtml(html);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.error("Failed to fetch markdown content", err);
-          setLoading(false);
-        });
-    };
+  setLoading(true);
+  fetch(selectedFile.download_url)
+    .then((res) => res.text())
+    .then((text) => {
+      const html = simpleMarkdownToHtml(text);
+      setMarkdownHtml(html);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.error("Failed to fetch markdown content", err);
+      setLoading(false);
+    });
+}, [selectedFile]);
 
-    fetchMarkdown();
-    const interval = setInterval(fetchMarkdown, 60 * 100);
-
-    return () => clearInterval(interval);
-  }, [selectedFile]);
 
   return (
     <div className="flex min-h-screen bg-white text-black">
