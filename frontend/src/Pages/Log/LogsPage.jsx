@@ -106,7 +106,7 @@ export default function LogsPage() {
     <div className="relative flex flex-col sm:flex-row min-h-screen bg-white text-black">
       {/* Toggle Tab (Right side) - Small screens only */}
       <button
-        className="sm:hidden fixed top-[30px] right-0 transform rotate-90 bg-pink-600 text-white px-3 py-1 rounded-b-md z-30 shadow-md"
+        className="sm:hidden fixed top-[70px] right-0 transform rotate-90 bg-pink-600 text-white pl-3 -mr-5 py-1 rounded-b-md z-30 shadow-md"
         onClick={() => setSidebarOpen(!sidebarOpen)}
       >
         Logs
