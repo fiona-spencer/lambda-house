@@ -2,32 +2,34 @@ import React, { useEffect, useState } from "react";
 
 const GITHUB_OWNER = "fiona-spencer";
 const GITHUB_REPO = "lambda-house-logs";
-const RAW_BASE = `https://raw.githubusercontent.com/fiona-spencer/lambda-house-logs/main`;
 
 // Basic markdown-to-HTML converter
+const RAW_BASE = "https://raw.githubusercontent.com/fiona-spencer/lambda-house-logs/main";
+
 function simpleMarkdownToHtml(md) {
   let html = md
-    .replace(/^### (.*$)/gim, "<h3 class='text-lg font-semibold mt-4'>$1</h3>")
-    .replace(/^## (.*$)/gim, "<h2 class='text-xl font-bold mt-6'>$1</h2>")
-    .replace(/^# (.*$)/gim, "<h1 class='text-2xl font-bold mt-8'>$1</h1>")
-    .replace(/^\> (.*$)/gim, "<blockquote class='border-l-4 border-pink-500 pl-4 italic text-gray-600'>$1</blockquote>")
-    .replace(/\*\*(.*?)\*\*/gim, "<strong class='font-bold'>$1</strong>")
-    .replace(/\*(.*?)\*/gim, "<em class='italic'>$1</em>")
-    .replace(/\[(.*?)\]\((.*?)\)/gim, "<a class='text-pink-600 underline hover:text-pink-800' href='$2' target='_blank'>$1</a>")
-    .replace(/^\s*\n\-/gm, "<ul class='list-disc ml-6'><li>")
-    .replace(/^\- (.*)$/gm, "<li class='mb-1'>$1</li>")
-    .replace(/\n$/gim, "<br />")
-     .replace(/\!\[(.*?)\]\((.*?)\)/gim, (match, alt, src) => {
-      // If src starts with /, assume it's relative and prepend RAW_BASE
-      const fullSrc = src.startsWith('/')
+    .replace(/^### (.*$)/gim, "<h3>$1</h3>")
+    .replace(/^## (.*$)/gim, "<h2>$1</h2>")
+    .replace(/^# (.*$)/gim, "<h1>$1</h1>")
+    .replace(/^\> (.*$)/gim, "<blockquote>$1</blockquote>")
+    .replace(/\*\*(.*?)\*\*/gim, "<strong>$1</strong>")
+    .replace(/\*(.*?)\*/gim, "<em>$1</em>")
+    .replace(/\!\[(.*?)\]\((.*?)\)/gim, (match, alt, src) => {
+      // If src starts with /, prepend RAW_BASE; otherwise keep as is
+      const fullSrc = src.startsWith("/")
         ? RAW_BASE + src
         : src;
-      return `<img alt='${alt}' src='${fullSrc}' class='max-w-full rounded-lg shadow-md my-4' />`;
+      return `<img alt='${alt}' src='${fullSrc}' class='max-w-full rounded-lg my-4' />`;
     })
+    .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2'>$1</a>")
+    .replace(/^\s*\n\-/gm, "<ul><li>")
+    .replace(/^\- (.*)$/gm, "<li>$1</li>")
+    .replace(/\n$/gim, "<br />");
 
-  if (html.includes("<ul class='list-disc ml-6'><li>")) html += "</ul>";
+  if (html.includes("<ul><li>")) html += "</ul>";
   return html.trim();
 }
+
 
 export default function LogsPage() {
   const [categories, setCategories] = useState([]);
