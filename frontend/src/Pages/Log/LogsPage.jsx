@@ -86,36 +86,36 @@ export default function LogsPage() {
   return (
     <div className="flex min-h-screen bg-white text-black">
       <aside className="w-64 border-r border-pink-300 bg-pink-50 p-4 overflow-y-auto">
-        <h2 className="text-xl font-bold mb-4 text-pink-700">Categories</h2>
         <ul>
-          {categories.map((cat) => (
-            <li key={cat.name} className="mb-2">
-              <button
-                className={`font-semibold hover:text-pink-600 ${
-                  selectedCategory?.name === cat.name ? "text-pink-700" : ""
-                }`}
-                onClick={() => selectCategory(cat)}
-              >
-                {cat.name.replace(/_/g, " ")}
-              </button>
-              {selectedCategory?.name === cat.name && (
-                <ul className="ml-4 mt-1 space-y-1">
-                  {files.map((file) => (
-                    <li key={file.name}>
-                      <button
-                        className={`text-sm hover:text-pink-600 ${
-                          selectedFile?.name === file.name ? "font-bold text-pink-700" : ""
-                        }`}
-                        onClick={() => setSelectedFile(file)}
-                      >
-                        {file.name.replace(".md", "").replace(/_/g, " ")}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
+{categories.map((cat, index) => (
+  <li key={cat.name} className="mb-4 pb-4 border-b border-pink-300">
+    <button
+      className={`font-semibold hover:underline ${
+        selectedCategory?.name === cat.name ? "text-pink-600" : ""
+      }`}
+      onClick={() => selectCategory(cat)}
+    >
+      {cat.name.replace(/_/g, " ")}
+    </button>
+    {selectedCategory?.name === cat.name && (
+      <ul className="ml-4 mt-2 space-y-1">
+        {files.map((file) => (
+          <li key={file.name}>
+            <button
+              className={`text-sm hover:text-pink-600 ${
+                selectedFile?.name === file.name ? "font-bold" : ""
+              }`}
+              onClick={() => setSelectedFile(file)}
+            >
+              {file.name.replace(".md", "").replace(/_/g, " ")}
+            </button>
+          </li>
+        ))}
+      </ul>
+    )}
+  </li>
+))}
+
         </ul>
       </aside>
 
