@@ -5,6 +5,31 @@ const GITHUB_REPO = "lambda-house-logs";
 const RAW_BASE = "https://raw.githubusercontent.com/fiona-spencer/lambda-house-logs/main";
 
 function simpleMarkdownToHtml(md) {
+  // 1. Convert Markdown tables before line breaks interfere
+  md = md.replace(
+    /\n\|(.+)\|\n\|([ -:\|]+)\|\n((?:\|.*\|\n?)+)/g,
+    (_, headers, separator, rows) => {
+      const ths = headers.split("|").map(h =>
+        `<div class="table-cell font-semibold border px-4 py-2 bg-pink-100">${h.trim()}</div>`
+      ).join("");
+
+      const trs = rows.trim().split("\n").map(row => {
+        const tds = row.split("|").map(c =>
+          `<div class="table-cell border px-4 py-2">${c.trim()}</div>`
+        ).join("");
+        return `<div class="table-row">${tds}</div>`;
+      }).join("");
+
+      return `
+<div class="table w-full border border-pink-400 my-6 text-sm rounded-md overflow-hidden">
+  <div class="table-header-group">${`<div class="table-row">${ths}</div>`}</div>
+  <div class="table-row-group">${trs}</div>
+</div>
+`;
+    }
+  );
+
+  // 2. Replace other markdown syntax
   let html = md
     .replace(/^### (.*$)/gim, "<h3 class='text-xl font-semibold mt-6 mb-3'>$1</h3>")
     .replace(/^## (.*$)/gim, "<h2 class='text-2xl font-bold mt-8 mb-4'>$1</h2>")
@@ -20,29 +45,6 @@ function simpleMarkdownToHtml(md) {
     .replace(/^\s*\n\-/gm, "<ul class='list-disc list-inside'><li>")
     .replace(/^\- (.*)$/gm, "<li>$1</li>")
     .replace(/\n$/gim, "<br />");
-
-  // Table conversion
-  html = html.replace(
-    /<br \/>\|(.+?)<br \/>\|(?:[\s\-\:\|]+)<br \/>([\s\S]+?)<br \/>/g,
-    (_, headerLine, bodyLines) => {
-      const headers = headerLine.trim().split("|").map(h => `<th class="border px-4 py-2">${h.trim()}</th>`).join("");
-      const rows = bodyLines
-        .trim()
-        .split("<br />")
-        .map(row => {
-          const cells = row.trim().split("|").map(c => `<td class="border px-4 py-2">${c.trim()}</td>`).join("");
-          return `<tr>${cells}</tr>`;
-        })
-        .join("");
-
-      return `
-        <table class="table-auto border border-collapse border-pink-400 my-6 text-sm">
-          <thead class="bg-pink-100">${headers ? `<tr>${headers}</tr>` : ""}</thead>
-          <tbody>${rows}</tbody>
-        </table>
-      `;
-    }
-  );
 
   if (html.includes("<ul><li>")) html += "</ul>";
   return html.trim();
