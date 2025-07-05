@@ -21,9 +21,33 @@ function simpleMarkdownToHtml(md) {
     .replace(/^\- (.*)$/gm, "<li>$1</li>")
     .replace(/\n$/gim, "<br />");
 
+  // Table conversion
+  html = html.replace(
+    /<br \/>\|(.+?)<br \/>\|(?:[\s\-\:\|]+)<br \/>([\s\S]+?)<br \/>/g,
+    (_, headerLine, bodyLines) => {
+      const headers = headerLine.trim().split("|").map(h => `<th class="border px-4 py-2">${h.trim()}</th>`).join("");
+      const rows = bodyLines
+        .trim()
+        .split("<br />")
+        .map(row => {
+          const cells = row.trim().split("|").map(c => `<td class="border px-4 py-2">${c.trim()}</td>`).join("");
+          return `<tr>${cells}</tr>`;
+        })
+        .join("");
+
+      return `
+        <table class="table-auto border border-collapse border-pink-400 my-6 text-sm">
+          <thead class="bg-pink-100">${headers ? `<tr>${headers}</tr>` : ""}</thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+    }
+  );
+
   if (html.includes("<ul><li>")) html += "</ul>";
   return html.trim();
 }
+
 
 export default function LogsPage() {
   const [categories, setCategories] = useState([]);
