@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { FaBars } from "react-icons/fa"; // Hamburger icon
 
 const GITHUB_OWNER = "fiona-spencer";
 const GITHUB_REPO = "lambda-house-logs";
 const RAW_BASE = "https://raw.githubusercontent.com/fiona-spencer/lambda-house-logs/main";
 
-// Simple Markdown to HTML converter
 function simpleMarkdownToHtml(md) {
   let html = md
     .replace(/^### (.*$)/gim, "<h3 class='text-xl font-semibold mt-6 mb-3'>$1</h3>")
@@ -35,7 +33,7 @@ export default function LogsPage() {
   const [markdownHtml, setMarkdownHtml] = useState("");
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [sidebarOpen, setSidebarOpen] = useState(false); // Sidebar toggle state
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/`)
@@ -76,7 +74,7 @@ export default function LogsPage() {
         const html = simpleMarkdownToHtml(text);
         setMarkdownHtml(html);
         setLoading(false);
-        setSidebarOpen(false); // Close sidebar on small screen when file is opened
+        setSidebarOpen(false);
       })
       .catch((err) => {
         console.error("Failed to fetch markdown content", err);
@@ -105,20 +103,20 @@ export default function LogsPage() {
     .filter(Boolean);
 
   return (
-    <div className="flex flex-col sm:flex-row min-h-screen bg-white text-black relative">
-      {/* Toggle button for small screens */}
+    <div className="relative flex flex-col sm:flex-row min-h-screen bg-white text-black">
+      {/* Toggle Tab (Right side) - Small screens only */}
       <button
-        className="sm:hidden p-4 text-pink-600 z-20"
+        className="sm:hidden fixed top-1/3 right-0 transform rotate-90 bg-pink-600 text-white px-3 py-1 rounded-t-md z-30 shadow-md"
         onClick={() => setSidebarOpen(!sidebarOpen)}
       >
-        <FaBars size={24} />
+        Logs
       </button>
 
       {/* Sidebar */}
       <aside
-        className={`${
-          sidebarOpen ? "block" : "hidden"
-        } sm:block absolute sm:relative z-10 w-64 border-r border-pink-300 bg-pink-50 p-4 overflow-y-auto sm:h-auto h-full transition-all`}
+        className={`fixed sm:relative top-0 right-0 sm:right-auto sm:translate-x-0 z-20 sm:z-auto bg-pink-50 w-64 h-full sm:h-auto border-l sm:border-r border-pink-300 p-4 overflow-y-auto transition-transform duration-300 ${
+          sidebarOpen ? "translate-x-0" : "translate-x-full"
+        } sm:translate-x-0`}
       >
         <input
           type="text"
