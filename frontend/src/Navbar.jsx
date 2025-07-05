@@ -61,7 +61,7 @@ export default function NavBar() {
   };
 
   return (
-    <nav className="bg-pink-500 p-4 flex justify-center space-x-8 lg:space-x-36 shadow-md relative z-50">
+    <nav className="bg-pink-500 p-4 flex justify-center space-x-8 lg:space-x-36 shadow-md relative">
       {navItems.map(({ page, link, subpages }) => {
         const isOpen = openDropdown === page;
 
