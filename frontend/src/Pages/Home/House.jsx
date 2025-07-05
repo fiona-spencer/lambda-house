@@ -82,7 +82,7 @@ export default function House() {
       requestIdRef.current = requestAnimationFrame(animate);
 
       if (mesh) {
-        mesh.rotation.z += 0.003;
+        mesh.rotation.z += 0.009;
 
         if (clickAnimation) {
           const elapsed = time - animationStartTime;
