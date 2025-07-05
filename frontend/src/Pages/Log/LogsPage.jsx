@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const GITHUB_OWNER = "fiona-spencer";
 const GITHUB_REPO = "lambda-house-logs";
+const RAW_BASE = `https://raw.githubusercontent.com/fiona-spencer/lambda-house-logs/main`;
 
 // Basic markdown-to-HTML converter
 function simpleMarkdownToHtml(md) {
@@ -16,10 +17,13 @@ function simpleMarkdownToHtml(md) {
     .replace(/^\s*\n\-/gm, "<ul class='list-disc ml-6'><li>")
     .replace(/^\- (.*)$/gm, "<li class='mb-1'>$1</li>")
     .replace(/\n$/gim, "<br />")
-    .replace(
-    /\!\[(.*?)\]\((.*?)\)/gim,
-    `<img alt='$1' src='$2' class='max-w-full rounded-lg shadow-md my-4' />`
-    );
+     .replace(/\!\[(.*?)\]\((.*?)\)/gim, (match, alt, src) => {
+      // If src starts with /, assume it's relative and prepend RAW_BASE
+      const fullSrc = src.startsWith('/')
+        ? RAW_BASE + src
+        : src;
+      return `<img alt='${alt}' src='${fullSrc}' class='max-w-full rounded-lg shadow-md my-4' />`;
+    })
 
   if (html.includes("<ul class='list-disc ml-6'><li>")) html += "</ul>";
   return html.trim();
